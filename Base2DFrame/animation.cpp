@@ -1,7 +1,7 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "animation.h"
 
-//ë©¤ë²„ ì´ë‹ˆì…œë¼ì´ì¦ˆ
+//¸â¹ö ÀÌ´Ï¼È¶óÀÌÁî
 animation::animation()
 	: _frameNum(0),
 	_frameWidth(0),
@@ -22,18 +22,18 @@ animation::~animation()
 
 HRESULT animation::init(int totalW, int totalH, int frameW, int frameH)
 {
-	//ê°€ë¡œ í”„ë ˆì„ ê°¯ìˆ˜
+	//°¡·Î ÇÁ·¹ÀÓ °¹¼ö
 	_frameWidth = frameW;
 	int _frameNumWidth = totalW / _frameWidth;
 
-	//ì„¸ë¡œ í”„ë ˆì„ ê°¯ìˆ˜
+	//¼¼·Î ÇÁ·¹ÀÓ °¹¼ö
 	_frameHeight = frameH;
 	int _frameNumHeight = totalH / _frameHeight;
 
-	//ì´ í”„ë ˆì„ ê°¯ìˆ˜
+	//ÃÑ ÇÁ·¹ÀÓ °¹¼ö
 	_frameNum = _frameNumWidth * _frameNumHeight;
 
-	//í•´ë‹¹ í”„ë ˆì„ ìœ„ì¹˜ë¡œ ì…‹íŒ…
+	//ÇØ´ç ÇÁ·¹ÀÓ À§Ä¡·Î ¼ÂÆÃ
 	for (int i = 0; i < _frameNumHeight; i++)
 	{
 		for (int j = 0; j < _frameNumWidth; j++)
@@ -47,7 +47,7 @@ HRESULT animation::init(int totalW, int totalH, int frameW, int frameH)
 		}
 	}
 
-	//ê¸°ë³¸ì€ ë””í´íŠ¸ë¡œ
+	//±âº»Àº µğÆúÆ®·Î
 	setDefPlayFrame();
 
 	return S_OK;
@@ -59,17 +59,17 @@ void animation::release(void)
 }
 
 
-//ë””í´íŠ¸ ì• ë‹ˆë©”ì´ì…˜
+//µğÆúÆ® ¾Ö´Ï¸ŞÀÌ¼Ç
 void animation::setDefPlayFrame(BOOL reverse, BOOL loop)
 {
 	_obj = NULL;
 	_callbackFunction = NULL;
 	_callbackFunctionParameter = NULL;
 
-	//ë£¨í”„ ì—¬ë¶€ ë°›ì
+	//·çÇÁ ¿©ºÎ ¹ŞÀÚ
 	_loop = loop;
 
-	//í”Œë ˆì´ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+	//ÇÃ·¹ÀÌ ¸®½ºÆ® ÃÊ±âÈ­
 	_playList.clear();
 
 	if (reverse)
@@ -126,10 +126,10 @@ void animation::setDefPlayFrame(BOOL reverse, BOOL loop, CALLBACK_FUNCTION cbFun
 	_callbackFunction = cbFunction;
 	_callbackFunctionParameter = NULL;
 
-	//ë£¨í”„ ì—¬ë¶€ ë°›ì
+	//·çÇÁ ¿©ºÎ ¹ŞÀÚ
 	_loop = loop;
 
-	//í”Œë ˆì´ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+	//ÇÃ·¹ÀÌ ¸®½ºÆ® ÃÊ±âÈ­
 	_playList.clear();
 
 	if (reverse)
@@ -186,10 +186,10 @@ void animation::setDefPlayFrame(BOOL reverse, BOOL loop, CALLBACK_FUNCTION_PARAM
 	_callbackFunction = NULL;
 	_callbackFunctionParameter = cbFunction;
 
-	//ë£¨í”„ ì—¬ë¶€ ë°›ì
+	//·çÇÁ ¿©ºÎ ¹ŞÀÚ
 	_loop = loop;
 
-	//í”Œë ˆì´ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+	//ÇÃ·¹ÀÌ ¸®½ºÆ® ÃÊ±âÈ­
 	_playList.clear();
 
 	if (reverse)
@@ -240,7 +240,7 @@ void animation::setDefPlayFrame(BOOL reverse, BOOL loop, CALLBACK_FUNCTION_PARAM
 	}
 }
 
-//ë°°ì—´ ì• ë‹ˆë©”ì´ì…˜
+//¹è¿­ ¾Ö´Ï¸ŞÀÌ¼Ç
 void animation::setPlayFrame(int* playArr, int arrLen, BOOL loop)
 {
 	_obj = NULL;
@@ -289,7 +289,7 @@ void animation::setPlayFrame(int* playArr, int arrLen, BOOL loop, CALLBACK_FUNCT
 	}
 }
 
-//êµ¬ê°„ ì• ë‹ˆë©”ì´ì…˜
+//±¸°£ ¾Ö´Ï¸ŞÀÌ¼Ç
 void animation::setPlayFrame(int start, int end, BOOL reverse, BOOL loop)
 {
 	_obj = NULL;
@@ -300,7 +300,7 @@ void animation::setPlayFrame(int start, int end, BOOL reverse, BOOL loop)
 
 	_playList.clear();
 
-	//ì²«ì¥ì´ë‘ ëì¥ì´ë‘ ê°™ë‹¤? -> 1ì¥
+	//Ã¹ÀåÀÌ¶û ³¡ÀåÀÌ¶û °°´Ù? -> 1Àå
 	if (start == end)
 	{
 		_playList.clear();
@@ -308,7 +308,7 @@ void animation::setPlayFrame(int start, int end, BOOL reverse, BOOL loop)
 		return;
 	}
 
-	//ì¸ë±ìŠ¤ ë²ˆí˜¸ê°€ ì•ì´ í´ë•Œ
+	//ÀÎµ¦½º ¹øÈ£°¡ ¾ÕÀÌ Å¬¶§
 	if (start > end)
 	{
 		if (reverse)
@@ -416,7 +416,7 @@ void animation::setPlayFrame(int start, int end, BOOL reverse, BOOL loop, CALLBA
 
 	_playList.clear();
 
-	//ì²«ì¥ì´ë‘ ëì¥ì´ë‘ ê°™ë‹¤? -> 1ì¥
+	//Ã¹ÀåÀÌ¶û ³¡ÀåÀÌ¶û °°´Ù? -> 1Àå
 	if (start == end)
 	{
 		_playList.clear();
@@ -424,7 +424,7 @@ void animation::setPlayFrame(int start, int end, BOOL reverse, BOOL loop, CALLBA
 		return;
 	}
 
-	//ì¸ë±ìŠ¤ ë²ˆí˜¸ê°€ ì•ì´ í´ë•Œ
+	//ÀÎµ¦½º ¹øÈ£°¡ ¾ÕÀÌ Å¬¶§
 	if (start > end)
 	{
 		if (reverse)
@@ -532,7 +532,7 @@ void animation::setPlayFrame(int start, int end, BOOL reverse, BOOL loop, CALLBA
 
 	_playList.clear();
 
-	//ì²«ì¥ì´ë‘ ëì¥ì´ë‘ ê°™ë‹¤? -> 1ì¥
+	//Ã¹ÀåÀÌ¶û ³¡ÀåÀÌ¶û °°´Ù? -> 1Àå
 	if (start == end)
 	{
 		_playList.clear();
@@ -540,7 +540,7 @@ void animation::setPlayFrame(int start, int end, BOOL reverse, BOOL loop, CALLBA
 		return;
 	}
 
-	//ì¸ë±ìŠ¤ ë²ˆí˜¸ê°€ ì•ì´ í´ë•Œ
+	//ÀÎµ¦½º ¹øÈ£°¡ ¾ÕÀÌ Å¬¶§
 	if (start > end)
 	{
 		if (reverse)
@@ -650,14 +650,14 @@ void animation::frameUpdate(float elapsedTime)
 	{
 		_elapsedSec += elapsedTime;
 
-		//í”„ë ˆì„ì„ ì—…ë°ì´íŠ¸ í•´ì•¼í•˜ë©´
+		//ÇÁ·¹ÀÓÀ» ¾÷µ¥ÀÌÆ® ÇØ¾ßÇÏ¸é
 		if (_elapsedSec >= _frameUpdateSec)
 		{
 			_elapsedSec -= _frameUpdateSec;
 
 			_nowPlayIndex++;
 
-			//ëê¹Œì§€ ì¬ìƒí–ˆë‹¤ë©´
+			//³¡±îÁö Àç»ıÇß´Ù¸é
 			if (_nowPlayIndex == _playList.size())
 			{
 				if (_loop) _nowPlayIndex = 0;

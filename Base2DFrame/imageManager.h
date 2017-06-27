@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "singletonBase.h"
 #include "image.h"
 #include <map>
@@ -19,23 +19,23 @@ public:
 	HRESULT init(void);
 	void release(void);
 
-	//ë¹ˆ ë¹„íŠ¸ë§µ
+	//ºó ºñÆ®¸Ê
 	image* addImage(string strKey, int width, int height);
 
-	//íŒŒì¼ ì´ë¯¸ì§€
+	//ÆÄÀÏ ÀÌ¹ÌÁö
 	image* addImage(string strKey, const char* fileName, int width, int height, bool trans, COLORREF transColor);
 	image* addImage(string strKey, const char* fileName, float x, float y, int width, int height, bool trans, COLORREF transColor);
-	//í”„ë ˆì„ ì´ë¯¸ì§€
+	//ÇÁ·¹ÀÓ ÀÌ¹ÌÁö
 	image* addFrameImage(string strKey, const char* fileName, float x, float y, int width, int height, int frameX, int frameY, bool trans, COLORREF transColor);
 	image* addFrameImage(string strKey, const char* fileName, int width, int height, int frameX, int frameY, bool trans, COLORREF transColor);
 
-	//í‚¤ ê°’ìœ¼ë¡œ ì´ë¯¸ì§€ ì°¾ì•„ì˜¤ëŠ” í•¨ìˆ˜
+	//Å° °ªÀ¸·Î ÀÌ¹ÌÁö Ã£¾Æ¿À´Â ÇÔ¼ö
 	image* findImage(string strKey);
 
-	//ì´ë¯¸ì§€ ì§€ì›Œì£¼ëŠ” í•¨ìˆ˜
+	//ÀÌ¹ÌÁö Áö¿öÁÖ´Â ÇÔ¼ö
 	BOOL deleteImage(string strKey);
 
-	//ì´ë¯¸ì§€ ì „ì²´ì ìœ¼ë¡œ ì§€ì›Œì£¼ëŠ” í•¨ìˆ˜
+	//ÀÌ¹ÌÁö ÀüÃ¼ÀûÀ¸·Î Áö¿öÁÖ´Â ÇÔ¼ö
 	BOOL deleteAll(void);
 
 	//void render(string strKey, HDC hdc);

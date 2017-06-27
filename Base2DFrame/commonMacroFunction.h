@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 
 //===========================================
 // ## 17.04.05 ## CommonMacroFunction ##
@@ -19,7 +19,7 @@ inline void LineMake(HDC hdc, int x1, int y1, int x2, int y2)
 }
 
 //Rect
-//ì‹œì‘ì¢Œí‘œë¥¼ ê¸°ì ìœ¼ë¡œ ë§Œë“ ë‹¤ ì‹œì‘ì¢Œí‘œX ì‹œì‘ì¢Œí‘œY ê°€ë¡œí¬ê¸° ì„¸ë¡œí¬ê¸°
+//½ÃÀÛÁÂÇ¥¸¦ ±âÁ¡À¸·Î ¸¸µç´Ù ½ÃÀÛÁÂÇ¥X ½ÃÀÛÁÂÇ¥Y °¡·ÎÅ©±â ¼¼·ÎÅ©±â
 inline RECT RectMake(int x, int y, int width, int height)
 {
 
@@ -28,7 +28,7 @@ inline RECT RectMake(int x, int y, int width, int height)
 	return rc;
 }
 
-//ì¤‘ì ì¢Œí‘œë¥¼ ê¸°ì ìœ¼ë¡œ ë§Œë“ ë‹¤ ì¤‘ì ì¢Œí‘œX, ì¤‘ì ì¢Œí‘œY, ê°€ë¡œí¬ê¸°, ì„¸ë¡œí¬ê¸° 
+//ÁßÁ¡ÁÂÇ¥¸¦ ±âÁ¡À¸·Î ¸¸µç´Ù ÁßÁ¡ÁÂÇ¥X, ÁßÁ¡ÁÂÇ¥Y, °¡·ÎÅ©±â, ¼¼·ÎÅ©±â 
 inline RECT RectMakeCenter(int x, int y, int width, int height)
 {
 	RECT rc = { x - (width / 2) , y - (height / 2) , x + (width / 2), y + (height / 2) };

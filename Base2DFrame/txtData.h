@@ -1,4 +1,4 @@
-Ôªø#pragma once
+#pragma once
 #include "singletonBase.h"
 #include <vector>
 #include <string>
@@ -9,11 +9,11 @@ public:
 	HRESULT init();
 	void release();
 
-	//ÏÑ∏Ïù¥Î∏å
+	//ºº¿Ã∫Í
 	void txtSave(const char* saveFileName, vector<string> vStr);
 	char* vectorArrayCombine(vector<string> vArray);
 
-	//Î°úÎìú
+	//∑ŒµÂ
 	vector<string> txtLoad(const char* loadFileName);
 	vector<string> charArraySeparation(char charArray[]);
 

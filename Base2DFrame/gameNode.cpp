@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "gameNode.h"
 
 
@@ -45,7 +45,11 @@ void gameNode::release(void)
 {
 	if (_managerInit)
 	{
-	
+		SOUNDMANAGER->release();
+		TIMEMANAGER->release();
+
+		IMAGEMANAGER->deleteImage("backBuffer");
+
 		KEYMANAGER->releaseSingleton();
 		IMAGEMANAGER->releaseSingleton();
 		TIMEMANAGER->releaseSingleton();
@@ -62,7 +66,7 @@ void gameNode::release(void)
 
 void gameNode::update(void)
 {
-	
+	SOUNDMANAGER->update();
 }
 
 void gameNode::render(void)
@@ -79,7 +83,7 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	switch (iMessage)
 	{
 
-		//ë§ˆìš°ìŠ¤ ì¢Œí‘œë¥¼ ì½ì–´ì˜¤ëŠ” í•¨ìˆ˜
+		//¸¶¿ì½º ÁÂÇ¥¸¦ ÀĞ¾î¿À´Â ÇÔ¼ö
 		case WM_MOUSEMOVE:
 			_ptMouse.x = static_cast<float>LOWORD(lParam);
 			_ptMouse.y = static_cast<float>HIWORD(lParam);

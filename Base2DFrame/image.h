@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "animation.h"
 
 //===================================================
@@ -11,8 +11,8 @@ class image
 public:
 	enum IMAGE_LOAD_KIND
 	{
-		LOAD_RESOURCE,			//ë¦¬ì†ŒìŠ¤ë¡œ ë¶€í„°
-		LOAD_FILE,				//íŒŒì¼ë¡œ ë¶€í„°
+		LOAD_RESOURCE,			//¸®¼Ò½º·Î ºÎÅÍ
+		LOAD_FILE,				//ÆÄÀÏ·Î ºÎÅÍ
 		LOAD_EMPTY,
 		LOAD_END
 	};
@@ -27,12 +27,12 @@ public:
 		float y;
 		int width;
 		int height;
-		int currentFrameX;	//í”„ë ˆìž„ ì´ë¯¸ì§€ ë²ˆí˜¸(ê°€ë¡œ)
-		int currentFrameY;	//í”„ë ˆìž„ ì´ë¯¸ì§€ ë²ˆí˜¸(ì„¸ë¡œ)
-		int maxFrameX;		//í”„ë ˆìž„ì˜ ë ë²ˆí˜¸(ê°€ë¡œ)
-		int maxFrameY;		//í”„ë ˆìž„ì˜ ë ë²ˆí˜¸(ì„¸ë¡œ)
-		int frameWidth;		//í”„ë ˆìž„ ì´ë¯¸ì§€ í•œìž¥ë‹¹ ê°€ë¡œí¬ê¸°
-		int frameHeight;	//í”„ë ˆìž„ ì´ë¯¸ì§€ í•œìž¥ë‹¹ ì„¸ë¡œí¬ê¸°
+		int currentFrameX;	//ÇÁ·¹ÀÓ ÀÌ¹ÌÁö ¹øÈ£(°¡·Î)
+		int currentFrameY;	//ÇÁ·¹ÀÓ ÀÌ¹ÌÁö ¹øÈ£(¼¼·Î)
+		int maxFrameX;		//ÇÁ·¹ÀÓÀÇ ³¡ ¹øÈ£(°¡·Î)
+		int maxFrameY;		//ÇÁ·¹ÀÓÀÇ ³¡ ¹øÈ£(¼¼·Î)
+		int frameWidth;		//ÇÁ·¹ÀÓ ÀÌ¹ÌÁö ÇÑÀå´ç °¡·ÎÅ©±â
+		int frameHeight;	//ÇÁ·¹ÀÓ ÀÌ¹ÌÁö ÇÑÀå´ç ¼¼·ÎÅ©±â
 		BYTE loadType;
 
 		tagImageInfo()
@@ -55,10 +55,10 @@ public:
 	}IMAGE_INFO, *LPIMAGE_INFO;
 
 private:
-	LPIMAGE_INFO	_imageInfo;		//ì´ë¯¸ì§€ êµ¬ì¡°ì²´
-	CHAR*			_fileName;		//íŒŒì¼ì´ë¦„
-	BOOL			_trans;			//íŠ¹ì • ì¹¼ë¼ ë‚ ë¦´êº¼ë‹ˆ?
-	COLORREF		_transColor;	//ë‚ ë¦°ë‹¤ë©´ ì–´ë–¤ ì¹¼ë¼ë¥¼ ë‚ ë¦´êº¼ë‹ˆ?(í”½ì…€ê°’)
+	LPIMAGE_INFO	_imageInfo;		//ÀÌ¹ÌÁö ±¸Á¶Ã¼
+	CHAR*			_fileName;		//ÆÄÀÏÀÌ¸§
+	BOOL			_trans;			//Æ¯Á¤ Ä®¶ó ³¯¸±²¨´Ï?
+	COLORREF		_transColor;	//³¯¸°´Ù¸é ¾î¶² Ä®¶ó¸¦ ³¯¸±²¨´Ï?(ÇÈ¼¿°ª)
 
 	BLENDFUNCTION	_blendFunc;
 	LPIMAGE_INFO	_blendImage;
@@ -86,10 +86,10 @@ public:
 
 	void render(HDC hdc);
 
-	//					ë¿Œë¦´ê³³ X     ë¿Œë¦´ê³³ Y
+	//					»Ñ¸±°÷ X     »Ñ¸±°÷ Y
 	void render(HDC hdc, int destX, int destY);
 
-	//					   ë¿Œë¦´ ê³³X  ë¿Œë¦´ ê³³Y    ë¿Œë ¤ì˜¬ ê³³X  ë¿Œë ¤ì˜¬ ê³³Y   ê·¸ì§€ì ì—ì„œ ê°€ë¡œ  ì„¸ë¡œ
+	//					   »Ñ¸± °÷X  »Ñ¸± °÷Y    »Ñ·Á¿Ã °÷X  »Ñ·Á¿Ã °÷Y   ±×ÁöÁ¡¿¡¼­ °¡·Î  ¼¼·Î
 	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
 
 	void frameRender(HDC hdc, int destX, int destY);
@@ -106,7 +106,7 @@ public:
 	inline HDC getMemDC(void) { return _imageInfo->hMemDC; }
 
 	//=========================================================
-	// ì´ë¯¸ì§€ ì¡°ìž‘ì„ íŽ¸í•˜ê²Œ í•˜ê¸°ìœ„í•œ ì ‘ê·¼,ì„¤ì •ìž
+	// ÀÌ¹ÌÁö Á¶ÀÛÀ» ÆíÇÏ°Ô ÇÏ±âÀ§ÇÑ Á¢±Ù,¼³Á¤ÀÚ
 	//=========================================================
 
 	inline void setX(float x) { _imageInfo->x = x; }

@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "timeManager.h"
 
 
@@ -43,8 +43,8 @@ void timeManager::render(HDC hdc)
 	char str[256];
 	string frameRate;
 	SetBkMode(hdc, TRANSPARENT);
-	//TRANSPARENT : í°íŠ¸ ë’·ë°°ê²½ íˆ¬ëª…
-	//OPAQUE : í°íŠ¸ ë’·ë°°ê²½ ë¶ˆíˆ¬ëª…
+	//TRANSPARENT : ÆùÆ® µŞ¹è°æ Åõ¸í
+	//OPAQUE : ÆùÆ® µŞ¹è°æ ºÒÅõ¸í
 
 
 #ifdef _DEBUG

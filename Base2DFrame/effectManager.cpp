@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "effectManager.h"
 #include "effect.h"
 
@@ -88,10 +88,10 @@ void effectManager::addEffect(string effectName, const char* imageName, int imag
 	arrEffects vEffectBuffer;
 	arrEffect mArrEffect;
 
-	//í‚¤ ê°’ì´ ìˆë‹¤ë©´
+	//Å° °ªÀÌ ÀÖ´Ù¸é
 	if (IMAGEMANAGER->findImage(imageName))
 	{
-		//ê·¸ê²ƒì„ ì“´ë‹¤
+		//±×°ÍÀ» ¾´´Ù
 		img = IMAGEMANAGER->findImage(imageName);
 	}
 	else
@@ -99,14 +99,14 @@ void effectManager::addEffect(string effectName, const char* imageName, int imag
 		img = IMAGEMANAGER->addImage(imageName, imageName, imageWidth, imageHeight, true, RGB(255, 0, 255));
 	}
 
-	//ë²„í¼ë§Œí¼ ìƒì„±
+	//¹öÆÛ¸¸Å­ »ı¼º
 	for (int i = 0; i < buffer; i++)
 	{
 		vEffectBuffer.push_back(new effect);
 		vEffectBuffer[i]->init(img, effectWidth, effectHeight, fps, elapsedTime);
 	}
 
-	//í˜ì–´!!!!
+	//Æä¾î!!!!
 	mArrEffect.insert(pair<string, arrEffects>(effectName, vEffectBuffer));
 
 	_vTotalEffects.push_back(mArrEffect);

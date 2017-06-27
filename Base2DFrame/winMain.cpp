@@ -1,19 +1,19 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "symphonyOfNight.h"
 
-//ì „ì—­ë³€ìˆ˜ ì„ ì–¸
-HINSTANCE	_hInstance;		//ìœˆë„ìš° APP ê³ ìœ ë²ˆí˜¸
+//Àü¿ªº¯¼ö ¼±¾ğ
+HINSTANCE	_hInstance;		//À©µµ¿ì APP °íÀ¯¹øÈ£
 HWND		_hWnd;
 
 LPTSTR _lpszClass = TEXT("Omega API");
 
 symphonyOfNight _mg;
 
-//í¬ì¸íŠ¸ ë³€ìˆ˜ -> êµ¬ì¡°ì²´ë¡œ ì´ë£¨ì–´ì ¸ìˆê³ , x, y ì¢Œí‘œë¥¼ ë‹´ì„ ìˆ˜ ìˆë‹¤.
+//Æ÷ÀÎÆ® º¯¼ö -> ±¸Á¶Ã¼·Î ÀÌ·ç¾îÁ®ÀÖ°í, x, y ÁÂÇ¥¸¦ ´ãÀ» ¼ö ÀÖ´Ù.
 POINT _ptMouse;
 
 
-//í•¨ìˆ˜ì˜ í”„ë¡œí†  íƒ€ì… ì„ ì–¸
+//ÇÔ¼öÀÇ ÇÁ·ÎÅä Å¸ÀÔ ¼±¾ğ
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 void setWindowsSize(int x, int y, int width, int height);
@@ -21,23 +21,23 @@ void setWindowsSize(int x, int y, int width, int height);
 // Cmd == Command 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int cmdShow)
 {
-	MSG			message;		//ìš´ì˜ì²´ì œì—ì„œ ë°œìƒí•˜ëŠ” ë©”ì‹œì§€ ì •ë³´ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ êµ¬ì¡°ì²´
-	WNDCLASS	wndClass;		//ìœˆë„ìš°ì˜ ì •ë³´ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ êµ¬ì¡°ì²´(ì–´ë–¤ í˜•íƒœì˜ ìœˆë„ìš° ì°½ì¸ê°€?)
+	MSG			message;		//¿î¿µÃ¼Á¦¿¡¼­ ¹ß»ıÇÏ´Â ¸Ş½ÃÁö Á¤º¸¸¦ ÀúÀåÇÏ±â À§ÇÑ ±¸Á¶Ã¼
+	WNDCLASS	wndClass;		//À©µµ¿ìÀÇ Á¤º¸¸¦ ÀúÀåÇÏ±â À§ÇÑ ±¸Á¶Ã¼(¾î¶² ÇüÅÂÀÇ À©µµ¿ì Ã¢ÀÎ°¡?)
 
 	_hInstance = hInstance;
 
-	wndClass.cbClsExtra = 0;										//í´ë˜ìŠ¤ ì—¬ë¶„ ë©”ëª¨ë¦¬ ì„¤ì •
-	wndClass.cbWndExtra = 0;										//ìœˆë„ìš° ì—¬ë¶„ ë©”ëª¨ë¦¬ ì„¤ì •
-	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);	//ìœˆë„ìš° ìƒ‰ê¹”ì„ í•˜ì–—ê²Œ
-	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);					//ìœˆë„ìš° ì»¤ì„œ ëª¨ì–‘(í˜„ì¬ í™”ì‚´í‘œ)
-	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);				//ìœˆë„ìš° ì•„ì´ì½˜ ëª¨ì–‘
-	wndClass.hInstance = hInstance;									//ìœˆë„ìš° ì¸ìŠ¤í„´ìŠ¤
-	wndClass.lpfnWndProc = (WNDPROC)WndProc;						//ìœˆë„ìš° í”„ë¡œì‹œì ¸
-	wndClass.lpszClassName = WINNAME;								//ìœˆë„ìš° í´ë˜ìŠ¤ì´ë¦„
-	wndClass.lpszMenuName = NULL;									//ìœˆë„ìš° ë©”ë‰´ì´ë¦„( ì•ˆì‚¬ìš©)
-	wndClass.style = CS_HREDRAW | CS_VREDRAW;						//ìœˆë„ìš° ìŠ¤íƒ€ì¼ ì§€ì •
+	wndClass.cbClsExtra = 0;										//Å¬·¡½º ¿©ºĞ ¸Ş¸ğ¸® ¼³Á¤
+	wndClass.cbWndExtra = 0;										//À©µµ¿ì ¿©ºĞ ¸Ş¸ğ¸® ¼³Á¤
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);	//À©µµ¿ì »ö±òÀ» ÇÏ¾é°Ô
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);					//À©µµ¿ì Ä¿¼­ ¸ğ¾ç(ÇöÀç È­»ìÇ¥)
+	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);				//À©µµ¿ì ¾ÆÀÌÄÜ ¸ğ¾ç
+	wndClass.hInstance = hInstance;									//À©µµ¿ì ÀÎ½ºÅÏ½º
+	wndClass.lpfnWndProc = (WNDPROC)WndProc;						//À©µµ¿ì ÇÁ·Î½ÃÁ®
+	wndClass.lpszClassName = WINNAME;								//À©µµ¿ì Å¬·¡½ºÀÌ¸§
+	wndClass.lpszMenuName = NULL;									//À©µµ¿ì ¸Ş´ºÀÌ¸§( ¾È»ç¿ë)
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;						//À©µµ¿ì ½ºÅ¸ÀÏ ÁöÁ¤
 
-	//ìœˆë„ìš° ì •ë³´ë¥¼ ë“±ë¡í•´ì£¼ì
+	//À©µµ¿ì Á¤º¸¸¦ µî·ÏÇØÁÖÀÚ
 	RegisterClass(&wndClass);
 
 	_hWnd = CreateWindow(WINNAME, 
@@ -52,17 +52,17 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 						hInstance, 
 						NULL);
 
-	//í•¨ìˆ˜ë¥¼ ë§Œë“¤ì—ˆìœ¼ë‹ˆ ì¨ë¨¹ëŠ”ë‹¤
+	//ÇÔ¼ö¸¦ ¸¸µé¾úÀ¸´Ï ½á¸Ô´Â´Ù
 	setWindowsSize(WINSTARTX, WINSTARTY, WINSIZEX, WINSIZEY);
 
 
-	//ì´ê²ƒì„ í•´ì£¼ë©´ ìœˆë„ìš° ì°½ì´ ëˆˆì— ë³´ì—¬ì§„ë‹¤
+	//ÀÌ°ÍÀ» ÇØÁÖ¸é À©µµ¿ì Ã¢ÀÌ ´«¿¡ º¸¿©Áø´Ù
 	ShowWindow(_hWnd, cmdShow);
 
-	//ë©”ì¸ê²Œì„ì´ ì´ˆê¸°í™”ê°€ ì•ˆë˜ë©´
+	//¸ŞÀÎ°ÔÀÓÀÌ ÃÊ±âÈ­°¡ ¾ÈµÇ¸é
 	if (FAILED(_mg.init()))
 	{
-		//êº¼ë²„ë ¤ë¼
+		//²¨¹ö·Á¶ó
 		return 0;
 	}
 
@@ -85,36 +85,36 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 
 	/*
-	//ë©”ì‹œì§€ ë£¨í”„ ì„ ì–¸
+	//¸Ş½ÃÁö ·çÇÁ ¼±¾ğ
 
-	//GetMessage : ë©”ì‹œì§€ê°€ ë°œìƒí•´ì•¼ ì²˜ë¦¬ë¥¼ í•œë‹¤
+	//GetMessage : ¸Ş½ÃÁö°¡ ¹ß»ıÇØ¾ß Ã³¸®¸¦ ÇÑ´Ù
 	while (GetMessage(&message, 0, 0, 0))
 	{
-		TranslateMessage(&message);		//í‚¤ë³´ë“œ ì…ë ¥ ë˜ëŠ” ìˆœê°„ ê·¸ ë©”ì‹œì§€ ì²˜ë¦¬ë¥¼ ë‹´ë‹¹
-		DispatchMessage(&message);		//ì‹¤ì œë¡œ ìœˆë„ìš°ë¡œ ë©”ì‹œì§€ë¥¼ ì „ë‹¬í•´ì£¼ëŠ” ì—­í•  ë‹´ë‹¹
+		TranslateMessage(&message);		//Å°º¸µå ÀÔ·Â µÇ´Â ¼ø°£ ±× ¸Ş½ÃÁö Ã³¸®¸¦ ´ã´ç
+		DispatchMessage(&message);		//½ÇÁ¦·Î À©µµ¿ì·Î ¸Ş½ÃÁö¸¦ Àü´ŞÇØÁÖ´Â ¿ªÇÒ ´ã´ç
 	}
 	*/
-	//ë©”ì‹œì§€ ë£¨í”„ë¥¼ ë‹¤ ëŒì•˜ë‹¤ë©´ í•´ì œí•´ì¤˜ë¼.
+	//¸Ş½ÃÁö ·çÇÁ¸¦ ´Ù µ¹¾Ò´Ù¸é ÇØÁ¦ÇØÁà¶ó.
 	_mg.release();
 
 	return message.wParam;
 }
 
-//í•¨ìˆ˜ë¥¼ ì”ì‹œë‹¤
+//ÇÔ¼ö¸¦ ¾¹½Ã´Ù
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	return _mg.MainProc(hWnd, iMessage, wParam, lParam);
 }
 
-//í´ë¼ì´ì–¸íŠ¸ ì˜ì—­ ì¬ì¡°ì • í•¨ìˆ˜
+//Å¬¶óÀÌ¾ğÆ® ¿µ¿ª ÀçÁ¶Á¤ ÇÔ¼ö
 void setWindowsSize(int x, int y, int width, int height)
 {
 	RECT winRect;
 
 	winRect.left = 0;
 	winRect.top = 0;
-	winRect.right = width;		//ê°€ë¡œí¬ê¸°
-	winRect.bottom = height;	//ì„¸ë¡œí¬ê¸°
+	winRect.right = width;		//°¡·ÎÅ©±â
+	winRect.bottom = height;	//¼¼·ÎÅ©±â
 
 	AdjustWindowRect(&winRect, WINSTYLE, false);
 

@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "progressBar.h"
 
 
@@ -43,8 +43,8 @@ HRESULT progressBar::init(char* topImage, char* bottomImage, float x, float y, i
 	sprintf(strTopImageName, "%s.bmp", topImage);
 	sprintf(strBottomImageName, "%s.bmp", bottomImage);
 
-	//010-9425-6266 ë´‰ê¸°ë‚¨
-	//010-4822-6515 ì¤€thã…“
+	//010-9425-6266 ºÀ±â³²
+	//010-4822-6515 ÁØth¤Ã
 
 	_progressBarBottom = IMAGEMANAGER->addImage(bottomImage, strBottomImageName, x, y, width, height, true, RGB(255, 0, 255));
 	_progressBarTop = IMAGEMANAGER->addImage(topImage, strTopImageName, x, y, width, height, true, RGB(255, 0, 255));
@@ -92,6 +92,6 @@ void progressBar::render()
 
 void progressBar::setGauge(float currentGauge, float maxGauge)
 {
-	//ë¹„ìœ¨ êµ¬í•˜ëŠ” ê³µì‹ì´ë‹ˆ ë¨¸ë¦¬ì— ë„£ì–´ë’
+	//ºñÀ² ±¸ÇÏ´Â °ø½ÄÀÌ´Ï ¸Ó¸®¿¡ ³Ö¾îŠy
 	_width = (currentGauge / maxGauge) * _progressBarBottom->getWidth();
 }

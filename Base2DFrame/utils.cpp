@@ -1,9 +1,9 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "utils.h"
 
 namespace OMEGA_UTIL
 {
-	//ê±°ë¦¬
+	//°Å¸®
 	float getDistance(float startX, float startY, float endX, float endY)
 	{
 		float x = endX - startX;
@@ -12,16 +12,16 @@ namespace OMEGA_UTIL
 		return sqrtf(x * x + y * y);
 	}
 
-	//ê°ë„
+	//°¢µµ
 	float getAngle(float x1, float y1, float x2, float y2)
 	{
-		float x = x2 - x1;		//xì¶• ê¸¸ì´
-		float y = y2 - y1;		//yì¶• ê¸¸ì´
+		float x = x2 - x1;		//xÃà ±æÀÌ
+		float y = y2 - y1;		//yÃà ±æÀÌ
 
-		//ê±°ë¦¬ë¥¼ ì•Œì•˜ë‹¤
+		//°Å¸®¸¦ ¾Ë¾Ò´Ù
 		float distance = sqrtf((x * x) + (y * y));
 
-		//così˜ ì—­ì¹˜ì—­ -> acosf
+		//cosÀÇ ¿ªÄ¡¿ª -> acosf
 		float angle = acosf(x / distance);
 
 		if (y2 > y1)

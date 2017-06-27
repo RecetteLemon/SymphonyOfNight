@@ -1,14 +1,14 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "sceneManager.h"
 #include "gameNode.h"
 
-//privateë„ Public ì²˜ëŸ¼ ì ‘ê·¼ê°€ëŠ¥ì¼€ í•´ì£¼ëŠ”ê²Œ friend 
+//privateµµ Public Ã³·³ Á¢±Ù°¡´ÉÄÉ ÇØÁÖ´Â°Ô friend 
 DWORD CALLBACK loadingThread(LPVOID prc)
 {
-	//êµì²´ì¤€ë¹„ëœ ì”¬ì„ ì´ˆê¸°í™” í•´ë‘ê³ 
+	//±³Ã¼ÁØºñµÈ ¾ÀÀ» ÃÊ±âÈ­ ÇØµÎ°í
 	sceneManager::_readyScene->init();
 
-	//í˜„ìž¬ ì”¬ì— ë°”ê¿”ë‚€ë‹¤
+	//ÇöÀç ¾À¿¡ ¹Ù²ã³¤´Ù
 	sceneManager::_currentScene = sceneManager::_readyScene;
 
 	sceneManager::_loadingScene->release();
@@ -73,10 +73,10 @@ void sceneManager::render(void)
 }
 
 
-//ì”¬ ì¶”ê°€
+//¾À Ãß°¡
 gameNode* sceneManager::addScene(string sceneName, gameNode* scene)
 {
-	//í•´ë‹¹ ì”¬ì´ ì¡´ìž¬ì¹˜ ì•Šìœ¼ë©´ ë„ ë°˜í™˜
+	//ÇØ´ç ¾ÀÀÌ Á¸ÀçÄ¡ ¾ÊÀ¸¸é ³Î ¹ÝÈ¯
 	if (!scene) return NULL;
 
 	_mSceneList.insert(make_pair(sceneName, scene));
@@ -85,10 +85,10 @@ gameNode* sceneManager::addScene(string sceneName, gameNode* scene)
 }
 
 
-//ë¡œë”© ì”¬ ì¶”ê°€
+//·Îµù ¾À Ãß°¡
 gameNode* sceneManager::addLoadingScene(string loadingSceneName, gameNode* scene)
 {
-	//í•´ë‹¹ ì”¬ì´ ì¡´ìž¬ì¹˜ ì•Šìœ¼ë©´ ë„ ë°˜í™˜
+	//ÇØ´ç ¾ÀÀÌ Á¸ÀçÄ¡ ¾ÊÀ¸¸é ³Î ¹ÝÈ¯
 	if (!scene) return NULL;
 
 	_mSceneList.insert(make_pair(loadingSceneName, scene));
@@ -101,17 +101,17 @@ HRESULT sceneManager::changeScene(string sceneName)
 {
 	mapSceneIter find = _mSceneList.find(sceneName);
 
-	//ì”¬ì´ ì¡´ìž¬í•˜ì§€ ì•Šìœ¼ë©´ ì‹¤íŒ¨ë¥¼ ì•Œë ¤ì¤˜ë¼
+	//¾ÀÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é ½ÇÆÐ¸¦ ¾Ë·ÁÁà¶ó
 	if (find == _mSceneList.end()) return E_FAIL;
 
-	//ì°¾ì€ ì”¬ì´ í˜„ìž¬ì”¬ì´ë©´ ë°”ê¾¸ì§€ ì•ŠëŠ”ë‹¤
+	//Ã£Àº ¾ÀÀÌ ÇöÀç¾ÀÀÌ¸é ¹Ù²ÙÁö ¾Ê´Â´Ù
 	if (find->second == _currentScene) return S_OK;
 
-	//ì”¬ ì „í™˜ì´ ì„±ê³µí•˜ë©´~
+	//¾À ÀüÈ¯ÀÌ ¼º°øÇÏ¸é~
 	if (SUCCEEDED(find->second->init()))
 	{
-		//ìˆœì„œê°€ ë§ˆìŒì— ì•ˆë“¤ë©´ ë¨¼ì € ì”¬ì„ ë°”ê¾¸ê³ , ê·¸ ì „ì— ì”¬ì— ë°ì´í„°ë¥¼ ë‚ ë ¤ì£¼ëŠ”
-		//í˜•íƒœë¡œ ë°”ê¿”ë„ ìƒê´€ì—†ë‹¤.
+		//¼ø¼­°¡ ¸¶À½¿¡ ¾Èµé¸é ¸ÕÀú ¾ÀÀ» ¹Ù²Ù°í, ±× Àü¿¡ ¾À¿¡ µ¥ÀÌÅÍ¸¦ ³¯·ÁÁÖ´Â
+		//ÇüÅÂ·Î ¹Ù²ãµµ »ó°ü¾ø´Ù.
 
 		if (_currentScene) _currentScene->release();
 
@@ -127,17 +127,17 @@ HRESULT sceneManager::changeScene(string sceneName, string loadingSceneName)
 {
 	mapSceneIter find = _mSceneList.find(sceneName);
 
-	//ì”¬ì´ ì¡´ìž¬í•˜ì§€ ì•Šìœ¼ë©´ ì‹¤íŒ¨ë¥¼ ì•Œë ¤ì¤˜ë¼
+	//¾ÀÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é ½ÇÆÐ¸¦ ¾Ë·ÁÁà¶ó
 	if (find == _mSceneList.end()) return E_FAIL;
 
-	//ì°¾ì€ ì”¬ì´ í˜„ìž¬ì”¬ì´ë©´ ë°”ê¾¸ì§€ ì•ŠëŠ”ë‹¤
+	//Ã£Àº ¾ÀÀÌ ÇöÀç¾ÀÀÌ¸é ¹Ù²ÙÁö ¾Ê´Â´Ù
 	if (find->second == _currentScene) return S_OK;
 
 	mapSceneIter findLoading = _mLoadingSceneList.find(loadingSceneName);
 
 	if (find == _mLoadingSceneList.end()) return changeScene(loadingSceneName);
 
-	//ì”¬ ì „í™˜ì´ ì„±ê³µí•˜ë©´~
+	//¾À ÀüÈ¯ÀÌ ¼º°øÇÏ¸é~
 	if (SUCCEEDED(find->second->init()))
 	{
 		if (_currentScene) _currentScene->release();

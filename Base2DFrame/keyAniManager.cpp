@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "keyAniManager.h"
 #include "image.h"
 #include "animation.h"
@@ -30,7 +30,7 @@ void keyAniManager::update()
 
 	for (iter; iter != _mTotalAnimation.end(); ++iter)
 	{
-		//ì• ë‹ˆë©”ì´ì…˜ì´ ìž¬ìƒì¤‘ì´ì§€ ì•Šìœ¼ë©´ ìž¬ìƒí•˜ì§€ ì•ŠëŠ”ë‹¤
+		//¾Ö´Ï¸ÞÀÌ¼ÇÀÌ Àç»ýÁßÀÌÁö ¾ÊÀ¸¸é Àç»ýÇÏÁö ¾Ê´Â´Ù
 		if (!iter->second->isPlay()) continue;
 
 		iter->second->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
@@ -44,7 +44,7 @@ void keyAniManager::render()
 }
 
 
-//ë””í´íŠ¸ ì• ë‹ˆë©”ì´ì…˜
+//µðÆúÆ® ¾Ö´Ï¸ÞÀÌ¼Ç
 void keyAniManager::addDefaultFrameAnimation(string animationKeyName, char* imageKeyName, int fps, bool reverse, bool loop)								
 {
 	image* img = IMAGEMANAGER->findImage(imageKeyName);
@@ -83,7 +83,7 @@ void keyAniManager::addDefaultFrameAnimation(string animationKeyName, char* imag
 }
 
 
-//ë°°ì—´ ì• ë‹ˆë©”ì´ì…˜
+//¹è¿­ ¾Ö´Ï¸ÞÀÌ¼Ç
 void keyAniManager::addArrayFrameAnimation(string animationKeyName, char* imageKeyName, int* arr, int arrLen, int fps, bool loop)							  
 {
 	image* img = IMAGEMANAGER->findImage(imageKeyName);
@@ -121,7 +121,7 @@ void keyAniManager::addArrayFrameAnimation(string animationKeyName, char* imageK
 }
 
 
-//êµ¬ê°„ ì• ë‹ˆë©”ì´ì…˜
+//±¸°£ ¾Ö´Ï¸ÞÀÌ¼Ç
 void keyAniManager::addCoordinateFrameAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop)							   
 {
 	image* img = IMAGEMANAGER->findImage(imageKeyName);

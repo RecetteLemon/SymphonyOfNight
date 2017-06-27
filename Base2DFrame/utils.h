@@ -1,8 +1,8 @@
-ï»¿#pragma once
-//ë²„ì „ ë‚®ì€ ì‚¬ëŒë“¤ì€ ìœ„í•œ cMath
+#pragma once
+//¹öÀü ³·Àº »ç¶÷µéÀº À§ÇÑ cMath
 #include <cmath>
 
-#define DEG_TO_RAD 0.017453f //1ë„ì— ëŒ€í•œ ë¼ë””ì•ˆ ê°’
+#define DEG_TO_RAD 0.017453f //1µµ¿¡ ´ëÇÑ ¶óµğ¾È °ª
 #define PI 3.141592654f
 #define PI2 PI * 2
 #define PI8 float(PI / 8.0f)
@@ -11,15 +11,15 @@
 #define PI64 float(PI / 64.0f)
 #define PI128 float(PI / 128.0f)
 
-#define FLAOT_EPSILON 0.001f //ì‹¤ìˆ˜ì— ê°€ì¥ ì‘ì€ ë‹¨ìœ„
+#define FLAOT_EPSILON 0.001f //½Ç¼ö¿¡ °¡Àå ÀÛÀº ´ÜÀ§
 #define FLOAT_TO_INT(f1) static_cast<int>(f1 + FLOAT_EPSILON)
 #define FLOAT_EQUAL(f1, f2) (fabs(f1, f2) <= FLOAT_EPSILON)
 
 namespace OMEGA_UTIL
 {
-	//ê±°ë¦¬
+	//°Å¸®
 	float getDistance(float startX, float startY, float endX, float endY);
 
-	//ê°ë„
+	//°¢µµ
 	float getAngle(float x1, float y1, float x2, float y2);
 }

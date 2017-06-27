@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "singletonBase.h"
 #include <vector>
 #include <map>
@@ -36,10 +36,10 @@ public:
 
 	void loadDatabase(string name);
 
-	//ì ‘ê·¼ì
+	//Á¢±ÙÀÚ
 	elements* getElementData(string str) { return _mTotalElment.find(str)->second; }
 
-	//ì„¤ì •ì
+	//¼³Á¤ÀÚ
 	void setElementDataCurrentHP(string str, float ch);
 	void setElementDataMaxHP(string str, float mh);
 	void setElementDataAngle(string str, float a);

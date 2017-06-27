@@ -1,4 +1,4 @@
-Ôªø#include "stdafx.h"
+#include "stdafx.h"
 #include "txtData.h"
 
 
@@ -22,7 +22,7 @@ void txtData::release()
 
 }
 
-//ÏÑ∏Ïù¥Î∏å
+//ºº¿Ã∫Í
 void txtData::txtSave(const char* saveFileName, vector<string> vStr)
 {
 	HANDLE file;
@@ -56,7 +56,7 @@ char* txtData::vectorArrayCombine(vector<string> vArray)
 }
 
 
-//Î°úÎìú
+//∑ŒµÂ
 vector<string> txtData::txtLoad(const char* loadFileName)
 {
 	HANDLE file;

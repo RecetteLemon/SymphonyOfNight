@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "gameNode.h"
 
 class animation;
@@ -6,13 +6,13 @@ class animation;
 class effect : public gameNode
 {
 protected:
-	int				_x;					//ì´í™íŠ¸ ì¢Œí‘œìœ„ì¹˜ Left
-	int				_y;					//ì´í™íŠ¸ ì¢Œí‘œìœ„ì¹˜ top
+	int				_x;					//ÀÌÆåÆ® ÁÂÇ¥À§Ä¡ Left
+	int				_y;					//ÀÌÆåÆ® ÁÂÇ¥À§Ä¡ top
 		
-	image*			_effectImage;		//ì´í™íŠ¸ ì´ë¯¸ì§€
-	animation*		_effectAnimation;	//ì´í™íŠ¸ ì• ë‹ˆë©”ì´ì…˜
-	BOOL			_isRunning;			//ì´í™íŠ¸ í™œì„±í™” ì—¬ë¶€
-	float			_elapsedTime;		//ì´í™íŠ¸ ê²½ê³¼ì‹œê°„
+	image*			_effectImage;		//ÀÌÆåÆ® ÀÌ¹ÌÁö
+	animation*		_effectAnimation;	//ÀÌÆåÆ® ¾Ö´Ï¸ŞÀÌ¼Ç
+	BOOL			_isRunning;			//ÀÌÆåÆ® È°¼ºÈ­ ¿©ºÎ
+	float			_elapsedTime;		//ÀÌÆåÆ® °æ°ú½Ã°£
 
 public:
 

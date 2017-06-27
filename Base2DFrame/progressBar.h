@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "gameNode.h"
 
 class progressBar : public gameNode
@@ -21,7 +21,7 @@ public:
 
 	void setGauge(float currentGauge, float maxGauge);
 
-	//ê²Œì´ì§€ ë°” ìœ„ì¹˜ ì¡°ì ˆ í•¨ì‘¤
+	//°ÔÀÌÁö ¹Ù À§Ä¡ Á¶Àı ÇÔ¾¥
 	void setX(int x) { _x = x; }
 	void setY(int y) { _y = y; }
 

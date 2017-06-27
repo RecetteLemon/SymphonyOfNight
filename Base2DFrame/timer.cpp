@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "timer.h"
 #include <mmsystem.h>
 
@@ -19,7 +19,7 @@ HRESULT timer::init(void)
 	//
 	if (QueryPerformanceFrequency((LARGE_INTEGER*)&_periodFrequency))
 	{
-		//ê³ ì„±ëŠ¥ í•˜ë“œì›¨ì–´ë¥¼ ì§€ì›í•˜ëŠ” ì‹œìŠ¤í…œì´êµ¬ë‚˜!
+		//°í¼º´É ÇÏµå¿þ¾î¸¦ Áö¿øÇÏ´Â ½Ã½ºÅÛÀÌ±¸³ª!
 		_isHardware = true;
 		QueryPerformanceCounter((LARGE_INTEGER*)&_lastTime);
 
@@ -29,7 +29,7 @@ HRESULT timer::init(void)
 	{
 		_isHardware = false;
 
-		//ë°€ë¦¬ì„¸ì»¨ìœ¼ë¡œ ê°•ì œë¡œ ë§žì¶°ë²„ë¦°ë‹¤
+		//¹Ð¸®¼¼ÄÁÀ¸·Î °­Á¦·Î ¸ÂÃç¹ö¸°´Ù
 		_lastTime = timeGetTime();
 		_timeScale = 0.001f;
 	}
@@ -72,7 +72,7 @@ void timer::tick(float lockFPS)
 	_FPSTimeElapsed += _timeElapsed;
 	_worldTime += _timeElapsed;
 
-	//ì´ˆë‹¹ ì¹´ìš´íŠ¸ ë½‘ê¸°ìœ„í•œ ìˆ˜ì¹˜ ê°±ì‹ 
+	//ÃÊ´ç Ä«¿îÆ® »Ì±âÀ§ÇÑ ¼öÄ¡ °»½Å
 	if (_FPSTimeElapsed > 1.0f)
 	{
 		_frameRate = _FPSFrameCount;

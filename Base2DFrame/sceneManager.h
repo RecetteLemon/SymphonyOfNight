@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "singletonBase.h"
 #include <string>
 #include <map>
@@ -32,10 +32,10 @@ public:
 	void update(void);
 	void render(void);
 
-	//ì”¬ ì¶”ê°€
+	//¾À Ãß°¡
 	gameNode* addScene(string sceneName, gameNode* scene);
 
-	//ë¡œë”© ì”¬ ì¶”ê°€
+	//·Îµù ¾À Ãß°¡
 	gameNode* addLoadingScene(string loadingSceneName, gameNode* scene);
 
 	HRESULT changeScene(string sceneName);

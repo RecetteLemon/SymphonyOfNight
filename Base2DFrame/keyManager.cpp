@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "keyManager.h"
 
 
@@ -13,10 +13,10 @@ keyManager::~keyManager()
 
 HRESULT keyManager::init(void)
 {
-	//ëˆŒë ¤ì§€ëŠ” í‚¤ ì¢…ë¥˜ë§Œí¼
+	//´­·ÁÁö´Â Å° Á¾·ù¸¸Å­
 	for (int i = 0; i < KEYMAX; i++)
 	{
-		//í•˜ë‚˜ë„ ì•ˆëˆŒëŸ¬ì¡Œë‹¤.
+		//ÇÏ³ªµµ ¾È´­·¯Á³´Ù.
 		this->getKeyUp().set(i, false);
 		this->getKeyUp().set(i, false);
 	}
@@ -29,7 +29,7 @@ void keyManager::release(void)
 
 }
 
-//í‚¤ë¥¼ ëˆŒë €ë‹¤ë©´
+//Å°¸¦ ´­·¶´Ù¸é
 bool keyManager::isOnceKeyDown(int key)
 {
 	if (GetAsyncKeyState(key) & 0x8000)
@@ -46,7 +46,7 @@ bool keyManager::isOnceKeyDown(int key)
 	return false;
 }
 
-//ëˆŒë €ë‹¤ ë–¼ë©´
+//´­·¶´Ù ¶¼¸é
 bool keyManager::isOnceKeyUp(int key)
 {
 	if (GetAsyncKeyState(key) & 0x8000) this->setKeyUp(key, true);

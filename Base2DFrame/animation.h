@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include <vector>
 
 //================================
@@ -9,15 +9,15 @@ typedef void(*CALLBACK_FUNCTION)(void);
 typedef void(*CALLBACK_FUNCTION_PARAMETER)(void*);
 
 //void*
-//ì–´ë–¤ í˜•ì´ë“  ë‹¤ ê°€ë¥´í‚¬ ìˆ˜ ìˆë‹¤
-//ë‹¤ë§Œ ì‚¬ìš©í• ë• ê¼­ ìºìŠ¤íŒ…ì„ í•´ì¤˜ì•¼í•œë‹¤
+//¾î¶² ÇüÀÌµç ´Ù °¡¸£Å³ ¼ö ÀÖ´Ù
+//´Ù¸¸ »ç¿ëÇÒ¶© ²À Ä³½ºÆÃÀ» ÇØÁà¾ßÇÑ´Ù
 
 
 class animation
 {
 public:
-	//ë³€ìˆ˜ì§€ë§Œ í¼ë¸”ë¦­ìœ¼ë¡œ ì„ ì–¸ í•˜ëŠ” ì´ìœ ëŠ”
-	//ì™¸ë¶€ì—ì„œ ì„ì˜ ì ‘ê·¼ì´ ì‰¬ì›Œì•¼ í•´ì„œ(ì• ë‹ˆë©”ì´ì…˜ <- í”„ë ˆì„ ë²ˆí˜¸ ì»¨íŠ¸ë¡¤)
+	//º¯¼öÁö¸¸ ÆÛºí¸¯À¸·Î ¼±¾ğ ÇÏ´Â ÀÌÀ¯´Â
+	//¿ÜºÎ¿¡¼­ ÀÓÀÇ Á¢±ÙÀÌ ½¬¿ö¾ß ÇØ¼­(¾Ö´Ï¸ŞÀÌ¼Ç <- ÇÁ·¹ÀÓ ¹øÈ£ ÄÁÆ®·Ñ)
 	typedef vector<POINT> vFrameList;
 	typedef vector<int> vPlayList;
 
@@ -49,16 +49,16 @@ public:
 	HRESULT init(int totalW, int totalH, int frameW, int frameH);
 	void release(void);
 
-	//ë””í´íŠ¸ ì• ë‹ˆë©”ì´ì…˜
+	//µğÆúÆ® ¾Ö´Ï¸ŞÀÌ¼Ç
 	void setDefPlayFrame(BOOL reverse = FALSE, BOOL loop = FALSE);
 	void setDefPlayFrame(BOOL reverse, BOOL loop, CALLBACK_FUNCTION cbFunction);
 	void setDefPlayFrame(BOOL reverse, BOOL loop, CALLBACK_FUNCTION_PARAMETER cbFunction, void* obj);
-	//ë°°ì—´ ì• ë‹ˆë©”ì´ì…˜
+	//¹è¿­ ¾Ö´Ï¸ŞÀÌ¼Ç
 	void setPlayFrame(int* playArr, int arrLen, BOOL loop = FALSE);
 	void setPlayFrame(int* playArr, int arrLen, BOOL loop, CALLBACK_FUNCTION cbFunction);
 	void setPlayFrame(int* playArr, int arrLen, BOOL loop, CALLBACK_FUNCTION_PARAMETER cbFunction, void* obj);
 
-	//êµ¬ê°„ ì• ë‹ˆë©”ì´ì…˜
+	//±¸°£ ¾Ö´Ï¸ŞÀÌ¼Ç
 	void setPlayFrame(int start, int end, BOOL reverse = FALSE, BOOL loop = FALSE);
 	void setPlayFrame(int start, int end, BOOL reverse, BOOL loop, CALLBACK_FUNCTION cbFunction);
 	void setPlayFrame(int start, int end, BOOL reverse, BOOL loop, CALLBACK_FUNCTION_PARAMETER cbFunction, void* obj);

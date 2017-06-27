@@ -1,11 +1,11 @@
-ï»¿// stdafx.h : ìžì£¼ ì‚¬ìš©í•˜ì§€ë§Œ ìžì£¼ ë³€ê²½ë˜ì§€ëŠ” ì•ŠëŠ”
-// í‘œì¤€ ì‹œìŠ¤í…œ í¬í•¨ íŒŒì¼ ë° í”„ë¡œì íŠ¸ ê´€ë ¨ í¬í•¨ íŒŒì¼ì´
-// ë“¤ì–´ ìžˆëŠ” í¬í•¨ íŒŒì¼ìž…ë‹ˆë‹¤.
+// stdafx.h : ÀÚÁÖ »ç¿ëÇÏÁö¸¸ ÀÚÁÖ º¯°æµÇÁö´Â ¾Ê´Â
+// Ç¥ÁØ ½Ã½ºÅÛ Æ÷ÇÔ ÆÄÀÏ ¹× ÇÁ·ÎÁ§Æ® °ü·Ã Æ÷ÇÔ ÆÄÀÏÀÌ
+// µé¾î ÀÖ´Â Æ÷ÇÔ ÆÄÀÏÀÔ´Ï´Ù.
 #pragma once
 #include "targetver.h"
 
-#define WIN32_LEAN_AND_MEAN             // ê±°ì˜ ì‚¬ìš©ë˜ì§€ ì•ŠëŠ” ë‚´ìš©ì€ Windows í—¤ë”ì—ì„œ ì œì™¸í•©ë‹ˆë‹¤.
-// Windows í—¤ë” íŒŒì¼:
+#define WIN32_LEAN_AND_MEAN             // °ÅÀÇ »ç¿ëµÇÁö ¾Ê´Â ³»¿ëÀº Windows Çì´õ¿¡¼­ Á¦¿ÜÇÕ´Ï´Ù.
+// Windows Çì´õ ÆÄÀÏ:
 #include <windows.h>
 #include <stdlib.h>
 #include <iostream>
@@ -30,17 +30,17 @@ using namespace OMEGA_UTIL;
 
 
 //==================================
-// ## 2017.04.05 ## ë””íŒŒì¸ë¬¸ ##
+// ## 2017.04.05 ## µðÆÄÀÎ¹® ##
 //==================================
 
 #define WINNAME (LPTSTR)(TEXT("Symphony of Night"))
-#define WINSTARTX 50			//ìœˆë„ìš° ì°½ ì‹œìž‘ì§€ì  Xì¢Œí‘œ
-#define WINSTARTY 50			//ìœˆë„ìš° ì°½ ì‹œìž‘ì§€ì  Yì¢Œí‘œ
-#define WINSIZEX  800			//ìœˆë„ìš° ì°½ ê°€ë¡œí¬ê¸°
-#define WINSIZEY  600			//ìœˆë„ìš° ì°½ ì„¸ë¡œí¬ê¸°
+#define WINSTARTX 50			//À©µµ¿ì Ã¢ ½ÃÀÛÁöÁ¡ XÁÂÇ¥
+#define WINSTARTY 50			//À©µµ¿ì Ã¢ ½ÃÀÛÁöÁ¡ YÁÂÇ¥
+#define WINSIZEX  800			//À©µµ¿ì Ã¢ °¡·ÎÅ©±â
+#define WINSIZEY  600			//À©µµ¿ì Ã¢ ¼¼·ÎÅ©±â
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 
-//ëžœë¤í•¨ìˆ˜ ë””íŒŒì¸
+//·£´ýÇÔ¼ö µðÆÄÀÎ
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()
 #define IMAGEMANAGER imageManager::getSingleton()
@@ -53,14 +53,14 @@ using namespace OMEGA_UTIL;
 #define DATABASE database::getSingleton()
 
 //==================================
-// ## 2017.04.05 ## ë§¤í¬ë¡œ í•¨ìˆ˜ ##
+// ## 2017.04.05 ## ¸ÅÅ©·Î ÇÔ¼ö ##
 //==================================
 
 #define SAFE_DELETE(p)	{if(p) {delete(p); (p) = NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}
 
 //==================================
-// ## 2017.04.10 ## ì „ì—­ ë³€ìˆ˜ ##
+// ## 2017.04.10 ## Àü¿ª º¯¼ö ##
 //==================================
 
 extern HWND _hWnd;
@@ -69,7 +69,7 @@ extern POINT _ptMouse;
 
 
 
-//===============================================ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ ì²´í¬============================
+//===============================================¸Þ¸ð¸® ´©¼ö Ã¼Å©============================
 #ifndef _MEMORYLEAK_H_
 #define _MEMORYLEAK_H_
 
@@ -85,8 +85,8 @@ public:
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		//_CrtSetBreakAlloc(60861);
 
-		//ë§Œì•½ ëˆ„ìˆ˜ ê²½ë¡œê°€ ëª…í™•ížˆ ëœ¨ì§€ ì•Šì„ ê²½ìš° ìœ„ì˜ ì£¼ì„ëœ ì¤„ì„ í™œì„±í™” í›„
-		//ëˆ„ìˆ˜ ê²½ê³ ê°€ ëœ¬ ë¬¸ìž¥ì— ì œì‹œëœ ìˆ«ìžë¥¼ ê´„í˜¸ì•ˆì— ë„£ê³  ë””ë²„ê¹…í•˜ë©´ ëˆ„ìˆ˜ëœ ì¤„ì— ë””ë²„ê¹…ì´ ë©ˆì¶˜ë‹¤
+		//¸¸¾à ´©¼ö °æ·Î°¡ ¸íÈ®È÷ ¶ßÁö ¾ÊÀ» °æ¿ì À§ÀÇ ÁÖ¼®µÈ ÁÙÀ» È°¼ºÈ­ ÈÄ
+		//´©¼ö °æ°í°¡ ¶á ¹®Àå¿¡ Á¦½ÃµÈ ¼ýÀÚ¸¦ °ýÈ£¾È¿¡ ³Ö°í µð¹ö±ëÇÏ¸é ´©¼öµÈ ÁÙ¿¡ µð¹ö±ëÀÌ ¸ØÃá´Ù
 	}
 	~MemoryMng()
 	{

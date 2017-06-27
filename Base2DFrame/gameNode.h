@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "image.h"
 
 static image* _backBuffer = IMAGEMANAGER->addImage("backBuffer", WINSIZEX, WINSIZEY);
@@ -16,8 +16,8 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 
-	////ì¸í„°í˜ì´ìŠ¤
-	//virtual void move(void) = 0;	//ìˆœìˆ˜ê°€ìƒí•¨ìˆ˜
+	////ÀÎÅÍÆäÀÌ½º
+	//virtual void move(void) = 0;	//¼ø¼ö°¡»óÇÔ¼ö
 	//virtual void jump(void) = 0;
 	//virtual void attack(void) = 0;
 

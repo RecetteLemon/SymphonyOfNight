@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "symphonyOfNight.h"
 
 
@@ -11,7 +11,7 @@ symphonyOfNight::~symphonyOfNight()
 {
 }
 
-//ì´ˆê¸°í™” í•´ì£¼ëŠ” í•¨ìˆ˜
+//ÃÊ±âÈ­ ÇØÁÖ´Â ÇÔ¼ö
 HRESULT symphonyOfNight::init(void)
 {
 	gameNode::init(true);
@@ -20,7 +20,7 @@ HRESULT symphonyOfNight::init(void)
 	return S_OK;
 }
 
-//ë©”ëª¨ë¦¬ í•´ì œ í•¨ìˆ˜
+//¸Þ¸ð¸® ÇØÁ¦ ÇÔ¼ö
 void symphonyOfNight::release(void)
 {
 	
@@ -31,7 +31,7 @@ void symphonyOfNight::release(void)
 
 }
 
-//ì—°ì‚°í•´ì£¼ëŠ” ê³³
+//¿¬»êÇØÁÖ´Â °÷
 void symphonyOfNight::update(void)
 {
 	gameNode::update();
@@ -40,7 +40,7 @@ void symphonyOfNight::update(void)
 
 }
 
-//ì—¬ê¸°ê°€ ê·¸ë ¤ì£¼ëŠ” ê³³
+//¿©±â°¡ ±×·ÁÁÖ´Â °÷
 void symphonyOfNight::render(void)
 {
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
@@ -49,7 +49,7 @@ void symphonyOfNight::render(void)
 	
 	
 	//================================================================================
-	//ê±´ë“¤ì§€ë§ˆë¼ ì´ê±°ë„
+	//°ÇµéÁö¸¶¶ó ÀÌ°Åµµ
 	TIMEMANAGER->render(getMemDC());
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 

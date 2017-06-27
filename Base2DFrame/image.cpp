@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "image.h"
 
 #pragma comment(lib, "msimg32.lib")
@@ -17,15 +17,15 @@ image::~image()
 {
 }
 
-//ë¹ˆ ë¹„íŠ¸ë§µ ì´ë¯¸ì§€ ë“±ë¡
+//ºó ºñÆ®¸Ê ÀÌ¹ÌÁö µî·Ï
 HRESULT image::init(int width, int height)
 {
-	//ì´ë¯¸ì§€ ì •ë³´ê°€ ë‚¨ì•„ìˆë‹¤ë©´ ë‚ ë ¤ì¤€ë‹¤
+	//ÀÌ¹ÌÁö Á¤º¸°¡ ³²¾ÆÀÖ´Ù¸é ³¯·ÁÁØ´Ù
 	if (_imageInfo != NULL) release();
 
 	HDC hdc = GetDC(_hWnd);
 
-	//ì´ë¯¸ì§€ ì •ë³´ ìƒì„±
+	//ÀÌ¹ÌÁö Á¤º¸ »ı¼º
 	_imageInfo = new IMAGE_INFO;
 	_imageInfo->loadType = LOAD_EMPTY;
 	_imageInfo->resID = 0;
@@ -40,7 +40,7 @@ HRESULT image::init(int width, int height)
 	_trans = FALSE;
 	_transColor = RGB(0, 0, 0);
 
-	//ì•ŒíŒŒë¸”ë Œë“œ ì˜µì…˜
+	//¾ËÆÄºí·»µå ¿É¼Ç
 	_blendFunc.BlendFlags = 0;
 	_blendFunc.AlphaFormat = 0;
 	_blendFunc.BlendOp = AC_SRC_OVER;
@@ -66,7 +66,7 @@ HRESULT image::init(int width, int height)
 	return S_OK;
 }
 
-//íŒŒì¼ë¡œ ì´ë¯¸ì§€ ë“±ë¡
+//ÆÄÀÏ·Î ÀÌ¹ÌÁö µî·Ï
 HRESULT image::init(const char* fileName, int width, int height,
 	BOOL trans, COLORREF transColor)
 {
@@ -93,7 +93,7 @@ HRESULT image::init(const char* fileName, int width, int height,
 	_trans = trans;
 	_transColor = transColor;
 
-	//ì•ŒíŒŒë¸”ë Œë“œ ì˜µì…˜
+	//¾ËÆÄºí·»µå ¿É¼Ç
 	_blendFunc.BlendFlags = 0;
 	_blendFunc.AlphaFormat = 0;
 	_blendFunc.BlendOp = AC_SRC_OVER;
@@ -148,7 +148,7 @@ HRESULT image::init(const char* fileName, float x, float y, int width, int heigh
 	_trans = trans;
 	_transColor = transColor;
 
-	//ì•ŒíŒŒë¸”ë Œë“œ ì˜µì…˜
+	//¾ËÆÄºí·»µå ¿É¼Ç
 	_blendFunc.BlendFlags = 0;
 	_blendFunc.AlphaFormat = 0;
 	_blendFunc.BlendOp = AC_SRC_OVER;
@@ -208,7 +208,7 @@ HRESULT image::init(const char* fileName, float x, float y, int width, int heigh
 	_trans = trans;
 	_transColor = transColor;
 
-	//ì•ŒíŒŒë¸”ë Œë“œ ì˜µì…˜
+	//¾ËÆÄºí·»µå ¿É¼Ç
 	_blendFunc.BlendFlags = 0;
 	_blendFunc.AlphaFormat = 0;
 	_blendFunc.BlendOp = AC_SRC_OVER;
@@ -266,7 +266,7 @@ HRESULT image::init(const char* fileName, int width, int height,
 	_trans = trans;
 	_transColor = transColor;
 
-	//ì•ŒíŒŒë¸”ë Œë“œ ì˜µì…˜
+	//¾ËÆÄºí·»µå ¿É¼Ç
 	_blendFunc.BlendFlags = 0;
 	_blendFunc.AlphaFormat = 0;
 	_blendFunc.BlendOp = AC_SRC_OVER;
@@ -326,17 +326,17 @@ void image::render(HDC hdc)
 {
 	if (_trans)
 	{
-		//íŠ¹ì • ì¹¼ë¼ ë‚ ë ¤ì£¼ëŠ” í•¨ìˆ˜
-		GdiTransparentBlt(hdc,		//ë³µì‚¬ë  ì¥ì†Œì˜ DC
-			_imageInfo->x,			//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì X(left)
-			_imageInfo->y,			//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì Y(top)
-			_imageInfo->width,		//ë³µì‚¬ë  ì´ë¯¸ì§€ ê°€ë¡œí¬ê¸°
-			_imageInfo->height,		//ë³µì‚¬ë  ì´ë¯¸ì§€ ì„¸ë¡œí¬ê¸°
-			_imageInfo->hMemDC,		//ë³µì‚¬ ëŒ€ìƒ DC
-			0, 0,					//ë³µì‚¬ë  ì‹œì‘ì§€ì 
-			_imageInfo->width,		//ë³µì‚¬ë  ê°€ë¡œí¬ê¸°
-			_imageInfo->height,		//ë³µì‚¬ë  ì„¸ë¡œí¬ê¸°
-			_transColor);			//ë‚ ë ¤ì¤„ ì¹¼ë¼
+		//Æ¯Á¤ Ä®¶ó ³¯·ÁÁÖ´Â ÇÔ¼ö
+		GdiTransparentBlt(hdc,		//º¹»çµÉ Àå¼ÒÀÇ DC
+			_imageInfo->x,			//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡X(left)
+			_imageInfo->y,			//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡Y(top)
+			_imageInfo->width,		//º¹»çµÉ ÀÌ¹ÌÁö °¡·ÎÅ©±â
+			_imageInfo->height,		//º¹»çµÉ ÀÌ¹ÌÁö ¼¼·ÎÅ©±â
+			_imageInfo->hMemDC,		//º¹»ç ´ë»ó DC
+			0, 0,					//º¹»çµÉ ½ÃÀÛÁöÁ¡
+			_imageInfo->width,		//º¹»çµÉ °¡·ÎÅ©±â
+			_imageInfo->height,		//º¹»çµÉ ¼¼·ÎÅ©±â
+			_transColor);			//³¯·ÁÁÙ Ä®¶ó
 	}
 	else
 	{
@@ -346,22 +346,22 @@ void image::render(HDC hdc)
 	}
 }
 
-//					ë¿Œë¦´ê³³ X     ë¿Œë¦´ê³³ Y
+//					»Ñ¸±°÷ X     »Ñ¸±°÷ Y
 void image::render(HDC hdc, int destX, int destY)
 {
 	if (_trans)
 	{
-		//íŠ¹ì • ì¹¼ë¼ ë‚ ë ¤ì£¼ëŠ” í•¨ìˆ˜
-		GdiTransparentBlt(hdc,		//ë³µì‚¬ë  ì¥ì†Œì˜ DC
-			destX,					//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì X(left)
-			destY,					//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì Y(top)
-			_imageInfo->width,		//ë³µì‚¬ë  ì´ë¯¸ì§€ ê°€ë¡œí¬ê¸°
-			_imageInfo->height,		//ë³µì‚¬ë  ì´ë¯¸ì§€ ì„¸ë¡œí¬ê¸°
-			_imageInfo->hMemDC,		//ë³µì‚¬ ëŒ€ìƒ DC
-			0, 0,					//ë³µì‚¬ë  ì‹œì‘ì§€ì 
-			_imageInfo->width,		//ë³µì‚¬ë  ê°€ë¡œí¬ê¸°
-			_imageInfo->height,		//ë³µì‚¬ë  ì„¸ë¡œí¬ê¸°
-			_transColor);			//ë‚ ë ¤ì¤„ ì¹¼ë¼
+		//Æ¯Á¤ Ä®¶ó ³¯·ÁÁÖ´Â ÇÔ¼ö
+		GdiTransparentBlt(hdc,		//º¹»çµÉ Àå¼ÒÀÇ DC
+			destX,					//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡X(left)
+			destY,					//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡Y(top)
+			_imageInfo->width,		//º¹»çµÉ ÀÌ¹ÌÁö °¡·ÎÅ©±â
+			_imageInfo->height,		//º¹»çµÉ ÀÌ¹ÌÁö ¼¼·ÎÅ©±â
+			_imageInfo->hMemDC,		//º¹»ç ´ë»ó DC
+			0, 0,					//º¹»çµÉ ½ÃÀÛÁöÁ¡
+			_imageInfo->width,		//º¹»çµÉ °¡·ÎÅ©±â
+			_imageInfo->height,		//º¹»çµÉ ¼¼·ÎÅ©±â
+			_transColor);			//³¯·ÁÁÙ Ä®¶ó
 	}
 	else
 	{
@@ -375,17 +375,17 @@ void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sour
 {
 	if (_trans)
 	{
-		//íŠ¹ì • ì¹¼ë¼ ë‚ ë ¤ì£¼ëŠ” í•¨ìˆ˜
-		GdiTransparentBlt(hdc,		//ë³µì‚¬ë  ì¥ì†Œì˜ DC
-			destX,					//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì X(left)
-			destY,					//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì Y(top)
-			sourWidth,				//ë³µì‚¬ë  ì´ë¯¸ì§€ ê°€ë¡œí¬ê¸°
-			sourHeight,				//ë³µì‚¬ë  ì´ë¯¸ì§€ ì„¸ë¡œí¬ê¸°
-			_imageInfo->hMemDC,		//ë³µì‚¬ ëŒ€ìƒ DC
-			sourX, sourY,			//ë³µì‚¬ë  ì‹œì‘ì§€ì 
-			sourWidth,				//ë³µì‚¬ë  ê°€ë¡œí¬ê¸°
-			sourHeight,				//ë³µì‚¬ë  ì„¸ë¡œí¬ê¸°
-			_transColor);			//ë‚ ë ¤ì¤„ ì¹¼ë¼
+		//Æ¯Á¤ Ä®¶ó ³¯·ÁÁÖ´Â ÇÔ¼ö
+		GdiTransparentBlt(hdc,		//º¹»çµÉ Àå¼ÒÀÇ DC
+			destX,					//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡X(left)
+			destY,					//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡Y(top)
+			sourWidth,				//º¹»çµÉ ÀÌ¹ÌÁö °¡·ÎÅ©±â
+			sourHeight,				//º¹»çµÉ ÀÌ¹ÌÁö ¼¼·ÎÅ©±â
+			_imageInfo->hMemDC,		//º¹»ç ´ë»ó DC
+			sourX, sourY,			//º¹»çµÉ ½ÃÀÛÁöÁ¡
+			sourWidth,				//º¹»çµÉ °¡·ÎÅ©±â
+			sourHeight,				//º¹»çµÉ ¼¼·ÎÅ©±â
+			_transColor);			//³¯·ÁÁÙ Ä®¶ó
 	}
 	else
 	{
@@ -399,18 +399,18 @@ void image::frameRender(HDC hdc, int destX, int destY)
 {
 	if (_trans)
 	{
-		//íŠ¹ì • ì¹¼ë¼ ë‚ ë ¤ì£¼ëŠ” í•¨ìˆ˜
-		GdiTransparentBlt(hdc,			//ë³µì‚¬ë  ì¥ì†Œì˜ DC
-			destX,						//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì X(left)
-			destY,						//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì Y(top)
-			_imageInfo->frameWidth,		//ë³µì‚¬ë  ì´ë¯¸ì§€ ê°€ë¡œí¬ê¸°
-			_imageInfo->frameHeight,	//ë³µì‚¬ë  ì´ë¯¸ì§€ ì„¸ë¡œí¬ê¸°
-			_imageInfo->hMemDC,			//ë³µì‚¬ ëŒ€ìƒ DC
+		//Æ¯Á¤ Ä®¶ó ³¯·ÁÁÖ´Â ÇÔ¼ö
+		GdiTransparentBlt(hdc,			//º¹»çµÉ Àå¼ÒÀÇ DC
+			destX,						//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡X(left)
+			destY,						//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡Y(top)
+			_imageInfo->frameWidth,		//º¹»çµÉ ÀÌ¹ÌÁö °¡·ÎÅ©±â
+			_imageInfo->frameHeight,	//º¹»çµÉ ÀÌ¹ÌÁö ¼¼·ÎÅ©±â
+			_imageInfo->hMemDC,			//º¹»ç ´ë»ó DC
 			_imageInfo->currentFrameX * _imageInfo->frameWidth, 
 			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			_imageInfo->frameWidth,		//ë³µì‚¬ë  ê°€ë¡œí¬ê¸°
-			_imageInfo->frameHeight,	//ë³µì‚¬ë  ì„¸ë¡œí¬ê¸°
-			_transColor);				//ë‚ ë ¤ì¤„ ì¹¼ë¼
+			_imageInfo->frameWidth,		//º¹»çµÉ °¡·ÎÅ©±â
+			_imageInfo->frameHeight,	//º¹»çµÉ ¼¼·ÎÅ©±â
+			_transColor);				//³¯·ÁÁÙ Ä®¶ó
 	}
 	else
 	{
@@ -431,18 +431,18 @@ void image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int cu
 
 	if (_trans)
 	{
-		//íŠ¹ì • ì¹¼ë¼ ë‚ ë ¤ì£¼ëŠ” í•¨ìˆ˜
-		GdiTransparentBlt(hdc,			//ë³µì‚¬ë  ì¥ì†Œì˜ DC
-			destX,						//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì X(left)
-			destY,						//ë³µì‚¬ë  ì¢Œí‘œ ì‹œì‘ì Y(top)
-			_imageInfo->frameWidth,		//ë³µì‚¬ë  ì´ë¯¸ì§€ ê°€ë¡œí¬ê¸°
-			_imageInfo->frameHeight,	//ë³µì‚¬ë  ì´ë¯¸ì§€ ì„¸ë¡œí¬ê¸°
-			_imageInfo->hMemDC,			//ë³µì‚¬ ëŒ€ìƒ DC
+		//Æ¯Á¤ Ä®¶ó ³¯·ÁÁÖ´Â ÇÔ¼ö
+		GdiTransparentBlt(hdc,			//º¹»çµÉ Àå¼ÒÀÇ DC
+			destX,						//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡X(left)
+			destY,						//º¹»çµÉ ÁÂÇ¥ ½ÃÀÛÁ¡Y(top)
+			_imageInfo->frameWidth,		//º¹»çµÉ ÀÌ¹ÌÁö °¡·ÎÅ©±â
+			_imageInfo->frameHeight,	//º¹»çµÉ ÀÌ¹ÌÁö ¼¼·ÎÅ©±â
+			_imageInfo->hMemDC,			//º¹»ç ´ë»ó DC
 			_imageInfo->currentFrameX * _imageInfo->frameWidth,
 			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			_imageInfo->frameWidth,		//ë³µì‚¬ë  ê°€ë¡œí¬ê¸°
-			_imageInfo->frameHeight,	//ë³µì‚¬ë  ì„¸ë¡œí¬ê¸°
-			_transColor);				//ë‚ ë ¤ì¤„ ì¹¼ë¼
+			_imageInfo->frameWidth,		//º¹»çµÉ °¡·ÎÅ©±â
+			_imageInfo->frameHeight,	//º¹»çµÉ ¼¼·ÎÅ©±â
+			_transColor);				//³¯·ÁÁÙ Ä®¶ó
 	}
 	else
 	{
@@ -456,22 +456,22 @@ void image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int cu
 	}
 }
 
-//ì´ë¯¸ì§€ 1ì¥ìœ¼ë¡œ í•˜ëŠ” ë£¨í”„ë Œë”
+//ÀÌ¹ÌÁö 1ÀåÀ¸·Î ÇÏ´Â ·çÇÁ·»´õ
 void image::loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY)
 {
 	//  -200					600				     -200   % 600
 	if (offSetX < 0) offSetX = _imageInfo->width + (offSetX % _imageInfo->width);
 	if (offSetY < 0) offSetY = _imageInfo->height + (offSetY % _imageInfo->height);
 
-	//ì˜¤í”„ì…‹ ì˜ì—­ ë°›ì•„ì˜¬ ë³€ìˆ˜
+	//¿ÀÇÁ¼Â ¿µ¿ª ¹Ş¾Æ¿Ã º¯¼ö
 	RECT rcSour;
 	int sourWidth;
 	int sourHeight;
 
-	//ê·¸ë ¤ì£¼ëŠ” ì˜ì—­
+	//±×·ÁÁÖ´Â ¿µ¿ª
 	RECT rcDest;
 
-	//í™”ë©´ì— ê·¸ë ¤ì£¼ëŠ” ì˜ì—­ ì§€ì •
+	//È­¸é¿¡ ±×·ÁÁÖ´Â ¿µ¿ª ÁöÁ¤
 	int drawAreaX = drawArea->left;						//Left
 	int drawAreaY = drawArea->top;						//Top
 	int drawAreaW = drawArea->right - drawArea->left;	//Width
@@ -485,14 +485,14 @@ void image::loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY)
 
 		sourHeight = rcSour.bottom - rcSour.top;
 
-		//ê·¸ë ¤ì§€ëŠ” ì˜ì—­ì˜ ë†’ì´ê°’ë³´ë‹¤ ?? í¬ë©´
+		//±×·ÁÁö´Â ¿µ¿ªÀÇ ³ôÀÌ°ªº¸´Ù ?? Å©¸é
 		if (y + sourHeight > drawAreaH)
 		{
 			rcSour.bottom -= (y + sourHeight) - drawAreaH;
 			sourHeight = rcSour.bottom - rcSour.top;
 		}
 
-		//ë¿Œë ¤ì£¼ëŠ” ì˜ì—­ 
+		//»Ñ·ÁÁÖ´Â ¿µ¿ª 
 		rcDest.top = y + drawAreaY;
 		rcDest.bottom = rcDest.top + sourHeight;
 
@@ -513,11 +513,11 @@ void image::loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY)
 			rcDest.left = x + drawAreaX;
 			rcDest.right = rcDest.left + sourWidth;
 
-			render(hdc, rcDest.left,				//ë¿Œë¦´ X
-						rcDest.top,					//ë¿Œë¦´ Y
-						rcSour.left, rcSour.top,	//ë¿Œë ¤ì˜¬ X, Y
-						rcSour.right - rcSour.left,	//ë¿Œë ¤ì˜¬ ì´ë¯¸ì§€ ê°€ë¡œí¬ê¸°
-						rcSour.bottom - rcSour.top);//ë¿Œë ¤ì˜¬ ì´ë¯¸ì§€ ì„¸ë¡œí¬ê¸°
+			render(hdc, rcDest.left,				//»Ñ¸± X
+						rcDest.top,					//»Ñ¸± Y
+						rcSour.left, rcSour.top,	//»Ñ·Á¿Ã X, Y
+						rcSour.right - rcSour.left,	//»Ñ·Á¿Ã ÀÌ¹ÌÁö °¡·ÎÅ©±â
+						rcSour.bottom - rcSour.top);//»Ñ·Á¿Ã ÀÌ¹ÌÁö ¼¼·ÎÅ©±â
 		}
 	}
 }

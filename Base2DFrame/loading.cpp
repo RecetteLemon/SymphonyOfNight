@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "loading.h"
 
 loadItem::loadItem(){}
@@ -110,7 +110,7 @@ loading::~loading()
 
 HRESULT loading::init()
 {
-	//_background = IMAGEMANAGER->addImage("ë¡œë”©ë°±ê·¸ë¼ìš´ë“œ", "ížˆì˜¤ìŠ¤ë©”ì¸.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	//_background = IMAGEMANAGER->addImage("·Îµù¹é±×¶ó¿îµå", "È÷¿À½º¸ÞÀÎ.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 
 	//_loadingBar = new progressBar;
 	//_loadingBar->init("loadingBarTop", "loadingBarBottom", WINSIZEX / 2, WINSIZEY - 20, WINSIZEX, 20);
@@ -178,12 +178,12 @@ void loading::loadFrameImage(string keyName, const char* fileName, float x, floa
 	_vLoadItem.push_back(item);
 }
 
-//ë¡œë”©í•˜ëŠ” ê³³
+//·ÎµùÇÏ´Â °÷
 BOOL loading::loadingDone()
 {
 
-	//ë¡œë”© ê²Œì´ì§€ê°€ ì˜¬ë¼ê°„ë‹¤ëŠ” ê²ƒì€ ë©”ëª¨ë¦¬ì— ì´ë¯¸ì§€, ì‚¬ìš´ë“œ ë“±ì´ ì˜¬ë¼ê°€ê³ ìžˆê³ ,
-	//ë²¡í„°ì‚¬ì´ì¦ˆë³´ë‹¤ ê°™ê±°ë‚˜ í¬ë‹¤ëŠ” ê²ƒì€. ë¡œë”©ì´ ëë‚¬ë‹¤ëŠ” ê±¸ ì˜ë¯¸
+	//·Îµù °ÔÀÌÁö°¡ ¿Ã¶ó°£´Ù´Â °ÍÀº ¸Þ¸ð¸®¿¡ ÀÌ¹ÌÁö, »ç¿îµå µîÀÌ ¿Ã¶ó°¡°íÀÖ°í,
+	//º¤ÅÍ»çÀÌÁîº¸´Ù °°°Å³ª Å©´Ù´Â °ÍÀº. ·ÎµùÀÌ ³¡³µ´Ù´Â °É ÀÇ¹Ì
 	if (_currentGauge >= _vLoadItem.size())
 	{
 		return TRUE;
@@ -230,7 +230,7 @@ BOOL loading::loadingDone()
 
 		case LOAD_KIND_SOUND:
 		{
-			//ì‚¬ìš´ë“œëŠ” ìˆ™ìª !!! ì•¼í›„!!!
+			//»ç¿îµå´Â ¼÷¥™!!! ¾ßÈÄ!!!
 		}
 		break;
 	}

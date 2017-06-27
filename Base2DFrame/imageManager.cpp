@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "imageManager.h"
 
 
@@ -24,12 +24,12 @@ void imageManager::release(void)
 }
 
 
-//ë¹ˆ ë¹„íŠ¸ë§µ
+//ºó ºñÆ®¸Ê
 image* imageManager::addImage(string strKey, int width, int height)
 {
 	image* img = findImage(strKey);
 
-	//ë§Œì•½ ì´ë¯¸ì§€ê°€ ìˆìœ¼ë©´ ê·¸ëƒ¥ ê·¸ ì´ë¯¸ì§€ ì‚¬ìš©
+	//¸¸¾à ÀÌ¹ÌÁö°¡ ÀÖÀ¸¸é ±×³É ±× ÀÌ¹ÌÁö »ç¿ë
 	if (img) return img;
 
 	img = new image;
@@ -41,15 +41,15 @@ image* imageManager::addImage(string strKey, int width, int height)
 		return NULL;
 	}
 
-	//pair<firstìë£Œí˜•,secondìë£Œí˜•>(firstê°’, secondê°’)
-	//make_pair(ê°’, ê°’) <-- ì•Œì•„ì„œ ìë£Œí˜• ì°¾ì•„ì„œ ëŒ€ì…
+	//pair<firstÀÚ·áÇü,secondÀÚ·áÇü>(first°ª, second°ª)
+	//make_pair(°ª, °ª) <-- ¾Ë¾Æ¼­ ÀÚ·áÇü Ã£¾Æ¼­ ´ëÀÔ
 	_mImageList.insert(make_pair(strKey, img));
 
 	return img;
 }
 
 
-//íŒŒì¼ ì´ë¯¸ì§€
+//ÆÄÀÏ ÀÌ¹ÌÁö
 image* imageManager::addImage(string strKey, const char* fileName, int width, int height, bool trans, COLORREF transColor)
 {
 	image* img = findImage(strKey);
@@ -90,7 +90,7 @@ image* imageManager::addImage(string strKey, const char* fileName, float x, floa
 	return img;
 }
 
-//í”„ë ˆì„ ì´ë¯¸ì§€
+//ÇÁ·¹ÀÓ ÀÌ¹ÌÁö
 image* imageManager::addFrameImage(string strKey, const char* fileName, float x, float y, int width, int height, int frameX, int frameY, bool trans, COLORREF transColor)
 {
 	image* img = findImage(strKey);
@@ -132,12 +132,12 @@ image* imageManager::addFrameImage(string strKey, const char* fileName, int widt
 }
 
 
-//í‚¤ ê°’ìœ¼ë¡œ ì´ë¯¸ì§€ ì°¾ì•„ì˜¤ëŠ” í•¨ìˆ˜
+//Å° °ªÀ¸·Î ÀÌ¹ÌÁö Ã£¾Æ¿À´Â ÇÔ¼ö
 image* imageManager::findImage(string strKey)
 {
 	mapImageIter key = _mImageList.find(strKey);
 
-	//í‚¤ ê°’ì„ ì°¾ì•˜ìœ¼ë©´
+	//Å° °ªÀ» Ã£¾ÒÀ¸¸é
 	if (key != _mImageList.end())
 	{
 		return key->second;
@@ -147,7 +147,7 @@ image* imageManager::findImage(string strKey)
 }
 
 
-//ì´ë¯¸ì§€ ì§€ì›Œì£¼ëŠ” í•¨ìˆ˜
+//ÀÌ¹ÌÁö Áö¿öÁÖ´Â ÇÔ¼ö
 BOOL imageManager::deleteImage(string strKey)
 {
 	mapImageIter key = _mImageList.find(strKey);
@@ -165,7 +165,7 @@ BOOL imageManager::deleteImage(string strKey)
 }
 
 
-//ì´ë¯¸ì§€ ì „ì²´ì ìœ¼ë¡œ ì§€ì›Œì£¼ëŠ” í•¨ìˆ˜
+//ÀÌ¹ÌÁö ÀüÃ¼ÀûÀ¸·Î Áö¿öÁÖ´Â ÇÔ¼ö
 BOOL imageManager::deleteAll(void)
 {
 	mapImageIter iter = _mImageList.begin();

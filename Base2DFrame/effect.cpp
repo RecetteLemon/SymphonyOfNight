@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "effect.h"
 #include "animation.h"
 
@@ -19,7 +19,7 @@ effect::~effect()
 
 HRESULT effect::init(image* effectImage, int frameW, int frameH, int fps, float elapsedTime)
 {
-	//ì´íŽ™íŠ¸ ì´ë¯¸ì§€ê°€ ì—†ë‹¤ë©´ ì‹¤í–‰í•˜ì§€ ë§ì–´ë¼
+	//ÀÌÆåÆ® ÀÌ¹ÌÁö°¡ ¾ø´Ù¸é ½ÇÇàÇÏÁö ¸»¾î¶ó
 	if (!effectImage) return E_FAIL;
 
 	_isRunning = false;
@@ -44,13 +44,13 @@ void effect::release(void)
 
 void effect::update(void) 
 {
-	//ì‹¤í–‰ì¤‘ì´ì§€ ì•Šë‹¤ë©´ ëŒë ¤ë³´ë‚´ê³ 
+	//½ÇÇàÁßÀÌÁö ¾Ê´Ù¸é µ¹·Áº¸³»°í
 	if (!_isRunning) return;
 
-	//ì• ë‹ˆë©”ì´ì…˜ í”„ë ˆìž„ ì—…ë°ì´íŠ¸
+	//¾Ö´Ï¸ÞÀÌ¼Ç ÇÁ·¹ÀÓ ¾÷µ¥ÀÌÆ®
 	_effectAnimation->frameUpdate(_elapsedTime);
 
-	//í”Œë ˆì´ ìƒíƒœê°€ ì•„ë‹ˆë©´			êº¼ì¤€ë‹¤
+	//ÇÃ·¹ÀÌ »óÅÂ°¡ ¾Æ´Ï¸é			²¨ÁØ´Ù
 	if (!_effectAnimation->isPlay()) killEffect();
 
 }
@@ -65,7 +65,7 @@ void effect::render(void)
 
 void effect::startEffect(int x, int y)
 {
-	//ì´ë¯¸ì§€ë‚˜ ì• ë‹ˆë©”ì´ì…˜ ë‘˜ì¤‘ í•˜ë‚˜ë¼ë„ ì—†ìœ¼ë©´ ì‹¤í–‰ì‹œí‚¤ì§€ë§ˆë¼
+	//ÀÌ¹ÌÁö³ª ¾Ö´Ï¸ÞÀÌ¼Ç µÑÁß ÇÏ³ª¶óµµ ¾øÀ¸¸é ½ÇÇà½ÃÅ°Áö¸¶¶ó
 	if (!_effectImage || !_effectAnimation) return;
 
 	_x = x - (_effectAnimation->getFrameWidth() / 2);

@@ -1,4 +1,4 @@
-﻿#include "singletonBase.h"
+#include "singletonBase.h"
 #include <time.h>
 
 //=======================================

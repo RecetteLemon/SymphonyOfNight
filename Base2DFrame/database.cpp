@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "database.h"
 
 
@@ -30,18 +30,18 @@ void database::release()
 
 void database::loadDatabase(string name)
 {
-	//ë°ì´í„°ë¥¼ ì½ì–´ì˜¤ì
+	//µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿ÀÀÚ
 	arrElements vTemp;
 	vTemp = TXTDATA->txtLoad(name.c_str());
 
 	string str;
 	int count = 0;
 
-	//ì¹¸ë§‰ì´ | ë¥¼ ê¸°ì ìœ¼ë¡œ ì†ì„±ë“¤ì„ ì½ì–´ì˜¤ì!
+	//Ä­¸·ÀÌ | ¸¦ ±âÁ¡À¸·Î ¼Ó¼ºµéÀ» ÀĞ¾î¿ÀÀÚ!
 
 	for (int i = 0; i < vTemp.size(); i++)
 	{
-		//|,ë°°ì¢…ë¥˜,í˜„ì²´ë ¥,ìµœì²´ë ¥,ì•µê¸€,ë§¥ìŠ¤ìŠ¤í”¼ë“œ,ê°€ì†ë„
+		//|,¹èÁ¾·ù,ÇöÃ¼·Â,ÃÖÃ¼·Â,¾Ş±Û,¸Æ½º½ºÇÇµå,°¡¼Óµµ
 		if (vTemp[i] == "|")
 		{
 			elements* em = new elements;
@@ -67,7 +67,7 @@ void database::loadDatabase(string name)
 }
 
 
-//ì„¤ì •ì
+//¼³Á¤ÀÚ
 void database::setElementDataCurrentHP(string str, float ch)
 {
 	iterElement mIter = _mTotalElment.find(str);

@@ -1,38 +1,38 @@
-ï»¿#pragma once
+#pragma once
 
 template <typename T>
 class singletonBase
 {
 protected:
-	//ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ ì„ ì–¸
+	//½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼±¾ğ
 	static T* singleton;
 
 	singletonBase(void) {};
 	~singletonBase(void){};
 
 public:
-	//ì‹±ê¸€í†¤ ì ‘ê·¼ì
+	//½Ì±ÛÅæ Á¢±ÙÀÚ
 	static T* getSingleton(void);
-	//ì‹±ê¸€í†¤ í•´ì œ í•¨ìˆ˜
+	//½Ì±ÛÅæ ÇØÁ¦ ÇÔ¼ö
 	void releaseSingleton(void);
 };
 
-//ì‹±ê¸€í†¤ ì´ˆê¸°í™”
+//½Ì±ÛÅæ ÃÊ±âÈ­
 template <typename T>
 T* singletonBase<T>::singleton = 0;
 
-//ì‹±ê¸€í†¤ ë¶ˆëŸ¬ì˜¤ëŠ” í•¨ìˆ˜
+//½Ì±ÛÅæ ºÒ·¯¿À´Â ÇÔ¼ö
 template <typename T>
 T* singletonBase<T>::getSingleton(void)
 {
-	//ë§Œì•½ì— ì‹±ê¸€í†¤ì´ ì—†ë‹¤ë©´ -> ì‹±ê¸€í†¤ ìƒì„±
+	//¸¸¾à¿¡ ½Ì±ÛÅæÀÌ ¾ø´Ù¸é -> ½Ì±ÛÅæ »ı¼º
 	if (!singleton) singleton = new T;
 
-	//ê·¸ë¦¬ê³  ë°˜í™˜
+	//±×¸®°í ¹İÈ¯
 	return singleton;
 }
 
-//ì‹±ê¸€í†¤ ë©”ëª¨ë¦¬ í•´ì œ
+//½Ì±ÛÅæ ¸Ş¸ğ¸® ÇØÁ¦
 template <typename T>
 void singletonBase<T>::releaseSingleton(void)
 {

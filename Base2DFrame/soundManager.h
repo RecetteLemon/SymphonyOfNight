@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "singletonBase.h"
 #include <map>
 
@@ -11,7 +11,7 @@ using namespace FMOD;
 #define SOUNDBUFFER 10
 #define EXTRACHANNELBUFFER 5
 
-#define TOTALSOUNDBUFFER SOUNDBUFFER + EXTRACHANNELBUFFER
+#define TOTALSOUNDBUFFER (SOUNDBUFFER + EXTRACHANNELBUFFER)
 
 class soundManager : public singletonBase<soundManager>
 {

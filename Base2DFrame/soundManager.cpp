@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "soundManager.h"
 
 
@@ -14,7 +14,7 @@ soundManager::~soundManager()
 
 HRESULT soundManager::init()
 {
-	//FMOD ì‚¬ìš´ë“œ ì—”ì§„ì„ ì“°ê² ë‹¤ê³  ì„ ì–¸
+	//FMOD »ç¿îµå ¿£ÁøÀ» ¾²°Ú´Ù°í ¼±¾ğ
 	System_Create(&_system);
 
 	_system->init(TOTALSOUNDBUFFER, FMOD_INIT_NORMAL, 0);
@@ -31,17 +31,42 @@ HRESULT soundManager::init()
 
 void soundManager::release()
 {
+	if ((_channel != NULL || _sound != NULL))
+	{
+		for (int i = 0; i < TOTALSOUNDBUFFER; i++)
+		{
+			if (_channel != NULL)
+			{
+				_channel[i]->stop();
+			}
 
+			if (_sound != NULL)
+			{
+				_sound[i]->release();
+			}
+		}
+	}
+
+	//¸Ş¸ğ¸® Áö¿ì±â
+	safeDeleteArray(_channel);
+	safeDeleteArray(_sound);
+
+	//½Ã½ºÅÛ ´İ±â 
+	if (_system != NULL)
+	{
+		_system->release();
+		_system->close();
+	}
 }
 
 void soundManager::update()
 {
-
+	_system->update();
 }
 
 void soundManager::addSound(string keyName, string soundName, bool bgm, bool loop)
 {
-	//ë£¨í”„ë¡œ ì¬ìƒì‹œí‚¬êº¼ëƒ?
+	//·çÇÁ·Î Àç»ı½ÃÅ³²¨³Ä?
 	if (loop)
 	{
 		if (bgm)
@@ -53,7 +78,7 @@ void soundManager::addSound(string keyName, string soundName, bool bgm, bool loo
 			_system->createSound(soundName.c_str(), FMOD_LOOP_NORMAL, 0, &_sound[_mTotalSounds.size()]);
 		}
 	}
-	else //ë£¨í”„ê°€ ì•„ë‹ˆë¼ë©´
+	else //·çÇÁ°¡ ¾Æ´Ï¶ó¸é
 	{
 		if (bgm)
 		{
@@ -65,7 +90,7 @@ void soundManager::addSound(string keyName, string soundName, bool bgm, bool loo
 		}
 	}
 
-	//pair<í˜•1, í˜•2>(ë³€ìˆ˜1, ë³€ìˆ˜2)
+	//pair<Çü1, Çü2>(º¯¼ö1, º¯¼ö2)
 	_mTotalSounds.insert(make_pair(keyName, &_sound[_mTotalSounds.size()]));
 }
 
@@ -77,7 +102,7 @@ void soundManager::play(string keyName, float volume) // 0 ~ 255 == 0.0 ~ 1.0f
 
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
-		//ìŒì•…ì´ ìˆë‹¤ë©´
+		//À½¾ÇÀÌ ÀÖ´Ù¸é
 		if (keyName == iter->first)
 		{
 			_system->playSound(FMOD_CHANNEL_FREE, _sound[count], false, &_channel[count]);
@@ -96,7 +121,7 @@ void soundManager::stop(string keyName)
 
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
-		//ìŒì•…ì´ ìˆë‹¤ë©´
+		//À½¾ÇÀÌ ÀÖ´Ù¸é
 		if (keyName == iter->first)
 		{
 			_channel[count]->stop();
@@ -113,7 +138,7 @@ void soundManager::pause(string keyName)
 
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
-		//ìŒì•…ì´ ìˆë‹¤ë©´
+		//À½¾ÇÀÌ ÀÖ´Ù¸é
 		if (keyName == iter->first)
 		{
 			_channel[count]->setPaused(true);
@@ -130,7 +155,7 @@ void soundManager::resume(string keyName)
 
 	for (iter; iter != _mTotalSounds.end(); ++iter, count++)
 	{
-		//ìŒì•…ì´ ìˆë‹¤ë©´
+		//À½¾ÇÀÌ ÀÖ´Ù¸é
 		if (keyName == iter->first)
 		{
 			_channel[count]->setPaused(false);

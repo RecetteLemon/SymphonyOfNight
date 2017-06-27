@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "singletonBase.h"
 #include <map>
 
@@ -21,17 +21,17 @@ public:
 	void update();
 	void render();
 
-	//ë””í´íŠ¸ ì• ë‹ˆë©”ì´ì…˜
+	//µğÆúÆ® ¾Ö´Ï¸ŞÀÌ¼Ç
 	void addDefaultFrameAnimation(string animationKeyName, char* imageKeyName, int fps, bool reverse, bool loop);
 	void addDefaultFrameAnimation(string animationKeyName, char* imageKeyName, int fps, bool reverse, bool loop, void* cbFunction);
 	void addDefaultFrameAnimation(string animationKeyName, char* imageKeyName, int fps, bool reverse, bool loop, void* cbFunction, void* obj);
 
-	//ë°°ì—´ ì• ë‹ˆë©”ì´ì…˜
+	//¹è¿­ ¾Ö´Ï¸ŞÀÌ¼Ç
 	void addArrayFrameAnimation(string animationKeyName, char* imageKeyName, int* arr, int arrLen, int fps, bool loop);
 	void addArrayFrameAnimation(string animationKeyName, char* imageKeyName, int* arr, int arrLen, int fps, bool loop, void* cbFunction);
 	void addArrayFrameAnimation(string animationKeyName, char* imageKeyName, int* arr, int arrLen, int fps, bool loop, void* cbFunction, void* obj);
 
-	//êµ¬ê°„ ì• ë‹ˆë©”ì´ì…˜
+	//±¸°£ ¾Ö´Ï¸ŞÀÌ¼Ç
 	void addCoordinateFrameAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop);
 	void addCoordinateFrameAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop, void* cbFunction);
 	void addCoordinateFrameAnimation(string animationKeyName, char* imageKeyName, int start, int end, int fps, bool reverse, bool loop, void* cbFunction, void* obj);
