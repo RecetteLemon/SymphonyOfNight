@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#define EPSILON 0.01f
 
 enum FAMILIARDIRECTION
 {
@@ -17,8 +18,9 @@ class familiar : public gameNode
 protected:
 	float* _x;
 	float* _y;
-	//float _targetX, _targetY;
+	float _targetX, _targetY;
 	FAMILIARDIRECTION _direction;
+	bool _familiarChange;
 
 //	RECT _rc;
 //	RECT _hitBox;
@@ -32,7 +34,6 @@ public:
 	//RECT getRect(void) { return _rc; }
 
 	virtual void move(void);
-	virtual void stopMotion(void);
 	virtual void setDirection(int direction) { _direction = (FAMILIARDIRECTION)direction; }
 
 	familiar();

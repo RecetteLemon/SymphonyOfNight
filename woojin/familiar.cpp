@@ -3,9 +3,6 @@
 
 
 familiar::familiar()
-	//:_x(0.0f), _y(0.0f), _direction(FAMILIAR_DIRECTION_NULL)
-	//_targetX(0.0f), _targetY(0.0f),
-	//_rc({ 0, 0, 0, 0 }), _hitBox({ 0, 0, 0, 0 }), 
 {
 }
 
@@ -16,6 +13,17 @@ familiar::~familiar()
 HRESULT familiar::init(const char* imageName, float* x, float* y)
 {
 	gameNode::init();
+
+	_x = x;
+	_y = y;
+
+	_targetX = *x;
+	_targetY = *y;
+
+	//*_y = *_y - WINSIZEY / 2;
+
+	_familiarChange = true;
+
 	return S_OK;
 }
 
@@ -27,6 +35,8 @@ void familiar::release(void)
 void familiar::update(void)
 {
 	gameNode::update();
+
+
 }
 
 void familiar::render(void)
@@ -35,8 +45,6 @@ void familiar::render(void)
 
 void familiar::move(void)
 {
-}
+	
 
-void familiar::stopMotion(void)
-{
 }

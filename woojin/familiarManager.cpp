@@ -25,20 +25,15 @@ HRESULT familiarManager::init()
 	_familiar[FAMILIAR_DEMON] = new familiarDemon;
 	_familiar[FAMILIAR_DEMON]->init("familiarDemon", &_x, &_y);
 
-	//_familiar[FAMILIAR_FAIRY] = NULL;
 	_familiar[FAMILIAR_FAIRY] = new familiarFairy;
 	_familiar[FAMILIAR_FAIRY]->init("familiarFairy", &_x, &_y);
 
-	_familiar[FAMILIAR_GHOST] = NULL;
+	_familiar[FAMILIAR_GHOST] = new familiarGhost;
+	_familiar[FAMILIAR_GHOST]->init("familiarGhost", &_x, &_y);
 
-	//_familiar[FAMILIAR_GHOST] = new familiarDemon;
-	//_familiar[FAMILIAR_GHOST]->init("familiarDemon", WINSIZEX/2, WINSIZEY/2);
-
-	//_familiar[FAMILIAR_END] = NULL;
-
-	_kind = FAMILIAR_FAIRY;
+	_kind = FAMILIAR_DEMON;
 	_focusFamiliar = _familiar[_kind];
-	_familiar[_kind]->setDirection(0);
+	_familiar[_kind]->setDirection(1);
 	return S_OK;
 }
 
@@ -50,7 +45,6 @@ void familiarManager::release()
 	{
 		if (_familiar[i] != NULL)
 		{
-			//_familiar[i]->release();
 			SAFE_DELETE(_familiar[i]);
 		}
 	}
@@ -61,10 +55,7 @@ void familiarManager::update()
 	gameNode::update();
 
 	keyControl();
-	//if (_kind != FAMILIAR_END && _focusFamiliar != NULL)
-	//{
-	//	_focusFamiliar->update();
-	//}
+
 	for (int i = 0; i < FAMILIAR_END; i++)
 	{
 		if (_familiar[i] == NULL) continue;
@@ -90,33 +81,39 @@ void familiarManager::selectFamailiar(int kind)
 	{
 	case FAMILIAR_DEMON:
 		_familiar[_kind]->setDirection(1);
+		_focusFamiliar = _familiar[_kind];
 		break;
 	case FAMILIAR_FAIRY:
 		_familiar[_kind]->setDirection(0);
+		_focusFamiliar = _familiar[_kind];
 		break;
 	case FAMILIAR_GHOST:
 		_familiar[_kind]->setDirection(1);
+		_focusFamiliar = _familiar[_kind];
 		break;
+	case FAMILIAR_END:
+		_focusFamiliar = NULL;
 	}
 
-	_focusFamiliar = _familiar[_kind];
+	
 }
 
 void familiarManager::keyControl(void)
 {
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		_focusFamiliar->stopMotion();
 		selectFamailiar(0);
 	}
 	if (KEYMANAGER->isOnceKeyDown('2'))
 	{
-		_focusFamiliar->stopMotion();
 		selectFamailiar(1);
 	}
 	if (KEYMANAGER->isOnceKeyDown('3'))
 	{
-		_focusFamiliar->stopMotion();
 		selectFamailiar(2);
+	}
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		selectFamailiar(3);
 	}
 }

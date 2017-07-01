@@ -13,13 +13,10 @@ familiarDemon::~familiarDemon()
 
 HRESULT familiarDemon::init(const char* imageName, float* x, float* y)
 {
-	_x = x;
-	_y = y;
+	familiar::init(imageName, x, y);
 	
 	_body = IMAGEMANAGER->findImage(imageName);
 	_wing = IMAGEMANAGER->findImage(imageName);
-
-	//_direction = FAMILIAR_DIRECTION_RIGHT;
 
 	//bodyMotion frame
 	int arrRight[] = { 0 };
@@ -60,6 +57,16 @@ void familiarDemon::render(void)
 
 void familiarDemon::move()
 {
+	//if (_familiarChange)
+	//{
+	//	if (getDistance(*_x, *_y, _targetX, _targetY) > EPSILON)
+	//	{
+	//		*_x += ((_targetX - *_x) * getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
+	//		*_y -= ((_targetY - *_y) * getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
+	//	}
+	//	else _familiarChange = false;
+	//}
+
 	switch (_direction)
 	{
 	case FAMILIAR_DIRECTION_RIGHT:
@@ -83,6 +90,8 @@ void familiarDemon::move()
 		if (!_bodyMotion->isPlay()) _bodyMotion->start();
 		break;
 	}
+
+	
 }
 
 void familiarDemon::cbRightAttack(void* obj)

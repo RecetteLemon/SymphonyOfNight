@@ -13,8 +13,7 @@ familiarFairy::~familiarFairy()
 
 HRESULT familiarFairy::init(const char* imageName, float* x, float* y)
 {
-	_x = x;
-	_y = y;
+	familiar::init(imageName, x, y);
 
 	_body = IMAGEMANAGER->findImage(imageName);
 	_wing = IMAGEMANAGER->findImage(imageName);
@@ -37,13 +36,13 @@ HRESULT familiarFairy::init(const char* imageName, float* x, float* y)
 
 	//wingMotion frame
 	int arrWingStand[] = { 2, 3 };
-	KEYANIMANAGER->addArrayFrameAnimation("FAIRY_WING_STAND", imageName, arrWingStand, 2, 12, true);
+	KEYANIMANAGER->addArrayFrameAnimation("FAIRY_WING_STAND", imageName, arrWingStand, 2, 8, true);
 
 	int arrWingRight[] = { 10, 11 };
-	KEYANIMANAGER->addArrayFrameAnimation("FAIRY_WING_RIGHT", imageName, arrWingRight, 2, 12, true);
+	KEYANIMANAGER->addArrayFrameAnimation("FAIRY_WING_RIGHT", imageName, arrWingRight, 2, 8, true);
 
 	int arrWingLeft[] = { 8, 9 };
-	KEYANIMANAGER->addArrayFrameAnimation("FAIRY_WING_LEFT", imageName, arrWingLeft, 2, 12, true);
+	KEYANIMANAGER->addArrayFrameAnimation("FAIRY_WING_LEFT", imageName, arrWingLeft, 2, 8, true);
 
 	//hairMotion frame
 	int arrHairStand[] = { 4, 5, 6, 7 };
@@ -79,6 +78,16 @@ void familiarFairy::render(void)
 
 void familiarFairy::move()
 {
+	//if (_familiarChange)
+	//{
+	//	if (getDistance(*_x, *_y, _targetX, _targetY) > EPSILON)
+	//	{
+	//		*_x += ((_targetX - *_x) / getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
+	//		*_y -= ((_targetY - *_y) / getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
+	//	}
+	//	else _familiarChange = false;
+	//}
+
 	switch (_direction)
 	{
 	case FAMILIAR_DIRECTION_STAND:
@@ -121,11 +130,4 @@ void familiarFairy::move()
 
 		break;
 	}
-}
-
-void familiarFairy::stopMotion(void)
-{
-	if (_bodyMotion->isPlay()) _bodyMotion->stop();
-	if (_hairMotion->isPlay()) _hairMotion->stop();
-	if (_wingMotion->isPlay()) _wingMotion->stop();
 }

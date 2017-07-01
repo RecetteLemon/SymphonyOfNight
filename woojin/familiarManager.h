@@ -2,6 +2,7 @@
 #include "gameNode.h"
 #include "familiarDemon.h"
 #include "familiarFairy.h"
+#include "familiarGhost.h"
 
 enum FAMILIARKIND
 {
@@ -27,6 +28,7 @@ public:
 	void update(void);
 	void render(void);
 	void selectFamailiar(int kind);
+	int getFamiliarKind(void) { return (int)_kind; }
 
 	void keyControl(void);
 
