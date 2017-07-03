@@ -22,19 +22,30 @@ protected:
 		ENEMY_LEFT_DIE,
 		ENEMY_RIGHT_DIE
 	};
+
+	enum ANI
+	{
+		ENEMY_LEFT_MOVEANI,
+		ENEMY_RIGHT_MOVEANI,
+		ENEMY_LEFT_REVIVEANI,
+		ENEMY_RIGHT_REVIVEANI,
+		ENEMY_LEFT_DIEANI,
+		ENEMY_RIGHT_DIEANI,
+		ENEMY_ANI_AND
+	};
 	// 적의 정보
 	struct ENEMYINFO
 	{
 		STAT stat;				// 적의 상태값
 		image* enemyImage;		// 적의 이미지
-		animation* enemyAni;	// 적의 프레임 애니메이션 설정
+		animation* enemyAni[ENEMY_ANI_AND];	// 적의 프레임 애니메이션 설정
 
 		RECT rc; // 적의 피격 렉트
 
 		float x, y; // 적의 좌표값
+		float speed;	//적의 속도
 
 		int atk, hp; // 적의 공격력 체력
-		int exp;
 
 		bool die; // 죽었니 살았니
 	};
@@ -47,14 +58,15 @@ protected:
 public:
 	//------------------------------------------------- 적 초기화, 업데이트, 그려줌
 	//						찾아올 이미지 이름   위치 x,   y
-	virtual HRESULT init(const char* imageName, float x, float y);
+	virtual HRESULT init(const char* imageName, float x, float y, int kind);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);
 
 	//------------------------------------------------- 다른 함수들
 
-
+	// 패턴 함수
+	virtual void move() = 0;
 
 	enemy();
 	~enemy();

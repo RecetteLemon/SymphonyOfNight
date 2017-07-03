@@ -10,15 +10,14 @@ class bloodSkeleton : public enemy
 private:
 	RECT _leftRect, _rightRect; // 이동 범위 설정
 	
-
-	float _speed; // 속도
 	float _maxReviveTime; // 이 시간이 지나면 살아남
 	float _reviveTime; // 살아나는 딜레이? _reviveTime += getElieceTIme; < 이 부분
 
 	bool _isLeft; // 왼쪽, 오른쪽 이동 판정
+	bool _playCount; // 애니메이션을 한번만 실행시키게 하는 변수
 
 public:
-	//				이미지 이름				얘가 움직일 렉트 범위 왼쪽 오른쪽		위치 x,  y
+	//				이미지 이름			얘가 움직일 렉트 범위 왼쪽 오른쪽		위치 x,  y
 	HRESULT init(const char* imageName, RECT leftRect, RECT rightRect, float x, float y);
 	void release();
 	void update();
@@ -38,12 +37,15 @@ public:
 	
 	// 설정자
 	void setSkeletonHP(int HP) { _enemyInfo.hp = HP; }
+	void setSkeletonDirection(bool direction) { _isLeft = direction; }
 
-	STAT getSkeletonDirection() { return _enemyInfo.stat; }
-	void setSkeletonDirection(STAT stat) { _enemyInfo.stat = stat; }
+	STAT getSkeletonStat() { return _enemyInfo.stat; }
+	void setSkeletonStat(STAT stat) { _enemyInfo.stat = stat; }
 
 	animation* getSkeletonAnimation() { return _enemyInfo.enemyAni; }
 	void setSkeletonAnimation(animation* ani) { _enemyInfo.enemyAni = ani; }
+
+	void setSkeletonDie(bool die) { _enemyInfo.die = die; }
 
 	bloodSkeleton();
 	~bloodSkeleton();

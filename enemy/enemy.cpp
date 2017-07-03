@@ -12,9 +12,9 @@ enemy::~enemy()
 
 }
 
-HRESULT enemy::init(const char* imageName, float x, float y)
+HRESULT enemy::init(const char* imageName, float x, float y, int kind)
 {
-	_enemyInfo.enemyImage = new image;
+	//_enemyInfo.enemyImage = new image;
 	_enemyInfo.enemyImage = IMAGEMANAGER->findImage(imageName);
 	_enemyInfo.x = x;
 	_enemyInfo.y = y;
@@ -39,5 +39,5 @@ void enemy::update(void)
 
 void enemy::render(void)
 {
-	//_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni);
+	_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni);
 }
