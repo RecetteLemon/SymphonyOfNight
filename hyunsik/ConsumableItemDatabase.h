@@ -5,17 +5,19 @@
 
 enum CATEGORY_C
 {
-	ONE_HAND, CATEGORY_C_END
+	ONE_HAND,
+	CATEGORY_C_END
 };
 enum cKind
 {
-	FOOD,POTION,cKInd_END
-
+	FOOD,
+	POTION,
+	cKInd_END
 };
 
 struct cItem
 {
-	const char* name;
+	string name;
 	CATEGORY_C category;
 	cKind cItemKind;
 	int HP_;
@@ -23,6 +25,9 @@ struct cItem
 	int con_;
 	int int_;
 	int lck_;
+	string explanation;
+
+	image* img_;
 
 	cItem(){}
 	~cItem(){}
@@ -47,20 +52,10 @@ private:
 public:
 	HRESULT init();
 	void release();
-
 	void loadDatabase(string name);
 
 	cItem* getCitemData(string str) { return _mTotalCitem.find(str)->second; }
 
-
-	
-	void setCitemDataCateroty(string str, CATEGORY_C caterory);
-	void setCitemDataCkind(string str, cKind cItemKind);
-	void setCitemDataHP(string str, int HP_);
-	void setCitemDataSTR(string str, int str_);
-	void setCitemDataINT(string str, int int_);
-	void setCitemDataCON(string str, int con_);
-	void setCitemDatalck(string str, int lck_);
 
 
 
