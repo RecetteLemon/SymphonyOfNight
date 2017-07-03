@@ -24,6 +24,7 @@ HRESULT bat::init(const char* imageName, float x, float y)
 	_enemyInfo.atk = 3;
 	_enemyInfo.hp = 10;
 	_enemyInfo.speed = 1.0f;
+
 	_comePlayerY = _move = _moveLeft = _upDown = false;
 
 	// ������ Y�� �ʱ�ȭ
