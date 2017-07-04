@@ -37,6 +37,9 @@ HRESULT gameNode::init(bool managerInit)
 		ITEM->init();
 		TXTDATA->init();
 		
+		// °ÔÀÓÀü¿ë ½Ì±ÛÅæ
+
+		INVEN->init();
 	}
 
 	return S_OK;

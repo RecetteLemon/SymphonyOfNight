@@ -28,6 +28,10 @@
 #include "itemDataBase.h"
 
 
+// 게임전용 싱글톤
+#include "inven.h"
+
+
 
 using namespace std;
 using namespace OMEGA_UTIL;
@@ -44,7 +48,7 @@ using namespace OMEGA_UTIL;
 #define WINSIZEY  600			//윈도우 창 세로크기
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 
-//랜덤함수 디파인
+//싱글톤 디파인
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()
 #define IMAGEMANAGER imageManager::getSingleton()
@@ -55,6 +59,9 @@ using namespace OMEGA_UTIL;
 #define KEYANIMANAGER keyAniManager::getSingleton()
 #define ITEM allItem::getSingleton()
 #define TXTDATA txtData::getSingleton()
+
+//게임 전용 디파인
+#define INVEN inven::getSingleton()
 
 //==================================
 // ## 2017.04.05 ## 매크로 함수 ##

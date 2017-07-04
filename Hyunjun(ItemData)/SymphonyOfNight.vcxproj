@@ -83,7 +83,8 @@
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
-    <ClInclude Include="item.h" />
+    <ClInclude Include="inven.h" />
+    <ClInclude Include="inventoryScene.h" />
     <ClInclude Include="itemDataBase.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
@@ -116,7 +117,8 @@
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
-    <ClCompile Include="item.cpp" />
+    <ClCompile Include="inven.cpp" />
+    <ClCompile Include="inventoryScene.cpp" />
     <ClCompile Include="itemDataBase.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
@@ -126,6 +128,7 @@
     <ClCompile Include="objTest.cpp" />
     <ClCompile Include="pixelCollision.cpp" />
     <ClCompile Include="shopScene.cpp" />
+    <ClCompile Include="symphonyOfNight+deleteImage.cpp" />
     <ClCompile Include="symphonyOfNight.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />

@@ -46,7 +46,7 @@ void titleScene::update()
 	{
 		//게임씬추가
 		SOUNDMANAGER->stop("TitleSound");
-		SCENEMANAGER->changeScene("ObjTest");
+		SCENEMANAGER->changeScene("InventoryScene");
 	}
 	
 	
@@ -57,4 +57,6 @@ void titleScene::render()
 	IMAGEMANAGER->findImage("TitleBackground")->render(getMemDC(), 0, 0);
 	_image->aniRender(getMemDC(), WINSIZEX / 2 - 170, WINSIZEY / 2 + 150, _start);
 
+	ITEM->getData("고기")->img_->render(getMemDC(), 50, 50);
+		
 }

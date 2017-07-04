@@ -14,6 +14,52 @@ allItem::~allItem()
 
 HRESULT allItem::init()
 {
+	IMAGEMANAGER->addFrameImage("Heart", "Image/Item/heart.bmp", 154, 12, 11, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Gold", "Image/Item/gold.bmp", 20, 20, 1, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("바제랄드", "Image/Item/dagger1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("숏소드", "Image/Item/dagger2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("레이피어", "Image/Item/dagger3.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("쥬엘소드", "Image/Item/dagger4.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("컴뱃나이프", "Image/Item/dagger5.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("틸핑", "Image/Item/OneHand_Sword1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("그라디우스", "Image/Item/OneHand_Sword2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("세이버", "Image/Item/OneHand_Sword3.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("하루파", "Image/Item/OneHand_Sword4.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("발만웨", "Image/Item/OneHand_Sword5.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("녹슨검", "Image/Item/TwoHand_Sword1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("요도무라마사", "Image/Item/TwoHand_Sword2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("타케미츠", "Image/Item/TwoHand_Sword3.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("야스츠나", "Image/Item/TwoHand_Sword4.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("마사무네", "Image/Item/TwoHand_Sword5.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("실버티아라", "Image/Item/helmet1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("석가면", "Image/Item/helmet2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("은빛서클렛", "Image/Item/helmet3.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("성스러운안경", "Image/Item/helmet4.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("펠트의모자", "Image/Item/helmet5.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("미러큐이러스", "Image/Item/armor1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("실버체스트", "Image/Item/armor2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("골드체스트", "Image/Item/armor3.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("다이아블래스트", "Image/Item/armor4.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("플레티넘체스트", "Image/Item/armor5.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("킹스톤", "Image/Item/accessory1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("넥클레스", "Image/Item/accessory2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("진주반지", "Image/Item/accessory3.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("마스터부츠", "Image/Item/accessory4.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("플레티넘부츠", "Image/Item/accessory5.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("리버서블망토", "Image/Item/accessory6.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("피로물든망토", "Image/Item/accessory7.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("엘프망토", "Image/Item/accessory8.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("블루망토", "Image/Item/accessory9.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("오더메이드", "Image/Item/accessory10.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("고기", "Image/Item/food1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("버섯", "Image/Item/food2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("소주", "Image/Item/food3.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("스파게티", "Image/Item/food4.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("바베큐", "Image/Item/food5.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("파란포션", "Image/Item/potion1.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("초록포션", "Image/Item/potion2.bmp", 20, 20, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("주황포션", "Image/Item/potion3.bmp", 20, 20, true, RGB(255, 0, 255));
+
 	loadDatabase("All_item.txt");
 
 	return S_OK;

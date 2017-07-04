@@ -73,6 +73,9 @@
     <Filter Include="SymphonyOfNight\TitleScene">
       <UniqueIdentifier>{f981cbfa-8424-404f-8d40-be3457a9d6bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SymphonyOfNight\Inventory">
+      <UniqueIdentifier>{ec1c1185-2503-4b57-a4c4-c2082d3762b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -156,9 +159,6 @@
     <ClInclude Include="objectCreate.h">
       <Filter>SymphonyOfNight\Object</Filter>
     </ClInclude>
-    <ClInclude Include="item.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="shopScene.h">
       <Filter>SymphonyOfNight\Shop</Filter>
     </ClInclude>
@@ -170,6 +170,12 @@
     </ClInclude>
     <ClInclude Include="titleScene.h">
       <Filter>SymphonyOfNight\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="inventoryScene.h">
+      <Filter>SymphonyOfNight\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="inven.h">
+      <Filter>SymphonyOfNight\Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,9 +236,6 @@
     <ClCompile Include="gameNode.cpp">
       <Filter>2DGameFramework\GameNode</Filter>
     </ClCompile>
-    <ClCompile Include="symphonyOfNight.cpp">
-      <Filter>SymphonyOfNight</Filter>
-    </ClCompile>
     <ClCompile Include="itemDataBase.cpp">
       <Filter>2DGameFramework\database</Filter>
     </ClCompile>
@@ -241,9 +244,6 @@
     </ClCompile>
     <ClCompile Include="objectCreate.cpp">
       <Filter>SymphonyOfNight\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="item.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="shopScene.cpp">
       <Filter>SymphonyOfNight\Shop</Filter>
@@ -256,6 +256,18 @@
     </ClCompile>
     <ClCompile Include="titleScene.cpp">
       <Filter>SymphonyOfNight\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="symphonyOfNight+deleteImage.cpp">
+      <Filter>SymphonyOfNight</Filter>
+    </ClCompile>
+    <ClCompile Include="inventoryScene.cpp">
+      <Filter>SymphonyOfNight\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="inven.cpp">
+      <Filter>SymphonyOfNight\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="symphonyOfNight.cpp">
+      <Filter>SymphonyOfNight</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

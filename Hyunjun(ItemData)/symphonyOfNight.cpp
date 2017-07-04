@@ -18,6 +18,7 @@ HRESULT symphonyOfNight::init(void)
 	
 	SCENEMANAGER->addScene("LoadingScene", new loadingScene);
 	SCENEMANAGER->addScene("TitleScene", new titleScene);
+	SCENEMANAGER->addScene("InventoryScene", new inventoryScene);
 	SCENEMANAGER->addScene("ObjTest", new objTest);
 	
 	SCENEMANAGER->changeScene("LoadingScene");
@@ -27,6 +28,7 @@ HRESULT symphonyOfNight::init(void)
 //메모리 해제 함수
 void symphonyOfNight::release(void)
 {
+	this->deleteImage();
 	IMAGEMANAGER->deleteImage("PixelTest");
 
 	gameNode::release();
@@ -51,6 +53,7 @@ void symphonyOfNight::render(void)
 	
 
 	SCENEMANAGER->render();
+	
 	
 
 	//================================================================================

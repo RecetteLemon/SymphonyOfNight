@@ -3,6 +3,7 @@
 #include "objTest.h"
 #include "loadingScene.h"
 #include "titleScene.h"
+#include "inventoryScene.h"
 
 
 class symphonyOfNight : public gameNode
@@ -17,7 +18,7 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 
-	
+	void deleteImage();
 
 	symphonyOfNight();
 	~symphonyOfNight();
