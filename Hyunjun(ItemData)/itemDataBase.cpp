@@ -2,25 +2,25 @@
 #include "itemDataBase.h"
 
 
-equipment::equipment()
+allItem::allItem()
 {
 }
 
 
-equipment::~equipment()
+allItem::~allItem()
 {
 }
 
 
-HRESULT equipment::init()
+HRESULT allItem::init()
 {
-	loadDatabase("category_e.txt");
+	loadDatabase("All_item.txt");
 
 	return S_OK;
 }
 
 //============================================================================동적할당 구조체 딜리트
-void equipment::release()
+void allItem::release()
 {
 	
 	mIterEitem mIter;
@@ -36,7 +36,7 @@ void equipment::release()
 //============================================================================데이터로딩
 //= 만약 맵이 터진다면 txtData의 로드데이터의 버퍼량을 늘려주자 =
 //============================================================================
-void equipment::loadDatabase(string name)
+void allItem::loadDatabase(string name)
 {
 	//데이터를 읽어오자
 	arrEitem vTemp;
@@ -52,7 +52,7 @@ void equipment::loadDatabase(string name)
 
 		//텍스트파일의 목록 표시 라인 건너뛰기
 		if (vTemp[i] == "단검" || vTemp[i] == "검" || vTemp[i] == "두손검" || vTemp[i] == "투구" || vTemp[i] == "갑옷" ||
-			vTemp[i] == "망토" || vTemp[i] == "악세서리")
+			vTemp[i] == "악세서리" || vTemp[i] == "푸드" || vTemp[i] == "포션")
 		{
 			count += 2;
 			continue;
@@ -66,7 +66,7 @@ void equipment::loadDatabase(string name)
 
 			_mTotalEitem.insert(pair<string, eItem*>(vTemp[i + 1], em));
 
-			if (i != 2) count += 13;
+			if (i != 2) count += 14;
 			continue;
 		}
 
@@ -82,9 +82,14 @@ void equipment::loadDatabase(string name)
 		else if (i == count + 8) mIter->second->con_ = (int)atoi(vTemp[i].c_str());
 		else if (i == count + 9) mIter->second->int_ = (int)atoi(vTemp[i].c_str());
 		else if (i == count + 10) mIter->second->lck_ = (int)atoi(vTemp[i].c_str());
-		else if (i == count + 11) mIter->second->description_ = vTemp[i];
-
-
+		else if (i == count + 11) mIter->second->HP_ = (int)atoi(vTemp[i].c_str());
+		else if (i == count + 12)
+		{
+			mIter->second->description_ = vTemp[i];
+			mIter->second->img_ = IMAGEMANAGER->findImage(mIter->second->name_);
+		}
+		
+	
 	}
 
 	vTemp.clear();

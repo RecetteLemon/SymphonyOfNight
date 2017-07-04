@@ -95,6 +95,19 @@ HRESULT loadItem::initForFrameImage(string keyName, const char* fileName, float 
 	return S_OK;
 }
 
+HRESULT loadItem::initForSound(string keyName, string fileName, BOOL bgm , BOOL loop )
+{
+	_kind = LOAD_KIND_SOUND;
+
+	memset(&_soundResource, 0, sizeof(tagSoundResource));
+
+	_soundResource.keyName = keyName;
+	_soundResource.fileName = fileName;
+	_soundResource.bgm = bgm;
+	_soundResource.loop = loop;
+
+	return S_OK;
+}
 
 
 
@@ -110,31 +123,48 @@ loading::~loading()
 
 HRESULT loading::init()
 {
-	//_background = IMAGEMANAGER->addImage("로딩백그라운드", "히오스메인.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	
+	_background = IMAGEMANAGER->addFrameImage("LoadingBackground", "Image/Loading/LoadingBackground.bmp",33000, 600, 41, 1, true, RGB(255, 0, 255));
+	
 
-	//_loadingBar = new progressBar;
-	//_loadingBar->init("loadingBarTop", "loadingBarBottom", WINSIZEX / 2, WINSIZEY - 20, WINSIZEX, 20);
-	//_loadingBar->setGauge(0, 0);
+	_loadingbackground = new animation;
+	_loadingbackground->init(_background->getWidth(), _background->getHeight(), _background->getFrameWidth(), _background->getFrameHeight());
+	_loadingbackground->setDefPlayFrame(false, true);
+	_loadingbackground->setFPS(1);
+	_loadingbackground->start();
 
-	//_currentGauge = 0;
+	
+	_currentGauge = 0;
 	
 	return S_OK;
 }
 
 void loading::release()
 {
-	//SAFE_DELETE(_loadingBar);
+	safeDelete(_loadingbackground);
+	IMAGEMANAGER->deleteImage("LoadingBackground");
+	_background = NULL;
+
+	arrLoadItemIter iter = _vLoadItem.begin();
+
+	for (; iter != _vLoadItem.end();)
+	{
+		safeDelete(*iter);
+		iter = _vLoadItem.erase(iter);
+	}
+
+	_vLoadItem.clear();
 }
 
 void loading::update() 
 {
-	//_loadingBar->update();
+	_loadingbackground->frameUpdate(TIMEMANAGER->getElapsedTime() * 20);
 }
 
 void loading::render() 
 {
-	//_background->render(getMemDC(), 0 ,0);
-	//_loadingBar->render();
+	_background->aniRender(getMemDC(), 0, 0, _loadingbackground);
+
 }
 
 
@@ -174,6 +204,14 @@ void loading::loadFrameImage(string keyName, const char* fileName, float x, floa
 {
 	loadItem* item = new loadItem;
 	item->initForFrameImage(keyName, fileName, x, y, width, height, frameX, frameY, trans, transColor);
+
+	_vLoadItem.push_back(item);
+}
+
+void loading::loadsound(string keyName, string fileName, BOOL bgm, BOOL loop)
+{
+	loadItem* item = new loadItem;
+	item->initForSound(keyName, fileName, bgm, loop);
 
 	_vLoadItem.push_back(item);
 }
@@ -230,12 +268,13 @@ BOOL loading::loadingDone()
 
 		case LOAD_KIND_SOUND:
 		{
-			//사운드는 숙쪠!!! 야후!!!
+			tagSoundResource sound = item->getSoundResource();
+			SOUNDMANAGER->addSound(sound.keyName, sound.fileName, sound.bgm, sound.loop);
+			
 		}
 		break;
 	}
 
-	_loadingBar->setGauge(_currentGauge, _vLoadItem.size());
 
 	_currentGauge++;
 

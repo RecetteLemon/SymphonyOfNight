@@ -64,6 +64,15 @@
     <Filter Include="SymphonyOfNight\Object">
       <UniqueIdentifier>{c8f719e5-671a-4ef0-87ce-0c24556078f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SymphonyOfNight\Shop">
+      <UniqueIdentifier>{e195177e-d228-4f67-b6f8-7bb0095cb288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SymphonyOfNight\LoadingScene">
+      <UniqueIdentifier>{eba1dab1-ca15-46bd-ac4c-2493c80a8b27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SymphonyOfNight\TitleScene">
+      <UniqueIdentifier>{f981cbfa-8424-404f-8d40-be3457a9d6bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +159,18 @@
     <ClInclude Include="item.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="shopScene.h">
+      <Filter>SymphonyOfNight\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="objTest.h">
+      <Filter>SymphonyOfNight\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingScene.h">
+      <Filter>SymphonyOfNight\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleScene.h">
+      <Filter>SymphonyOfNight\TitleScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -223,6 +244,18 @@
     </ClCompile>
     <ClCompile Include="item.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="shopScene.cpp">
+      <Filter>SymphonyOfNight\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="objTest.cpp">
+      <Filter>SymphonyOfNight\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingScene.cpp">
+      <Filter>SymphonyOfNight\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleScene.cpp">
+      <Filter>SymphonyOfNight\TitleScene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

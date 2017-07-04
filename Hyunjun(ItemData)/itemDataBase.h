@@ -4,7 +4,7 @@
 //============================================================================아이템종류
 enum CATEGORY_E
 {
-	ONE_HAND, TWO_HAND, HEAD, ARMOR, CAPE, ACCESSORY, CATEGORY_END
+	ONE_HAND, TWO_HAND, HEAD, ARMOR, ACCESSORY, FOOD, POTION, CATEGORY_END
 };
 
 //============================================================================상태이상 목록
@@ -27,6 +27,7 @@ struct eItem
 	int			con_;
 	int			int_;
 	int			lck_;
+	int			HP_;
 	string		description_;
 
 	image*		img_;
@@ -34,7 +35,7 @@ struct eItem
 	~eItem() {};
 };
 
-class equipment : public singletonBase<equipment>
+class allItem : public singletonBase<allItem>
 {
 private:
 	typedef vector<string> arrEitem;
@@ -55,6 +56,8 @@ public:
 	eItem* getData(string str) { return _mTotalEitem.find(str)->second; }
 
 
-	equipment();
-	~equipment();
+	allItem();
+	~allItem();
 };
+
+

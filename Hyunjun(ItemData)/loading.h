@@ -1,9 +1,9 @@
 #pragma once
 #include "gameNode.h"
-#include "progressBar.h"
+
 
 enum LOAD_KIND
-{
+{ 
 	LOAD_KIND_IMAGE_0,
 	LOAD_KIND_IMAGE_1,
 	LOAD_KIND_IMAGE_2,
@@ -23,12 +23,22 @@ struct tagImageResource
 	bool trans;
 	COLORREF transColor;
 };
+struct tagSoundResource
+{
+	string keyName;
+	string fileName;
+	bool bgm, loop;
+
+
+};
 
 class loadItem
 {
 private:
 	LOAD_KIND _kind;
 	tagImageResource _imageResource;
+	tagSoundResource _soundResource;
+
 
 public:
 	HRESULT initForImage(string keyName, int width, int height);
@@ -43,9 +53,12 @@ public:
 	HRESULT initForFrameImage(string keyName, const char* fileName, float x, float y, int width, int height,
 		int frameX, int frameY, BOOL trans = FALSE, COLORREF transColor = FALSE);
 
+	HRESULT initForSound(string keyName, string fileName, BOOL bgm = FALSE, BOOL loop = FALSE);
+
 	LOAD_KIND getLoadingKind(void) { return _kind; }
 
 	tagImageResource getImageResource(void) { return _imageResource; }
+	tagSoundResource getSoundResource(void) { return _soundResource; }
 
 	loadItem();
 	~loadItem();
@@ -61,7 +74,8 @@ private:
 	arrLoadItem		_vLoadItem;
 
 	image*			_background;
-	progressBar*	_loadingBar;
+	animation*		_loadingbackground;
+	
 
 	int				_currentGauge;
 
@@ -76,6 +90,7 @@ public:
 	void loadImage(string keyName, const char* fileName, float x, float y, int width, int height, BOOL trans = FALSE, COLORREF transColor = FALSE);
 	void loadFrameImage(string keyName, const char* fileName, int width, int height, int frameX, int frameY, BOOL trans = FALSE, COLORREF transColor = FALSE);
 	void loadFrameImage(string keyName, const char* fileName, float x, float y, int width, int height, int frameX, int frameY, BOOL trans = FALSE, COLORREF transColor = FALSE);
+	void loadsound(string keyName, string fileName, BOOL bgm = FALSE, BOOL loop = FALSE);
 
 	BOOL loadingDone();
 
