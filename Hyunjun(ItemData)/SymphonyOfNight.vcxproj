@@ -83,13 +83,17 @@
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
-    <ClInclude Include="item.h" />
+    <ClInclude Include="inven.h" />
+    <ClInclude Include="inventoryScene.h" />
     <ClInclude Include="itemDataBase.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="loading.h" />
+    <ClInclude Include="loadingScene.h" />
     <ClInclude Include="objectCreate.h" />
+    <ClInclude Include="objTest.h" />
     <ClInclude Include="pixelCollision.h" />
+    <ClInclude Include="shopScene.h" />
     <ClInclude Include="symphonyOfNight.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
@@ -101,6 +105,7 @@
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="titleScene.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
@@ -112,13 +117,18 @@
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
-    <ClCompile Include="item.cpp" />
+    <ClCompile Include="inven.cpp" />
+    <ClCompile Include="inventoryScene.cpp" />
     <ClCompile Include="itemDataBase.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="loading.cpp" />
+    <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="objectCreate.cpp" />
+    <ClCompile Include="objTest.cpp" />
     <ClCompile Include="pixelCollision.cpp" />
+    <ClCompile Include="shopScene.cpp" />
+    <ClCompile Include="symphonyOfNight+deleteImage.cpp" />
     <ClCompile Include="symphonyOfNight.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
@@ -129,6 +139,7 @@
     </ClCompile>
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="winMain.cpp" />

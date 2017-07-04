@@ -34,9 +34,12 @@ HRESULT gameNode::init(bool managerInit)
 		SOUNDMANAGER->init();
 		SCENEMANAGER->init();
 		KEYANIMANAGER->init();
-		EQUIPDATA->init();
+		ITEM->init();
 		TXTDATA->init();
 		
+		// °ÔÀÓÀü¿ë ½Ì±ÛÅæ
+
+		INVEN->init();
 	}
 
 	return S_OK;
@@ -48,7 +51,8 @@ void gameNode::release(void)
 	{
 		SOUNDMANAGER->release();
 		TIMEMANAGER->release();
-		EQUIPDATA->release();
+		SCENEMANAGER->release();
+		ITEM->release();
 
 		IMAGEMANAGER->deleteImage("backBuffer");
 
@@ -59,7 +63,7 @@ void gameNode::release(void)
 		SOUNDMANAGER->releaseSingleton();
 		SCENEMANAGER->releaseSingleton();
 		KEYANIMANAGER->releaseSingleton();
-		EQUIPDATA->releaseSingleton();
+		ITEM->releaseSingleton();
 		TXTDATA->releaseSingleton();
 		
 		

@@ -31,6 +31,7 @@ void pixelCollision::pixelColliTop(int fromCheckX, int fromCheckY, image* pixelI
 		{
 			_colli[TOP] = true;
 			checkY = i - fromCheckY;
+			return;
 		}
 	}
 
@@ -43,7 +44,7 @@ void pixelCollision::pixelColliBottom(int fromCheckX, int fromCheckY, image* pix
 {
 	_probeY = checkY + fromCheckY;
 
-	for (int i = _probeY; i > _probeY - scale; i--)
+	for (int i = _probeY - scale; i < _probeY; i++)
 	{
 		_color = GetPixel(pixelImage->getMemDC(), (int)checkX + fromCheckX, i);
 
@@ -55,8 +56,8 @@ void pixelCollision::pixelColliBottom(int fromCheckX, int fromCheckY, image* pix
 		{
 			_colli[BOTTOM] = true;
 			checkY = i - fromCheckY;
+			return;
 		}
-	
 	}
 
 	_colli[BOTTOM] = false;
@@ -78,6 +79,7 @@ void pixelCollision::pixelColliRight(int fromCheckX, int fromCheckY, image* pixe
 		{
 			_colli[RIGHT] = true;
 			checkX = i - fromCheckX;
+			return;
 		}
 
 	}
@@ -101,6 +103,7 @@ void pixelCollision::pixelColliLeft(int fromCheckX, int fromCheckY, image* pixel
 		{
 			_colli[LEFT] = true;
 			checkX = i - fromCheckX;
+			return;
 		}
 
 	}

@@ -25,7 +25,7 @@ private:
 	DROP_ITEM	_randomItem;
 
 
-	image* _itemImg[DROP_ITEM_END];
+	image* _itemImg;
 
 public:
 

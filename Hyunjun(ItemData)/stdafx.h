@@ -28,6 +28,10 @@
 #include "itemDataBase.h"
 
 
+// 게임전용 싱글톤
+#include "inven.h"
+
+
 
 using namespace std;
 using namespace OMEGA_UTIL;
@@ -41,10 +45,10 @@ using namespace OMEGA_UTIL;
 #define WINSTARTX 50			//윈도우 창 시작지점 X좌표
 #define WINSTARTY 50			//윈도우 창 시작지점 Y좌표
 #define WINSIZEX  800			//윈도우 창 가로크기
-#define WINSIZEY  800			//윈도우 창 세로크기
+#define WINSIZEY  600			//윈도우 창 세로크기
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 
-//랜덤함수 디파인
+//싱글톤 디파인
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()
 #define IMAGEMANAGER imageManager::getSingleton()
@@ -53,8 +57,11 @@ using namespace OMEGA_UTIL;
 #define SOUNDMANAGER soundManager::getSingleton()
 #define SCENEMANAGER sceneManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
-#define EQUIPDATA equipment::getSingleton()
+#define ITEM allItem::getSingleton()
 #define TXTDATA txtData::getSingleton()
+
+//게임 전용 디파인
+#define INVEN inven::getSingleton()
 
 //==================================
 // ## 2017.04.05 ## 매크로 함수 ##
@@ -87,7 +94,7 @@ public:
 	MemoryMng()
 	{
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-		//_CrtSetBreakAlloc(60861);
+		//_CrtSetBreakAlloc(3333);
 
 		//만약 누수 경로가 명확히 뜨지 않을 경우 위의 주석된 줄을 활성화 후
 		//누수 경고가 뜬 문장에 제시된 숫자를 괄호안에 넣고 디버깅하면 누수된 줄에 디버깅이 멈춘다
