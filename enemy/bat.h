@@ -20,8 +20,6 @@ private:
 	bool _comePlayerY;		// 플레이어 좌표의 Y값에 왔니?				  Y좌표 판정
 
 	// 테스트 용으로 필요한거
-	float _playerX;
-	float _playerY;
 
 public:
 	//				이미지 이름			위치x,	 y
@@ -44,8 +42,7 @@ public:
 	void setBatMove(bool move) { _move = move; }
 
 	// 지금은 실험을 하기위해 필요하다.
-	// 플레이어 좌표를 받아오는 함수
-	void getPlayerXY(float x, float y);
+
 
 	bat();
 	~bat();

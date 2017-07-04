@@ -27,10 +27,10 @@ HRESULT bat::init(const char* imageName, float x, float y)
 
 	_comePlayerY = _move = _moveLeft = _upDown = false;
 
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½ ï¿½Ê±ï¿½È­
+	// ÀúÀåÇÒ Y°ª ÃÊ±âÈ­
 	_saveY = 0;
 
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ¿òÁ÷ÀÏ ¹üÀ§ ¼³Á¤
 	_waveRange = WINSIZEY / 5;
 
 
@@ -46,22 +46,31 @@ void bat::release()
 
 void bat::update()
 {
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) 
+	// Ãæµ¹ ÆÇÁ¤
+	RECT temp;
+	if (IntersectRect(&temp, &_enemyInfo.playerRc, &_comeRange))
+	{
+		_move = true;
+	}
+
+
+
+	// ¿òÁ÷ÀÓ(ÆÐÅÏ) 
 	move();
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+	// ¿òÁ÷ÀÌÁö ¾ÊÀ»¶§¸¸ ÆÇÁ¤¹üÀ§¸¦ ¸¸µé¾î ³½´Ù.
 	if (!_move)
 	{
 		_comeRange = RectMakeCenter(_enemyInfo.x + _enemyInfo.enemyImage->getFrameWidth() / 2, 
 			_enemyInfo.y + _enemyInfo.enemyImage->getFrameHeight() / 2,
 			100, 100);
 	}
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+	// ¸¸¾à ¿òÁ÷ÀÌ¸é ¹üÀ§´Â 0À¸·Î ÃÊ±âÈ­
 	else
 	{
 		_comeRange = RectMake(0, 0, 0, 0);
 	}
 
-	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½
+	// ÀÌ ¹ÚÁãÀÇ ·ºÆ®°ª
 	_enemyInfo.rc = RectMake(_enemyInfo.x, _enemyInfo.y,
 		_enemyInfo.enemyImage->getFrameWidth(),
 		_enemyInfo.enemyImage->getFrameHeight());
@@ -69,74 +78,114 @@ void bat::update()
 
 void bat::render()
 {
-	Rectangle(getMemDC(), _comeRange.left, _comeRange.top, _comeRange.right, _comeRange.bottom);
-	// ï¿½×·ï¿½ï¿½Ö´Â°ï¿½
-	_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
-		_enemyInfo.enemyAni);
+	// ±×·ÁÁÖ´Â°Å
+	// »óÅÂ°ª¿¡ µû¸¥ Çàµ¿
+	switch (_enemyInfo.stat)
+	{
+	case ENEMY_LEFT_STAY:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
+			_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]);
+
+		break;
+
+	case ENEMY_RIGHT_STAY:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
+			_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]);
+		break;
+	case ENEMY_LEFT_MOVE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
+			_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]);
+
+		break;
+
+	case ENEMY_RIGHT_MOVE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
+			_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]);
+		break;
+
+		// Á×¾úÀ»¶§ ÀÌ¹ÌÁö¸¦ Áö¿î´Ù
+	case ENEMY_LEFT_DIE:
+		release();
+		break;
+
+	case ENEMY_RIGHT_DIE:
+		release();
+		break;
+	}
 }
 
-// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+// ÀÌ¹ÌÁö ÃÊ±âÈ­
 void bat::imageInit()
 {
-	// ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â°Å¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â°ï¿½
+	for (int i = 0; i < ENEMY_ANI_AND; i++)
+	{
+		_enemyInfo.enemyAni[i] = new animation;
+		_enemyInfo.enemyAni[i]->init(_enemyInfo.enemyImage->getWidth(), _enemyInfo.enemyImage->getHeight()
+			, _enemyInfo.enemyImage->getFrameWidth(), _enemyInfo.enemyImage->getFrameHeight());
+	}
+	// ¾Ö´Ï¸ÞÀÌ¼Ç ÃÊ±âÈ­µé ¿ÞÂÊ ¿òÁ÷ÀÓ°ú ¿À¸¥ÂÊ ¿òÁ÷ÀÓ, ¿ÞÂÊ °¡¸¸È÷ ÀÖ´Â°Å¶û ¿À¸¥ÂÊ °¡¸¸È÷ ÀÖ´Â°Å
 	int arrLeftMove[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-	KEYANIMANAGER->addArrayFrameAnimation("leftBatMove", "bat", arrLeftMove, 10, 5, true);
+	_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->setPlayFrame(arrLeftMove, 10, true);
+	_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->setFPS(30);
 
 	int arrRightMove[] = { 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
-	KEYANIMANAGER->addArrayFrameAnimation("rightBatMove", "bat", arrRightMove, 10, 5, true);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setPlayFrame(arrRightMove, 10, true);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setFPS(30);
 
 	int arrLeftStay[] = { 20, 21 };
-	KEYANIMANAGER->addArrayFrameAnimation("leftBatStay", "bat", arrLeftStay, 2, 3, true);
+	_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->setPlayFrame(arrLeftStay, 2, true);
+	_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->setFPS(5);
 
 	int arrRightStay[] = { 22, 23 };
-	KEYANIMANAGER->addArrayFrameAnimation("rightBatStay", "bat", arrRightStay, 2, 3, true);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->setPlayFrame(arrRightStay, 2, true);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->setFPS(5);
 
-	_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("leftBatStay");
-	_enemyInfo.enemyAni->start();
+	_enemyInfo.stat = ENEMY_LEFT_STAY;
+	_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->start();
 
 }
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
+// ¿òÁ÷ÀÓ(ÆÐÅÏ)
 void bat::move()
 {
-	// ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½.
+	// ÇÃ·¹ÀÌ¾î°¡ ¹ÚÁãÀÇ ÆÇÁ¤ ·ºÆ®¿¡ ´Ù¾ÒÀ»¶§ ±×¶§ ¿òÁ÷ÀÎ´Ù.
 	if (_move)
 	{
-		// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Yï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ù°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´Ù¸ï¿½ 
+		// ÇÃ·¹ÀÌ¾îÀÇ YÁÂÇ¥¿¡ ´Ù°¡°¡Áö ¸øÇß´Ù¸é 
 		if (!_comePlayerY)
 		{
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+			// ¹ÚÁãÀÇ yÁÂÇ¥¸¦ ´õÇØÁØ´Ù.
 			_enemyInfo.y += _enemyInfo.speed;
-			// ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
-			if (_playerX <= _enemyInfo.x)
+			// ÇÃ·¹ÀÌ¾î°¡ ÀÌ ÀûÀÇ ¿ÞÂÊ¿¡ ÀÖÀ» °æ¿ì
+			if (_enemyInfo.playerRc.left <= _enemyInfo.x)
 			{
 				_moveLeft = true;
 				_enemyInfo.stat = ENEMY_LEFT_MOVE;
 			}
 
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-			if (_playerX > _enemyInfo.x)
+			// ¿À¸¥ÂÊ
+			if (_enemyInfo.playerRc.right > _enemyInfo.x)
 			{
 				_moveLeft = false;
 				_enemyInfo.stat = ENEMY_RIGHT_MOVE;
 			}
 
-			// ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-			if (_enemyInfo.y >= _playerY)
+			// ÀûÀÌ ÇÃ·¹ÀÌ¾î À§Ä¡¿¡ ¿ÔÀ»¶§
+			if (_enemyInfo.y >= _enemyInfo.playerRc.top)
 			{
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Yï¿½ï¿½Ç¥
+				// ÀúÀåÇÒ YÁÂÇ¥
 				_saveY = _enemyInfo.y;
 				_comePlayerY = true;
 
 			}
 		}
-		// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ yï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
+		// ÇÃ·¹ÀÌ¾îÀÇ yÁÂÇ¥ ÆÇÁ¤
 		if (_comePlayerY)
 		{
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ñ´ï¿½
-			// ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			// ¿©±â´Â ÇÃ·¹ÀÌ¾î À§Ä¡¸¦ ¹Þ¾Æ¼­ ¿ÞÂÊ ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ÇÑ´Ù
+			// ¿©±â¼­ ¿ÞÂÊ ¿À¸¥ÂÊÀÌ °áÁ¤µÇ¸é ¾Ö´Ï¸ÞÀÌ¼Ç »óÅÂ°ªµµ º¯°æ
 
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ¹°°á·Î ¿òÁ÷ÀÓ
 			if (_upDown)
 			{
 				_enemyInfo.y += 1.5f;
@@ -146,13 +195,13 @@ void bat::move()
 				_enemyInfo.y -= 1.5f;
 			}
 
-			// ï¿½ï¿½ï¿½à¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°£´ï¿½
+			// ¸¸¾à¿¡ ÇöÀç ÀûÀÇ yÁÂÇ¥¿¡¼­ ¿þÀÌºê¹üÀ§¸¸Å­ ´õÇÑ°Ô ½ÃÀÛ yÁÂÇ¥º¸´Ù ÀÛ¾ÆÁö¸é ´Ù½Ã À§·Î ¿Ã¶ó°£´Ù
 			if (_enemyInfo.y + _waveRange / 2 < _saveY)
 			{
 				_upDown = true;
 			}
 
-			// ï¿½ï¿½ï¿½à¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ yï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ¸¸¾à¿¡ ÇöÀç ÀûÀÇ yÁÂÇ¥¿¡¼­ ¿þÀÌºê¹üÀ§¸¦ »«°Ô ½ÃÀÛ yÁÂÇ¥º¸´Ù Ä¿Áö¸é ´Ù½Ã ¾Æ·¡·Î ³»·Á°£´Ù
 			if (_enemyInfo.y - _waveRange / 2 > _saveY)
 			{
 				_upDown = false;
@@ -160,31 +209,42 @@ void bat::move()
 		}
 	}
 
-	// ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½àµ¿
+	// »óÅÂ°ª¿¡ µû¸¥ Çàµ¿
 	switch (_enemyInfo.stat)
 	{
-		case ENEMY_LEFT_MOVE:
-			_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("leftBatMove");
-			_enemyInfo.x -= _enemyInfo.speed;
+		case ENEMY_LEFT_STAY:
+			_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
-			if (!_enemyInfo.enemyAni->isPlay())
+			break;
+
+		case ENEMY_RIGHT_STAY:
+			_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+
+			break;
+
+		case ENEMY_LEFT_MOVE:
+			_enemyInfo.x -= _enemyInfo.speed;
+			_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+
+			if (!_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->isPlay())
 			{
-				_enemyInfo.enemyAni->start();
+				_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->start();
 			}
 			break;
 
 		case ENEMY_RIGHT_MOVE:
-			_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("rightBatMove");
 			_enemyInfo.x += _enemyInfo.speed;
+			_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
-			if (!_enemyInfo.enemyAni->isPlay())
+			if (!_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->isPlay())
 			{
-				_enemyInfo.enemyAni->start();
+				_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->start();
 			}
 			break;
 
-		// ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+		// Á×¾úÀ»¶§ ÀÌ¹ÌÁö¸¦ Áö¿î´Ù
 		case ENEMY_LEFT_DIE:
+
 			release();
 			break;
 
@@ -192,11 +252,4 @@ void bat::move()
 			release();
 			break;
 	}	
-}
-
-// ï¿½×½ï¿½Æ® ï¿½ï¿½
-void bat::getPlayerXY(float x, float y)
-{
-	_playerX = x;
-	_playerY = y;
 }

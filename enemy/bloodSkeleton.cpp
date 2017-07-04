@@ -24,13 +24,16 @@ HRESULT bloodSkeleton::init(const char* imageName, RECT leftRect, RECT rightRect
 
 	// 스켈의 공력, 경험치, 체력을 초기화
 	_enemyInfo.atk = 4;
-	_enemyInfo.hp = 10000;
+	_enemyInfo.hp = 1;
 	_enemyInfo.die = false;
-	_isLeft = _playCount = false;
+	_isLeft = false;
 
 	_enemyInfo.speed = 0.5f;
 	_maxReviveTime = 5;
 	_reviveTime = 0;
+
+	_comeRange = RectMakeCenter(_enemyInfo.x, _enemyInfo.y,
+		_enemyInfo.enemyImage->getFrameWidth() * 2, _enemyInfo.enemyImage->getFrameHeight());
 
 	_leftRect = leftRect;
 	_rightRect = rightRect;
@@ -49,14 +52,9 @@ void bloodSkeleton::release()
 void bloodSkeleton::update()
 {
 	enemy::update();
-	statChange();
+	move();
 
-	_enemyInfo.hp -= RND->getFromFloatTo(0.1, 100.9f);
-	if (_enemyInfo.hp < 0)
-	{
-		_enemyInfo.die = true;
-		_playCount = false;
-	}
+
 
 	// 만약에 죽었으면
 	if (_enemyInfo.die && _enemyInfo.stat != ENEMY_LEFT_REVIVE && _enemyInfo.stat != ENEMY_RIGHT_REVIVE)
@@ -66,14 +64,13 @@ void bloodSkeleton::update()
 		if (_enemyInfo.stat == ENEMY_LEFT_MOVE)
 		{
 			_enemyInfo.stat = ENEMY_LEFT_DIE;
-			_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("leftSkeleDie");
-			_enemyInfo.enemyAni->start();
+			_enemyInfo.enemyAni[ENEMY_LEFT_DIEANI]->start();
 		}
 		if (_enemyInfo.stat == ENEMY_RIGHT_MOVE)
 		{
 			_enemyInfo.stat = ENEMY_RIGHT_DIE;
-			_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("rightSkeleDie");
-			_enemyInfo.enemyAni->start();
+			_enemyInfo.enemyAni[ENEMY_RIGHT_DIEANI]->start();
+
 		}
 		
 	}
@@ -84,18 +81,26 @@ void bloodSkeleton::update()
 		// 왼쪽일때랑
 		if (_direction == ENEMY_LEFT && _enemyInfo.stat == ENEMY_LEFT_DIE)
 		{
-			_enemyInfo.stat = ENEMY_LEFT_REVIVE;			
+			_enemyInfo.stat = ENEMY_LEFT_REVIVE;
+			_enemyInfo.enemyAni[ENEMY_LEFT_REVIVEANI]->start();
 		}
 		// 오른쪽일때
 		if (_direction == ENEMY_RIGHT && _enemyInfo.stat == ENEMY_RIGHT_DIE)
 		{
 			_enemyInfo.stat = ENEMY_RIGHT_REVIVE;
+			_enemyInfo.enemyAni[ENEMY_RIGHT_REVIVEANI]->start();
 		}
 		// 적의 정보값 다시 초기화, 애니 시작
 		_reviveTime = 0;
-		_enemyInfo.hp = 10000;
-		_playCount = true;
+		_enemyInfo.hp = 1;
 	}
+
+	_enemyInfo.rc = RectMake(_enemyInfo.x, _enemyInfo.y,
+		_enemyInfo.enemyImage->getFrameWidth(), _enemyInfo.enemyImage->getFrameHeight());
+
+	_comeRange = RectMakeCenter(_enemyInfo.x + _enemyInfo.enemyImage->getFrameWidth() / 2,
+		_enemyInfo.y + _enemyInfo.enemyImage->getFrameHeight() / 2,
+		100, _enemyInfo.enemyImage->getFrameHeight());
 
 	KEYANIMANAGER->update();
 
@@ -104,48 +109,104 @@ void bloodSkeleton::update()
 void bloodSkeleton::render()
 {
 	enemy::render();
-	Rectangle(getMemDC(), _enemyInfo.rc.left, _enemyInfo.rc.top, _enemyInfo.rc.right, _enemyInfo.rc.bottom);
-	_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni);
+	Rectangle(getMemDC(), _comeRange.left, _comeRange.top, _comeRange.right, _comeRange.bottom);
+	// 상태값에 따른 애니메이션, 행동 변경
+	switch (_enemyInfo.stat)
+	{
+	case ENEMY_LEFT_MOVE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]);
+
+		break;
+
+	case ENEMY_RIGHT_MOVE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]);
+
+		break;
+
+	case ENEMY_LEFT_REVIVE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_LEFT_REVIVEANI]);
+
+		break;
+
+	case ENEMY_RIGHT_REVIVE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_RIGHT_REVIVEANI]);
+
+		break;
+
+	case ENEMY_LEFT_DIE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_LEFT_DIEANI]);
+
+		break;
+
+	case ENEMY_RIGHT_DIE:
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_RIGHT_DIEANI]);
+
+		break;
+	
+	}
+	
 }
 
 // 이미지 초기화
 void bloodSkeleton::imageInit()
 {
+	for (int i = 0; i < ENEMY_ANI_AND; i++)
+	{
+		_enemyInfo.enemyAni[i] = new animation;
+		_enemyInfo.enemyAni[i]->init(_enemyInfo.enemyImage->getWidth(), _enemyInfo.enemyImage->getHeight()
+			, _enemyInfo.enemyImage->getFrameWidth(), _enemyInfo.enemyImage->getFrameHeight());
+	}
+
+
+
 	// 왼쪽 프레임들
 	int arrLeftMove[] = { 0, 1, 2, 3, 4, 3, 2, 1 };
-	KEYANIMANAGER->addArrayFrameAnimation("leftSkeleMove", "bloodSkeleton", arrLeftMove, 8, 3, true); // 이동
+	_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->setPlayFrame(arrLeftMove, 8, true);
+	_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->setFPS(5);
 
 	int arrLeftRevive[] = { 13, 12, 11, 10, 9, 8, 7 };
-	KEYANIMANAGER->addArrayFrameAnimation("leftSkeleRevive", "bloodSkeleton", arrLeftRevive, 7, 1, false, leftRevive, this); // 살아나고 왼쪽이동 애니메이션으로 바꿈
+	_enemyInfo.enemyAni[ENEMY_LEFT_REVIVEANI]->setPlayFrame(arrLeftRevive, 7, false, leftRevive, this);
+	_enemyInfo.enemyAni[ENEMY_LEFT_REVIVEANI]->setFPS(7);
 
-	int arrLeftDie[] = { 8, 9, 10, 11, 12 };
-	_enemyInfo.enemyAni[ENEMY_LEFT_DIE]->setPlayFrame(arrLeftDie, 5, false, false);
-
-	KEYANIMANAGER->addArrayFrameAnimation("leftSkeleDie", "bloodSkeleton", arrLeftDie, 5, 1, false); // 죽음
-
+	int arrLeftDie[] = { 8, 9, 10, 11, 12, 13 };
+	_enemyInfo.enemyAni[ENEMY_LEFT_DIEANI]->setPlayFrame(arrLeftDie, 6, false, false);
+	_enemyInfo.enemyAni[ENEMY_LEFT_DIEANI]->setFPS(8);
 
 	// 오른쪽 프레임들
 	int arrRightMove[] = { 15, 16, 17, 18, 19, 18, 17, 16 };
-	KEYANIMANAGER->addArrayFrameAnimation("rightSkeleMove", "bloodSkeleton", arrRightMove, 8, 3, true); // 이동
+	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setPlayFrame(arrRightMove, 8, true);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setFPS(2);
 
 	int arrRightRevive[] = { 28, 27, 26 ,25, 24, 23, 22 };
-	KEYANIMANAGER->addArrayFrameAnimation("rightSkeleRevive", "bloodSkeleton", arrRightRevive, 7, 1, false, rightRevive, this); // 살아나고 오른쪽움직임으로 바꿈
+	_enemyInfo.enemyAni[ENEMY_RIGHT_REVIVEANI]->setPlayFrame(arrRightRevive, 7, false, rightRevive, this);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_REVIVEANI]->setFPS(7);
 
 	int arrRightDie[] = { 23, 24, 25, 26, 27, 28 };
-	KEYANIMANAGER->addArrayFrameAnimation("rightSkeleDie", "bloodSkeleton", arrRightDie, 6, 1, false); // 죽음
+	_enemyInfo.enemyAni[ENEMY_RIGHT_DIEANI]->setPlayFrame(arrRightDie, 6, false, false);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_DIEANI]->setFPS(8);
 
-	// 애니메이션 시작
-	_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("rightSkeleMove");
-	_enemyInfo.enemyAni->start();
 	_enemyInfo.stat = ENEMY_RIGHT_MOVE;
+	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVE]->start();
 	_direction = ENEMY_RIGHT;
 }
 
 // 상태값 변경(패턴)
-void bloodSkeleton::statChange()
+void bloodSkeleton::move()
 {
 
 	RECT temp; // InterSectRect(_temp) < 이부분에 이용
+
+	if (IntersectRect(&temp, &_comeRange, &_enemyInfo.playerRc))
+	{
+		if (_enemyInfo.x < _enemyInfo.playerRc.left)
+		{
+			_isLeft = false;
+		}
+		if (_enemyInfo.x > _enemyInfo.playerRc.left)
+		{
+			_isLeft = true;
+		}
+	}
 
 	// 방향 값 전환  
 	// 왼쪽에 네모에 다으면 상태값을 오른쪽으로
@@ -180,45 +241,40 @@ void bloodSkeleton::statChange()
 	switch (_enemyInfo.stat)
 	{
 	case ENEMY_LEFT_MOVE:
-		_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("leftSkeleMove");
 		_enemyInfo.x -= _enemyInfo.speed;
-		if (!_enemyInfo.enemyAni->isPlay())
+		_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+
+		if (!_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->isPlay())
 		{
-			_enemyInfo.enemyAni->start();
+			_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->start();
 		}
-		_enemyInfo.rc = RectMake(_enemyInfo.x, _enemyInfo.y,
-			_enemyInfo.enemyImage->getFrameWidth(), _enemyInfo.enemyImage->getFrameHeight());
 		break;
 
 	case ENEMY_RIGHT_MOVE:
-		_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("rightSkeleMove");
 		_enemyInfo.x += _enemyInfo.speed;
+		_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
-		_enemyInfo.rc = RectMake(_enemyInfo.x, _enemyInfo.y,
-			_enemyInfo.enemyImage->getFrameWidth(), _enemyInfo.enemyImage->getFrameHeight());
+		if (!_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->isPlay())
+		{
+			_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->start();
+		}
 		break;
 	case ENEMY_LEFT_DIE:
+		_enemyInfo.enemyAni[ENEMY_LEFT_DIEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
 		break;
 	
 	case ENEMY_RIGHT_DIE:
-		
+		_enemyInfo.enemyAni[ENEMY_RIGHT_DIEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+
 		break;
 	case ENEMY_LEFT_REVIVE:
-		_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("leftSkeleRevive");
-		if (!_enemyInfo.enemyAni->isPlay())
-		{
-			_enemyInfo.enemyAni->start();
-		}
+		_enemyInfo.enemyAni[ENEMY_LEFT_REVIVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
 		break;
 
 	case ENEMY_RIGHT_REVIVE:
-		_enemyInfo.enemyAni = KEYANIMANAGER->findAnimation("rightSkeleRevive");
-		if (!_enemyInfo.enemyAni->isPlay())
-		{
-			_enemyInfo.enemyAni->start();
-		}
+		_enemyInfo.enemyAni[ENEMY_RIGHT_REVIVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
 		break;
 	}
@@ -232,8 +288,6 @@ void bloodSkeleton::leftRevive(void* obj)
 	skeleton->setSkeletonDie(false);
 	skeleton->setSkeletonDirection(true);
 	skeleton->setSkeletonStat(ENEMY_LEFT_MOVE);
-	skeleton->setSkeletonAnimation(KEYANIMANAGER->findAnimation("leftSkeleMove"));
-	skeleton->getSkeletonAnimation()->start();
 }
 
 void bloodSkeleton::rightRevive(void* obj)
@@ -243,6 +297,4 @@ void bloodSkeleton::rightRevive(void* obj)
 	skeleton->setSkeletonDie(false);
 	skeleton->setSkeletonDirection(false);
 	skeleton->setSkeletonStat(ENEMY_RIGHT_MOVE);
-	skeleton->setSkeletonAnimation(KEYANIMANAGER->findAnimation("rightSkeleMove"));
-	skeleton->getSkeletonAnimation()->start();
 }

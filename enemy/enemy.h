@@ -15,6 +15,8 @@ protected:
 	// 상태값
 	enum STAT
 	{
+		ENEMY_LEFT_STAY,
+		ENEMY_RIGHT_STAY,
 		ENEMY_LEFT_MOVE,
 		ENEMY_RIGHT_MOVE,
 		ENEMY_LEFT_REVIVE,	// 스켈만이 살아나는 상태값
@@ -25,6 +27,8 @@ protected:
 
 	enum ANI
 	{
+		ENEMY_LEFT_STAYANI,
+		ENEMY_RIGHT_STAYANI,
 		ENEMY_LEFT_MOVEANI,
 		ENEMY_RIGHT_MOVEANI,
 		ENEMY_LEFT_REVIVEANI,
@@ -41,6 +45,7 @@ protected:
 		animation* enemyAni[ENEMY_ANI_AND];	// 적의 프레임 애니메이션 설정
 
 		RECT rc; // 적의 피격 렉트
+		RECT playerRc; // 받아올 플레이어의 렉트
 
 		float x, y; // 적의 좌표값
 		float speed;	//적의 속도
@@ -67,6 +72,9 @@ public:
 
 	// 패턴 함수
 	virtual void move() = 0;
+
+
+	void getPlayerRect(RECT playerRc);
 
 	enemy();
 	~enemy();
