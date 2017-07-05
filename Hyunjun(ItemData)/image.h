@@ -91,6 +91,7 @@ public:
 
 	//					   뿌릴 곳X  뿌릴 곳Y    뿌려올 곳X  뿌려올 곳Y   그지점에서 가로  세로
 	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
+	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int modWidht, int modHeight, int sourWidth, int sourHeight);
 
 	void frameRender(HDC hdc, int destX, int destY);
 	void frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY);

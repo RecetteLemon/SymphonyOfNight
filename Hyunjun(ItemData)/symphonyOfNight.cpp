@@ -22,6 +22,9 @@ HRESULT symphonyOfNight::init(void)
 	SCENEMANAGER->addScene("ObjTest", new objTest);
 	
 	SCENEMANAGER->changeScene("LoadingScene");
+
+	// ╟тюсюЭ©К ╫л╠шеФ
+	
 	return S_OK;
 }
 

@@ -17,6 +17,12 @@ struct tagINVENITEM
 	string		description_;
 
 	image*		img_;
+
+	int			count_;
+
+	tagINVENITEM():
+		count_(0)
+	{}
 };
 
 class inven : public singletonBase<inven>
@@ -33,8 +39,30 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 
-	virtual void insertItem(string itemName);
+	void insertItem(string itemName);
+	void deleteItem(string itemName);
+
+	vector<tagINVENITEM> getVinven() { return vInven; }
+	vector<tagINVENITEM>::iterator getVIinven() { return viInven; }
+	
 	inven();
 	~inven();
+};
+
+class alucardHave : public singletonBase<alucardHave>
+{
+private:
+	vector<tagINVENITEM> vAlucard;
+	vector<tagINVENITEM>::iterator viAlucard;
+
+public:
+	void insertItem(string itemName);
+	void deleteItem(string itemName);
+
+	vector<tagINVENITEM> getValucard() { return vAlucard; }
+	vector<tagINVENITEM>::iterator getVIalucard() { return viAlucard; }
+
+	alucardHave();
+	~alucardHave();
 };
 

@@ -124,7 +124,7 @@ loading::~loading()
 HRESULT loading::init()
 {
 	
-	_background = IMAGEMANAGER->addFrameImage("LoadingBackground", "Image/Loading/LoadingBackground.bmp",33000, 600, 41, 1, true, RGB(255, 0, 255));
+	_background = IMAGEMANAGER->addFrameImage("LoadingBackground", "Image/Loading/LoadingBackground.bmp",23200, 600, 29, 1, true, RGB(255, 0, 255));
 	
 
 	_loadingbackground = new animation;

@@ -395,6 +395,30 @@ void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sour
 	}
 }
 
+void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int modWidth, int modHeight, int sourWidth, int sourHeight)
+{
+	if (_trans)
+	{
+		//특정 칼라 날려주는 함수
+		GdiTransparentBlt(hdc,		//복사될 장소의 DC
+			destX,					//복사될 좌표 시작점X(left)
+			destY,					//복사될 좌표 시작점Y(top)
+			modWidth,				//복사될 이미지 가로크기
+			modHeight,				//복사될 이미지 세로크기
+			_imageInfo->hMemDC,		//복사 대상 DC
+			sourX, sourY,			//복사될 시작지점
+			sourWidth,				//복사될 가로크기
+			sourHeight,				//복사될 세로크기
+			_transColor);			//날려줄 칼라
+	}
+	else
+	{
+		BitBlt(hdc, destX, destY,
+			sourWidth, sourHeight,
+			_imageInfo->hMemDC, sourX, sourY, SRCCOPY);
+	}
+}
+
 void image::frameRender(HDC hdc, int destX, int destY)
 {
 	if (_trans)
