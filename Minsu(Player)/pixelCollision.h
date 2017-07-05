@@ -25,6 +25,7 @@ public:
 
 	int VerticalCollision(RECT rc, float destX, float destY, image* sourImage);		// 수직
 	int HorizontalCollision(RECT rc, float destX, float destY, image* sourImage);	// 수평
+	float setPlayerVertical(RECT rc, float destX, float destY, image* sourImage);
 
 	pixelCollision();
 	~pixelCollision();

@@ -125,26 +125,29 @@ void player::release()
 
 void player::update() 
 {
+	// 플레이어 맞는 렉트는 항상 고정
 	_rc_Hit = RectMakeCenter(_x, _y - 50, 50, 100);
 
-	
-
-	// 왼쪽으로 움직였을때
+	// 왼쪽 방향키를 눌렀을때
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
+		// 플레이어가 앉은 상태가 아니면 움직일 수 있는 상태
 		if (_playerDir != DIR_RIGHT_SIT && _playerDir != DIR_LEFT_SIT)
 		{
-			_x -= MOVESPEED;
-//			_x -= MOVESPEED;
+			// 왼쪽 벽에 안닿았으면 움직이게 하자
+			if (_collision.HorizontalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != LEFT) _x -= MOVESPEED;
 		}
 
+		// 오른쪽으로 앉았는데 왼쪽 방향키 눌렀으면
 		if (_playerDir == DIR_RIGHT_SIT)
 		{
+			// 왼쪽 앉은 상태로 바꿔주자
 			_playerDir = DIR_LEFT_SIT;
 			_playerMotion = KEYANIMANAGER->findAnimation("playerLeftSitDown");
 			_playerMotion->start();
 		}
 
+		// 왼쪽으로 멈춰있는 상태면 움직이게 하자
 		if (_playerDir == DIR_LEFT_STOP)
 		{
 			_playerMotion->stop();
@@ -153,16 +156,20 @@ void player::update()
 			_playerMotion->start();
 			
 		}
+		// 만약 오른쪽으로 멈춰있는 상태면
 		else if (_playerDir == DIR_RIGHT_STOP)
 		{
+			// 뒤돌아서서 가는 모션을 취하고 왼쪽으로 움직이는 상태로 만들자
 			_playerMotion->stop();
 			_playerDir = DIR_LEFT_MOVE;
 			_playerMotion = KEYANIMANAGER->findAnimation("playerLeftTurn");
 			_playerMotion->start();
 		}
 	}
+	// 키 안눌렀는데 왼쪽으로 움직이는 상태면
 	else if (!KEYMANAGER->isStayKeyDown(VK_LEFT) && _playerDir == DIR_LEFT_MOVE)
 	{
+		// 멈춰주자
 		_playerMotion->stop();
 		_playerDir = DIR_LEFT_STOP;
 		_playerMotion = KEYANIMANAGER->findAnimation("playerLeftStopStart");
@@ -170,40 +177,49 @@ void player::update()
 	}
 
 
-	// 오른쪽으로 움직였을때
+	// 오른쪽 방향키를 눌렀을때
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 	{
+		// 앉아있는 상태가 아니라면
 		if (_playerDir != DIR_RIGHT_SIT && _playerDir != DIR_LEFT_SIT)
 		{
-			_x += MOVESPEED;
-//			_x += MOVESPEED;
+			// 오른쪽 벽에 부딪히지 않는 상태면 움직이게 해주자
+			if (_collision.HorizontalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != RIGHT) _x += MOVESPEED;
 		}
 
+		// 왼쪽으로 앉아있는 상태면
 		if (_playerDir == DIR_LEFT_SIT)
 		{
+			// 오른쪽으로 앉아서 보게하자
 			_playerDir = DIR_RIGHT_SIT;
 			_playerMotion = KEYANIMANAGER->findAnimation("playerRightSitDown");
 			_playerMotion->start();
 		}
 		
+		// 오른쪽으로 서있는 상태면
 		if (_playerDir == DIR_RIGHT_STOP)
 		{
+			// 움직이는 상태로 바꿔주자
 			_playerMotion->stop();
 			_playerMotion = KEYANIMANAGER->findAnimation("playerRightMoveStart");
 			_playerMotion->start();
 			_playerDir = DIR_RIGHT_MOVE;
 			
 		}
+		// 왼쪽으로 서있는 상태면
 		else if (_playerDir == DIR_LEFT_STOP)
 		{
+			// 오른쪽으로 돌아서는 모션을 취하고 오른쪽으로 움직이는 상태로 바꿔주자
 			_playerMotion->stop();
 			_playerMotion = KEYANIMANAGER->findAnimation("playerRightTurn");
 			_playerMotion->start();
 			_playerDir = DIR_RIGHT_MOVE;
 		}
 	}
+	// 키 안눌렀는데 오른쪽으로 움직이는 상태면
 	else if (!KEYMANAGER->isStayKeyDown(VK_RIGHT) && _playerDir == DIR_RIGHT_MOVE)
 	{
+		// 멈춰주자
 		_playerDir = DIR_RIGHT_STOP;
 		_playerMotion->stop();
 		_playerMotion = KEYANIMANAGER->findAnimation("playerRightStopStart");
@@ -211,9 +227,10 @@ void player::update()
 	}
 
 
-	// 앉을때
+	// 아래 방향키를 눌렀을때
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
+		// 방향마다 서있는 상태면 앉게 해주자
 		if (_playerDir == DIR_RIGHT_STOP)
 		{
 			_playerMotion->stop();
@@ -229,8 +246,10 @@ void player::update()
 			_playerMotion->start();
 		}
 	}
+	// 아래 방향키를 땠을때
 	else if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
 	{
+		// 방향마다 서있는 상태로 바꿔주자
 		if (_playerDir == DIR_RIGHT_SIT)
 		{
 			_playerMotion->stop();
@@ -247,8 +266,7 @@ void player::update()
 		}
 	}
 
-
-	// 점프할때
+	// 점프키 눌렀을때
 	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
 		// 서있을때 점프냐!
@@ -305,8 +323,7 @@ void player::update()
 	switch (_playerDir)
 	{
 		case DIR_RIGHT_STOP:
-
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == NULL)
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != BOTTOM)
 			{
 				_playerDir = DIR_RIGHT_FALL;
 				setPlayerMotion(KEYANIMANAGER->findAnimation("playerRightFall"));
@@ -314,13 +331,13 @@ void player::update()
 			}
 			else
 			{
-				_y = _collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
+				// y 좌표 바닥에 놓기
+				_y = _collision.setPlayerVertical(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
 			}
 		break;
 
 		case DIR_LEFT_STOP:
-
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == NULL)
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != BOTTOM)
 			{
 				_playerDir = DIR_LEFT_FALL;
 				setPlayerMotion(KEYANIMANAGER->findAnimation("playerLeftFall"));
@@ -328,13 +345,13 @@ void player::update()
 			}
 			else
 			{
-				_y = _collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
+//				// y 좌표 바닥에 놓기
+				_y = _collision.setPlayerVertical(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
 			}
 		break;
 
 		case DIR_RIGHT_MOVE:
-		
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == NULL)
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != BOTTOM)
 			{
 				_playerDir = DIR_RIGHT_FALL;
 				setPlayerMotion(KEYANIMANAGER->findAnimation("playerRightFall"));
@@ -342,13 +359,13 @@ void player::update()
 			}
 			else
 			{
-				_y = _collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
+				// y 좌표 바닥에 놓기
+				_y = _collision.setPlayerVertical(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
 			}
 		break;
 
 		case DIR_LEFT_MOVE:
-		
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == NULL)
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != BOTTOM)
 			{
 				_playerDir = DIR_LEFT_FALL;
 				setPlayerMotion(KEYANIMANAGER->findAnimation("playerLeftFall"));
@@ -356,15 +373,15 @@ void player::update()
 			}
 			else
 			{
-				_y = _collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
+				// y 좌표 바닥에 놓기
+				_y = _collision.setPlayerVertical(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map"));
 			}
 		break;
 
 		case DIR_RIGHT_MOVE_JUMP:
 		
 		case DIR_RIGHT_JUMP: 
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == NULL ||
-				_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) >= _y) _y -= JUMPFORCE;
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != TOP) _y -= JUMPFORCE;
 		break;
 
 		case DIR_RIGHT_FALL: 
@@ -373,7 +390,7 @@ void player::update()
 			_y += _gravity;
 
 			// 여기에 픽셀충돌 했는지 안했는지 넣으면 됨
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != NULL)
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == BOTTOM)
 			{
 				_gravity = 0;
 
@@ -388,8 +405,7 @@ void player::update()
 		case DIR_LEFT_MOVE_JUMP:
 
 		case DIR_LEFT_JUMP:
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == NULL ||
-				_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) >= _y) _y -= JUMPFORCE;
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != TOP) _y -= JUMPFORCE;
 		break;
 
 		case DIR_LEFT_FALL:
@@ -398,7 +414,7 @@ void player::update()
 			_y += _gravity;
 
 			// 여기에 픽셀충돌 했는지 안했는지 넣으면 됨
-			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) != NULL)
+			if (_collision.VerticalCollision(_rc_Hit, _x, _y, IMAGEMANAGER->findImage("map")) == BOTTOM)
 			{
 				_gravity = 0;
 
