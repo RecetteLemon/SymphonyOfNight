@@ -11,61 +11,66 @@ familiarDemon::~familiarDemon()
 {
 }
 
-HRESULT familiarDemon::init(const char* imageName, float* x, float* y)
+HRESULT familiarDemon::init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY)
 {
-	familiar::init(imageName, x, y);
+	familiar::init(imageName, x, y, playerPosX, playerPosY);
 	
 	_body = IMAGEMANAGER->findImage(imageName);
 	_wing = IMAGEMANAGER->findImage(imageName);
 
 	//bodyMotion frame
 	int arrRight[] = { 0 };
-	KEYANIMANAGER->addArrayFrameAnimation("DEMON_RIGHT", imageName, arrRight, 1, 10, false);
+	KEYANIMANAGER->addArrayFrameAnimation("DEMON_RIGHT", imageName, arrRight, 1, 1, false);
 
 	int arrLeft[] = { 1 };
-	KEYANIMANAGER->addArrayFrameAnimation("DEMON_LEFT", imageName, arrLeft, 1, 10, false);
+	KEYANIMANAGER->addArrayFrameAnimation("DEMON_LEFT", imageName, arrLeft, 1, 1, false);
 
 	int arrRightAttack[] = { 15, 16, 17 };
-	KEYANIMANAGER->addArrayFrameAnimation("DEMON_RIGHT_ATTACK", imageName, arrRightAttack, 3, 10, false, cbRightAttack, this);
+	KEYANIMANAGER->addArrayFrameAnimation("DEMON_RIGHT_ATTACK", imageName, arrRightAttack, 3, 12, false, cbRightAttack, this);
 
 	int arrLeftAttack[] = { 20, 21, 22 };
-	KEYANIMANAGER->addArrayFrameAnimation("DEMON_LEFT_ATTACK", imageName, arrLeftAttack, 3, 10, false, cbLeftAttack, this);
+	KEYANIMANAGER->addArrayFrameAnimation("DEMON_LEFT_ATTACK", imageName, arrLeftAttack, 3, 12, false, cbLeftAttack, this);
 
 
 	//wingMotion frame
 	int arrRightWing[] = { 25, 26, 27, 28, 27, 26 };
-	KEYANIMANAGER->addArrayFrameAnimation("DEMON_RIGHT_WING", imageName, arrRightWing, 6, 12, true);
+	KEYANIMANAGER->addArrayFrameAnimation("DEMON_RIGHT_WING", imageName, arrRightWing, 6, 15, true);
 
 	int arrLeftWing[] = { 30, 31, 32, 33, 32, 31 };
-	KEYANIMANAGER->addArrayFrameAnimation("DEMON_LEFT_WING", imageName, arrLeftWing, 6, 12, true);
+	KEYANIMANAGER->addArrayFrameAnimation("DEMON_LEFT_WING", imageName, arrLeftWing, 6, 15, true);
+
+	if (_x - *_playerPosX > 0) _direction = FAMILIAR_DIRECTION_LEFT;
+	if (_x - *_playerPosX <= 0) _direction = FAMILIAR_DIRECTION_RIGHT;
 
 	return S_OK;
 }
 
 void familiarDemon::update()
 {
-	move();
+	_direction;
 
-	KEYANIMANAGER->update();
+	move();
 }
 
 void familiarDemon::render(void)
 {
-	_wing->aniRender(getMemDC(), *_x, *_y, _wingMotion);
-	_body->aniRender(getMemDC(), *_x, *_y, _bodyMotion);
+	_wing->aniRender(getMemDC(), _rc.left, _rc.top, _wingMotion);
+	_body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
+
+	char ptr[32];
+	sprintf(ptr, "%5.2f", _x - *_playerPosX);
+	TextOut(getMemDC(), 200, 200, ptr, strlen(ptr));
+
+	sprintf(ptr, "%5.2f", _x);
+	TextOut(getMemDC(), 200, 220, ptr, strlen(ptr));
+
+	sprintf(ptr, "%5.2f", *_playerPosX);
+	TextOut(getMemDC(), 200, 240, ptr, strlen(ptr));
 }
 
 void familiarDemon::move()
 {
-	//if (_familiarChange)
-	//{
-	//	if (getDistance(*_x, *_y, _targetX, _targetY) > EPSILON)
-	//	{
-	//		*_x += ((_targetX - *_x) * getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
-	//		*_y -= ((_targetY - *_y) * getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
-	//	}
-	//	else _familiarChange = false;
-	//}
+	familiar::move();
 
 	switch (_direction)
 	{
@@ -91,7 +96,13 @@ void familiarDemon::move()
 		break;
 	}
 
+	_rc = RectMakeCenter(_x, _y, _body->getFrameWidth(), _body->getFrameHeight());
 	
+	if (_direction != FAMILIAR_DIRECTION_RIGHT_ATTACK || _direction != FAMILIAR_DIRECTION_LEFT_ATTACK)
+	{
+		if (_x - *_playerPosX > 0) _direction = FAMILIAR_DIRECTION_LEFT;
+		if (_x - *_playerPosX <= 0) _direction = FAMILIAR_DIRECTION_RIGHT;
+	}
 }
 
 void familiarDemon::cbRightAttack(void* obj)

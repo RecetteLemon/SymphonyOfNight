@@ -12,25 +12,37 @@ enum FAMILIARKIND
 	FAMILIAR_END
 };
 
+enum PLAYERDIRECT
+{
+	PRIGHT, PLEFT
+};
+
 class familiarManager : public gameNode
 {
 private:
-	familiar* _familiar[FAMILIAR_END];
+
 	familiar* _focusFamiliar;
 	FAMILIARKIND _kind;
+	PLAYERDIRECT _playerDirect;
 
-	float _x;
-	float _y;
+	float* _x;
+	float* _y;
+	float _familiarX;
+	float _familiarY;
+
+	RECT _rc;
 
 public:
-	HRESULT init(void);
+	HRESULT init(float* x, float* y);
 	void release(void);
 	void update(void);
 	void render(void);
+
 	void selectFamailiar(int kind);
+	
 	int getFamiliarKind(void) { return (int)_kind; }
 
-	void keyControl(void);
+	void setPlayerDirect(int direct) { _playerDirect = (PLAYERDIRECT)direct; }
 
 	familiarManager();
 	~familiarManager();

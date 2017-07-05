@@ -11,9 +11,9 @@ familiarGhost::~familiarGhost()
 {
 }
 
-HRESULT familiarGhost::init(const char* imageName, float* x, float* y)
+HRESULT familiarGhost::init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY)
 {
-	familiar::init(imageName, x, y);
+	familiar::init(imageName, x, y, playerPosX, playerPosY);
 
 	_body = IMAGEMANAGER->findImage(imageName);
 
@@ -23,25 +23,24 @@ HRESULT familiarGhost::init(const char* imageName, float* x, float* y)
 	int arrLeft[] = { 0, 1, 2, 3 };
 	KEYANIMANAGER->addArrayFrameAnimation("GHOST_LEFT", imageName, arrLeft, 4, 6, true);
 
+	if (_x - *_playerPosX > 0) _direction = FAMILIAR_DIRECTION_LEFT;
+	if (_x - *_playerPosX <= 0) _direction = FAMILIAR_DIRECTION_RIGHT;
+
 	return S_OK;
 }
 void familiarGhost::update(void)
 {
-	KEYANIMANAGER->update();
-
 	move();
 }
+
+void familiarGhost::render(void)
+{
+	_body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
+}
+
 void familiarGhost::move(void)
 {
-	//if (_familiarChange)
-	//{
-	//	if (getDistance(*_x, *_y, _targetX, _targetY) > EPSILON)
-	//	{
-	//		*_x += ((_targetX - *_x) / getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
-	//		*_y -= ((_targetY - *_y) / getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
-	//	}
-	//	else _familiarChange = false;
-	//}
+	familiar::move();
 
 	switch (_direction)
 	{
@@ -54,8 +53,12 @@ void familiarGhost::move(void)
 		if (!_bodyMotion->isPlay()) _bodyMotion->start();
 		break;
 	}
-}
-void familiarGhost::render(void)
-{
-	_body->aniRender(getMemDC(), *_x, *_y, _bodyMotion);
+
+	_rc = RectMakeCenter(_x, _y, _body->getFrameWidth(), _body->getFrameHeight());
+
+	if (_direction != FAMILIAR_DIRECTION_RIGHT_ATTACK || _direction != FAMILIAR_DIRECTION_LEFT_ATTACK)
+	{
+		if (_x - *_playerPosX > 0) _direction = FAMILIAR_DIRECTION_LEFT;
+		if (_x - *_playerPosX <= 0) _direction = FAMILIAR_DIRECTION_RIGHT;
+	}
 }

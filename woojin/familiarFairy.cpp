@@ -11,15 +11,13 @@ familiarFairy::~familiarFairy()
 {
 }
 
-HRESULT familiarFairy::init(const char* imageName, float* x, float* y)
+HRESULT familiarFairy::init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY)
 {
-	familiar::init(imageName, x, y);
+	familiar::init(imageName, x, y, playerPosX, playerPosY);
 
 	_body = IMAGEMANAGER->findImage(imageName);
 	_wing = IMAGEMANAGER->findImage(imageName);
 	_hair = IMAGEMANAGER->findImage(imageName);
-
-	//_direction = FAMILIAR_DIRECTION_STAND;
 
 	//bodyMotion frame
 	int arrStand[] = { 0, 1 };
@@ -54,6 +52,9 @@ HRESULT familiarFairy::init(const char* imageName, float* x, float* y)
 	int arrHairLeft[] = { 12, 13, 14, 15 };
 	KEYANIMANAGER->addArrayFrameAnimation("FAIRY_HAIR_LEFT", imageName, arrHairLeft, 4, 5, true);
 	
+	if (_x - *_playerPosX > 2) _direction = FAMILIAR_DIRECTION_LEFT;
+	if (_x - *_playerPosX < 2) _direction = FAMILIAR_DIRECTION_RIGHT;
+	if (_x - *_playerPosX <= 2 && _x - *_playerPosX > -2) _direction = FAMILIAR_DIRECTION_STAND;
 
 	return S_OK;
 }
@@ -62,31 +63,29 @@ void familiarFairy::update()
 {
 	move();
 
-	KEYANIMANAGER->update();
 }
 
 void familiarFairy::render(void)
 {
 	if (_direction != FAMILIAR_DIRECTION_CASTSKILL)
 	{
-		_wing->aniRender(getMemDC(), *_x, *_y, _wingMotion);
-		_hair->aniRender(getMemDC(), *_x, *_y, _hairMotion);
-		_body->aniRender(getMemDC(), *_x, *_y, _bodyMotion);
+		_wing->aniRender(getMemDC(), _rc.left, _rc.top, _wingMotion);
+		_hair->aniRender(getMemDC(), _rc.left, _rc.top, _hairMotion);
+		_body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
 	}
-	else _body->aniRender(getMemDC(), *_x, *_y, _bodyMotion);
+	else _body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
+
+	char ptr[32];
+	sprintf(ptr, "%5.2f", _x - *_playerPosX);
+	TextOut(getMemDC(), 200, 200, ptr, strlen(ptr));
+
+	sprintf(ptr, "%5.2f", _x);
+	TextOut(getMemDC(), 200, 220, ptr, strlen(ptr));
 }
 
 void familiarFairy::move()
 {
-	//if (_familiarChange)
-	//{
-	//	if (getDistance(*_x, *_y, _targetX, _targetY) > EPSILON)
-	//	{
-	//		*_x += ((_targetX - *_x) / getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
-	//		*_y -= ((_targetY - *_y) / getDistance(*_x, *_y, _targetX, _targetY)) * TIMEMANAGER->getElapsedTime();
-	//	}
-	//	else _familiarChange = false;
-	//}
+	familiar::move();
 
 	switch (_direction)
 	{
@@ -129,5 +128,14 @@ void familiarFairy::move()
 		if (!_bodyMotion->isPlay()) _bodyMotion->start();
 
 		break;
+	}
+
+	_rc = RectMakeCenter(_x, _y, _body->getFrameWidth(), _body->getFrameHeight());
+
+	if (_direction != FAMILIAR_DIRECTION_CASTSKILL)
+	{
+		if (_x - *_playerPosX > 2) _direction = FAMILIAR_DIRECTION_LEFT;
+		if (_x - *_playerPosX < 2) _direction = FAMILIAR_DIRECTION_RIGHT;
+		if (_x - *_playerPosX <= 2 && _x - *_playerPosX > -2) _direction = FAMILIAR_DIRECTION_STAND;
 	}
 }
