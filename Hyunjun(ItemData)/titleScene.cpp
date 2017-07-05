@@ -57,6 +57,6 @@ void titleScene::render()
 	IMAGEMANAGER->findImage("TitleBackground")->render(getMemDC(), 0, 0);
 	_image->aniRender(getMemDC(), WINSIZEX / 2 - 170, WINSIZEY / 2 + 150, _start);
 
-	ITEM->getData("°í±â")->img_->render(getMemDC(), 50, 50);
+	
 		
 }

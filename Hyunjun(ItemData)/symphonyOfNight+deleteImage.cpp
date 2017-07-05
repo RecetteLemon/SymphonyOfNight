@@ -52,4 +52,5 @@ void symphonyOfNight::deleteImage()
 	IMAGEMANAGER->deleteImage("주황포션");
 
 	IMAGEMANAGER->deleteImage("InventoryUI");
+	IMAGEMANAGER->deleteImage("ItemSelect");
 }
