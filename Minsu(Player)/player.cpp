@@ -115,16 +115,39 @@ HRESULT player::init(float x, float y)
 	_playerMotion = KEYANIMANAGER->findAnimation("playerRightStop");
 	_playerMotion->start();
 
+	switch (_playerDir)
+	{
+	case DIR_RIGHT_STOP: case DIR_RIGHT_MOVE: case DIR_RIGHT_SIT: case DIR_RIGHT_BACKDASH:
+	case DIR_RIGHT_JUMP: case DIR_RIGHT_FALL: case DIR_RIGHT_ATK:
+	case DIR_RIGHT_HIT: case DIR_RIGHT_SKILL:
+		_fX = _x - _image[0]->getFrameWidth() / 4;
+		break;
+	case DIR_LEFT_STOP: case DIR_LEFT_MOVE: case DIR_LEFT_SIT: case DIR_LEFT_BACKDASH:
+	case DIR_LEFT_JUMP: case DIR_LEFT_FALL: case DIR_LEFT_ATK:
+	case DIR_LEFT_HIT: case DIR_LEFT_SKILL:
+		_fX = _x + _image[0]->getFrameWidth() / 4;
+		break;
+	}
+
+	_fY = _y - 120;
+
+	_fm = new familiarManager;
+	_fm->init(&_fX, &_fY);
+
+	setFamiliarDirection();
+
 	return S_OK;
 }
 
 void player::release()
 {
-
+	_fm->release();
+	SAFE_DELETE(_fm);
 }
 
 void player::update() 
 {
+	setFamiliarDirection();
 	// 플레이어 맞는 렉트는 항상 고정
 	_rc_Hit = RectMakeCenter(_x, _y - 50, 50, 100);
 
@@ -427,12 +450,32 @@ void player::update()
 		break;
 	}
 
-	KEYANIMANAGER->update();
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_fm->selectFamailiar(0);
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_fm->selectFamailiar(1);
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_fm->selectFamailiar(2);
+	}
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		_fm->selectFamailiar(3);
+	}
+
+	_fm->update();
+
+	
 }
 
 void player::render() 
 {
 //	Rectangle(getMemDC(), _rc_Hit.left, _rc_Hit.top, _rc_Hit.right, _rc_Hit.bottom);
+	_fm->render();
 
 	char str[500];
 	sprintf(str, "%.2f %.2f / %d %d", _x, _y, _image[0]->getFrameWidth(), _image[0]->getFrameHeight());
@@ -497,4 +540,25 @@ void player::leftFalling(void * obj)
 	p->_playerDir = DIR_LEFT_FALL;
 	p->setPlayerMotion(KEYANIMANAGER->findAnimation("playerLeftFall"));
 	p->getPlayerMotion()->start();
+}
+
+void player::setFamiliarDirection(void)
+{
+	switch (_playerDir)
+	{
+	case DIR_RIGHT_STOP: case DIR_RIGHT_MOVE: case DIR_RIGHT_SIT: case DIR_RIGHT_BACKDASH:
+	case DIR_RIGHT_JUMP: case DIR_RIGHT_FALL: case DIR_RIGHT_ATK:
+	case DIR_RIGHT_HIT: case DIR_RIGHT_SKILL:
+		_fm->setPlayerDirect(0);
+		_fX = _x - _image[0]->getFrameWidth() / 4;
+		break;
+	case DIR_LEFT_STOP: case DIR_LEFT_MOVE: case DIR_LEFT_SIT: case DIR_LEFT_BACKDASH:
+	case DIR_LEFT_JUMP: case DIR_LEFT_FALL: case DIR_LEFT_ATK:
+	case DIR_LEFT_HIT: case DIR_LEFT_SKILL:
+		_fX = _x + _image[0]->getFrameWidth() / 4;
+		_fm->setPlayerDirect(1);
+		break;
+	}
+
+	_fY = _y - 120;
 }

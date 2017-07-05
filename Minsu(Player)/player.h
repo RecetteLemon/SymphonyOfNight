@@ -1,6 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include "pixelCollision.h"
+#include "familiarManager.h"
 
 #define MOVESPEED 3.0f
 #define JUMPFORCE 5.0f
@@ -46,6 +47,10 @@ private:
 
 	pixelCollision _collision; // ÇÈ¼¿ Ãæµ¹
 
+	familiarManager* _fm;
+
+	float _fX, _fY;
+
 public:
 	HRESULT init(float x, float y);
 	void release();
@@ -68,6 +73,8 @@ public:
 
 	animation* getPlayerMotion() { return _playerMotion; }
 	void setPlayerMotion(animation* ani) { _playerMotion = ani; }
+
+	void setFamiliarDirection(void);
 
 	player();
 	~player();
