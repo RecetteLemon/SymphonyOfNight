@@ -11,11 +11,9 @@ bat::~bat()
 {
 }
 
-HRESULT bat::init(const char* imageName, float x, float y)
+HRESULT bat::init(const char* imageName, float x, float y, float moveRange)
 {
-	_enemyInfo.enemyImage = IMAGEMANAGER->findImage(imageName);
-
-	enemy::init(imageName, x, y, 1);
+	enemy::init(imageName, x, y, 0);
 
 	imageInit();
 
@@ -33,19 +31,18 @@ HRESULT bat::init(const char* imageName, float x, float y)
 	// 움직일 범위 설정
 	_waveRange = WINSIZEY / 5;
 
-
-
-
 	return S_OK;
 }
 
 void bat::release()
 {
-	_enemyInfo.enemyImage->release();
+	enemy::release();
+	
 }
 
 void bat::update()
 {
+	enemy::update();
 	// 충돌 판정
 	RECT temp;
 	if (IntersectRect(&temp, &_enemyInfo.playerRc, &_comeRange))
@@ -60,7 +57,7 @@ void bat::update()
 	// 움직이지 않을때만 판정범위를 만들어 낸다.
 	if (!_move)
 	{
-		_comeRange = RectMakeCenter(_enemyInfo.x + _enemyInfo.enemyImage->getFrameWidth() / 2, 
+		_comeRange = RectMakeCenter(_enemyInfo.x + _enemyInfo.enemyImage->getFrameWidth() / 2,
 			_enemyInfo.y + _enemyInfo.enemyImage->getFrameHeight() / 2,
 			100, 100);
 	}
@@ -78,29 +75,29 @@ void bat::update()
 
 void bat::render()
 {
+	//enemy::render();
 	// 그려주는거
 	// 상태값에 따른 행동
 	switch (_enemyInfo.stat)
 	{
 	case ENEMY_LEFT_STAY:
-		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
-			_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]);
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]);
 
 		break;
 
 	case ENEMY_RIGHT_STAY:
-		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
-			_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]);
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]);
+		
 		break;
+
 	case ENEMY_LEFT_MOVE:
-		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
-			_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]);
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]);
 
 		break;
 
 	case ENEMY_RIGHT_MOVE:
-		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y,
-			_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]);
+		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]);
+		
 		break;
 
 		// 죽었을때 이미지를 지운다
@@ -117,7 +114,7 @@ void bat::render()
 // 이미지 초기화
 void bat::imageInit()
 {
-	for (int i = 0; i < ENEMY_ANI_AND; i++)
+	for (int i = 0; i < ENEMY_ANI_END; i++)
 	{
 		_enemyInfo.enemyAni[i] = new animation;
 		_enemyInfo.enemyAni[i]->init(_enemyInfo.enemyImage->getWidth(), _enemyInfo.enemyImage->getHeight()
@@ -140,8 +137,19 @@ void bat::imageInit()
 	_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->setPlayFrame(arrRightStay, 2, true);
 	_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->setFPS(5);
 
-	_enemyInfo.stat = ENEMY_LEFT_STAY;
-	_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->start();
+	int randomStat = RND->getInt(2);
+
+	if (randomStat % 2 == 0)
+	{
+		_enemyInfo.stat = ENEMY_LEFT_STAY;
+		_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->start();
+	}
+	else if (randomStat % 2 == 1)
+	{
+		_enemyInfo.stat = ENEMY_RIGHT_STAY;
+		_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->start();
+	}
+	
 
 }
 
@@ -212,44 +220,44 @@ void bat::move()
 	// 상태값에 따른 행동
 	switch (_enemyInfo.stat)
 	{
-		case ENEMY_LEFT_STAY:
-			_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+	case ENEMY_LEFT_STAY:
+		_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
-			break;
+		break;
 
-		case ENEMY_RIGHT_STAY:
-			_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+	case ENEMY_RIGHT_STAY:
+		_enemyInfo.enemyAni[ENEMY_RIGHT_STAYANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
-			break;
+		break;
 
-		case ENEMY_LEFT_MOVE:
-			_enemyInfo.x -= _enemyInfo.speed;
-			_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+	case ENEMY_LEFT_MOVE:
+		_enemyInfo.x -= _enemyInfo.speed;
+		_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
-			if (!_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->isPlay())
-			{
-				_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->start();
-			}
-			break;
+		if (!_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->isPlay())
+		{
+			_enemyInfo.enemyAni[ENEMY_LEFT_MOVEANI]->start();
+		}
+		break;
 
-		case ENEMY_RIGHT_MOVE:
-			_enemyInfo.x += _enemyInfo.speed;
-			_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
+	case ENEMY_RIGHT_MOVE:
+		_enemyInfo.x += _enemyInfo.speed;
+		_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->frameUpdate(TIMEMANAGER->getElapsedTime());
 
-			if (!_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->isPlay())
-			{
-				_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->start();
-			}
-			break;
+		if (!_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->isPlay())
+		{
+			_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->start();
+		}
+		break;
 
 		// 죽었을때 이미지를 지운다
-		case ENEMY_LEFT_DIE:
+	case ENEMY_LEFT_DIE:
 
-			release();
-			break;
+		release();
+		break;
 
-		case ENEMY_RIGHT_DIE:
-			release();
-			break;
-	}	
+	case ENEMY_RIGHT_DIE:
+		release();
+		break;
+	}
 }

@@ -17,8 +17,8 @@ private:
 	bool _isLeft; // 왼쪽, 오른쪽 이동 판정
 
 public:
-	//				이미지 이름			얘가 움직일 렉트 범위 왼쪽 오른쪽		위치 x,  y
-	HRESULT init(const char* imageName, RECT leftRect, RECT rightRect, float x, float y);
+	//				이미지 이름			위치 x,  y			움직일 범위
+	HRESULT init(const char* imageName, float x, float y, float moveRange);
 	void release();
 	void update();
 	void render();

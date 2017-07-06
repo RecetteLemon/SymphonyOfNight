@@ -16,16 +16,16 @@ bloodSkeleton::~bloodSkeleton()
 // 적이 죽고 살아나면 계속 살아남
 // 살아나면 3번째 살아날때까지 이미지 프레임 속도 증가
 
-
-
-HRESULT bloodSkeleton::init(const char* imageName, RECT leftRect, RECT rightRect, float x, float y)
+HRESULT bloodSkeleton::init(const char* imageName, float x, float y, float moveRange)
 {
-	enemy::init(imageName, x, y, 1);
+	enemy::init(imageName, x, y, 0);
 
 	// 스켈의 공력, 경험치, 체력을 초기화
+
 	_enemyInfo.atk = 4;
 	_enemyInfo.hp = 1;
 	_enemyInfo.die = false;
+	_enemyInfo.moveRange = moveRange;
 	_isLeft = false;
 
 	_enemyInfo.speed = 0.5f;
@@ -35,8 +35,12 @@ HRESULT bloodSkeleton::init(const char* imageName, RECT leftRect, RECT rightRect
 	_comeRange = RectMakeCenter(_enemyInfo.x, _enemyInfo.y,
 		_enemyInfo.enemyImage->getFrameWidth() * 2, _enemyInfo.enemyImage->getFrameHeight());
 
-	_leftRect = leftRect;
-	_rightRect = rightRect;
+	// 왼쪽 렉트는 적위치에서 움직임 범위 / 2 를 빼준다.
+	_leftRect = RectMake(_enemyInfo.x - _enemyInfo.moveRange / 2, _enemyInfo.y,
+		1, _enemyInfo.enemyImage->getFrameHeight());
+
+	_rightRect = RectMake(_enemyInfo.x + _enemyInfo.enemyImage->getFrameWidth() + _enemyInfo.moveRange / 2, _enemyInfo.y,
+		1, _enemyInfo.enemyImage->getFrameHeight());
 
 	imageInit();
 
@@ -46,14 +50,14 @@ HRESULT bloodSkeleton::init(const char* imageName, RECT leftRect, RECT rightRect
 
 void bloodSkeleton::release()
 {
-	_enemyInfo.enemyImage->release();
+	enemy::release();
+
 }
 
 void bloodSkeleton::update()
 {
 	enemy::update();
 	move();
-
 
 
 	// 만약에 죽었으면
@@ -108,8 +112,11 @@ void bloodSkeleton::update()
 
 void bloodSkeleton::render()
 {
-	enemy::render();
-	Rectangle(getMemDC(), _comeRange.left, _comeRange.top, _comeRange.right, _comeRange.bottom);
+	//enemy::render();
+	//Rectangle(getMemDC(), _comeRange.left, _comeRange.top, _comeRange.right, _comeRange.bottom);
+	//Rectangle(getMemDC(), _leftRect.left, _leftRect.top, _leftRect.right, _leftRect.bottom);
+	//Rectangle(getMemDC(), _rightRect.left, _rightRect.top, _rightRect.right, _rightRect.bottom);
+	
 	// 상태값에 따른 애니메이션, 행동 변경
 	switch (_enemyInfo.stat)
 	{
@@ -142,7 +149,6 @@ void bloodSkeleton::render()
 		_enemyInfo.enemyImage->aniRender(getMemDC(), _enemyInfo.x, _enemyInfo.y, _enemyInfo.enemyAni[ENEMY_RIGHT_DIEANI]);
 
 		break;
-	
 	}
 	
 }
@@ -150,7 +156,7 @@ void bloodSkeleton::render()
 // 이미지 초기화
 void bloodSkeleton::imageInit()
 {
-	for (int i = 0; i < ENEMY_ANI_AND; i++)
+	for (int i = 0; i < ENEMY_ANI_END; i++)
 	{
 		_enemyInfo.enemyAni[i] = new animation;
 		_enemyInfo.enemyAni[i]->init(_enemyInfo.enemyImage->getWidth(), _enemyInfo.enemyImage->getHeight()
@@ -175,7 +181,7 @@ void bloodSkeleton::imageInit()
 	// 오른쪽 프레임들
 	int arrRightMove[] = { 15, 16, 17, 18, 19, 18, 17, 16 };
 	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setPlayFrame(arrRightMove, 8, true);
-	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setFPS(2);
+	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setFPS(5);
 
 	int arrRightRevive[] = { 28, 27, 26 ,25, 24, 23, 22 };
 	_enemyInfo.enemyAni[ENEMY_RIGHT_REVIVEANI]->setPlayFrame(arrRightRevive, 7, false, rightRevive, this);
@@ -186,7 +192,7 @@ void bloodSkeleton::imageInit()
 	_enemyInfo.enemyAni[ENEMY_RIGHT_DIEANI]->setFPS(8);
 
 	_enemyInfo.stat = ENEMY_RIGHT_MOVE;
-	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVE]->start();
+	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->start();
 	_direction = ENEMY_RIGHT;
 }
 

@@ -23,7 +23,7 @@ private:
 
 public:
 	//				이미지 이름			위치x,	 y
-	HRESULT init(const char* imageName, float x, float y);
+	HRESULT init(const char* imageName, float x, float y, float moveRange);
 	void release();
 	void update();
 	void render();
