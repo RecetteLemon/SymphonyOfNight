@@ -1,82 +1,58 @@
 #pragma once
 #include "enemy.h"
+#define FRAMECOUNT 500.0f
 
-enum DRACULAPHASE
-{
-	Phase1,
-	Phase2
-};
-
-enum DRACULADIRECTION
-{
-	DRACULA_RIGHT_STOP,
-	DRACULA_LEFT_STOP,
-	DRACULA_RIGHT_JUMP,
-	DRACULA_LEFT_JUMP,
-	DRACULA_RIGHT_ATTK,
-	DRACULA_LEFT_ATTK
-
-};
-
-
-struct DRACULAINFO
-{
-	image* BOSSImage; // 드라큘라이미지
-
-	RECT rc; // 적의 피격 렉트
-
-	float x, y; // 적의 좌표값
-
-	int atk, hp; // 적의 공격력 체력
-
-	bool fire; // 불을 쏘냐?
-
-	bool Jump; // 점프하냐?
-
-	float gravity;
-
-	float timer;
-
-
-};
 class Dracula : public enemy
 {
 
 private:
 
-	DRACULAPHASE _DraculaPhase;
-	DRACULADIRECTION _DraculaDirection;
-	DRACULAINFO _DraculaInfo;
+	RECT _Playerrc;
+	bool _isLeft; //왼쪽에 있나 판정 
 
-	animation* _DraculaMotion;
+	
+	float gravity;
+	int _count, _fireCount, _fireSpeed;
+	int _bCount; //불렛 카운트
+	
+	bool Appear; //순간이동했다 나타나는 불값
+	
+	float _reAppearTime; //순간이동 했다가 나타나는 딜레이
+	float _maxReAppearTime; //일정한 시간 후에 나타남
 
-	image* _Draculaimage;
-	image* _Monsterimage;
-
-
-	int _count;
-	int _fireCount;
-	int _rndFireCount;
-
+	float _frameCount;
 
 public:
 
-	HRESULT init();
+	HRESULT init(const char* imageName, float x, float y);
 	void release();
 	void update();
 	void render();
-	void move();
+	void appear();
+	void setDraculaDirection();
+	void setDraculaPhase();
+	void fire(void);
 
+
+	static void cbRightBulletFire(void* obj);
+	
+	static void cbLeftBulletFire(void* obj);
+
+	static void cbRightBallFire(void* obj);
+	
+	static void cbLeftBallFire(void* obj);
 
 	DRACULADIRECTION getDraculaDirection(void) { return _DraculaDirection; }
 	void setDraculaDirection(DRACULADIRECTION direction) { _DraculaDirection = direction; }
 
-	animation* getDraculaMotion(void) { return _DraculaMotion; }
-	void setDraculaMotion(animation* ani) { _DraculaMotion = ani; }
+	animation* getDraculaAnimation() { return _enemyInfo.enemyAni; }
+	void setDraculaAnimation(animation* ani) { _enemyInfo.enemyAni = ani; }
 
-
+	
 
 	Dracula();
 	~Dracula();
+
 };
+
 
