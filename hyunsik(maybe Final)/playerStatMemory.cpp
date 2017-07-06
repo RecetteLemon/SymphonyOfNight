@@ -15,6 +15,8 @@ playerStatMemory::playerStatMemory()
 	_alucardStat.atk = 0;
 	_alucardStat.def = 0;
 	_alucardStat.familiar = 3;
+	_alucardStat.x = 0;
+	_alucardStat.y = 0;
 }
 
 

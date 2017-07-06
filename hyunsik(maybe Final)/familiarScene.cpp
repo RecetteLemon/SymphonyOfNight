@@ -118,27 +118,42 @@ void familiarScene::update(void)
 	}
 
 	RECT tp;
-	if (IntersectRect(&tp,&_selectRC,&_demon.rc) && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	if (IntersectRect(&tp,&_selectRC,&_demon.rc) && !_demon.on &&KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		_demon.on = true;
 		_fairy.on = _ghost.on = false;
 		ALUCARD_INFO->setFamiliar(0);
 	}
+	else if (IntersectRect(&tp, &_selectRC, &_demon.rc) && _demon.on &&KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_demon.on = false;
+		ALUCARD_INFO->setFamiliar(3);
+	}
 
-	if (IntersectRect(&tp, &_selectRC, &_fairy.rc) && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	if (IntersectRect(&tp, &_selectRC, &_fairy.rc)&&!_fairy.on && KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 
 		_fairy.on = true;
 		_demon.on = _ghost.on = false;
 		ALUCARD_INFO->setFamiliar(1);
 	}
+	else if (IntersectRect(&tp, &_selectRC, &_fairy.rc) && _fairy.on && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_fairy.on = false;
+		ALUCARD_INFO->setFamiliar(3);
+	}
 
-	if (IntersectRect(&tp, &_selectRC, &_ghost.rc) && KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	if (IntersectRect(&tp, &_selectRC, &_ghost.rc) && !_ghost.on &&KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 
 		_ghost.on = true;
 		_demon.on = _fairy.on = false;
 		ALUCARD_INFO->setFamiliar(2);
+	}
+	else if (IntersectRect(&tp, &_selectRC, &_ghost.rc) && _ghost.on &&KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_ghost.on = false;
+		ALUCARD_INFO->setFamiliar(3);
 	}
 
 	if (IntersectRect(&tp, &_selectRC, &_unkown) && KEYMANAGER->isOnceKeyDown(VK_SPACE))
@@ -147,6 +162,7 @@ void familiarScene::update(void)
 		_demon.on = _fairy.on = _ghost.on = false;
 		ALUCARD_INFO->setFamiliar(3);
 	}
+
 	if (KEYMANAGER->isOnceKeyDown('Z')) SCENEMANAGER->changeScene("CharScene");
 
 	_selectRC = RectMakeCenter(_selectX + 65, _selectY + 25, 250, 50);
