@@ -25,9 +25,7 @@ HRESULT hosuk::init(const char* imageName, float x, float y)
 
 	_enemyInfo.attackTime = _count = 0;
 
-	//실험용
-	playerX = WINSIZEX / 2;
-	playerY = WINSIZEY / 2;
+	
 	
 	_px = new pixelCollision;
 	
@@ -58,7 +56,6 @@ void hosuk::imageInit()
 	int arrLeftStay[] = { 1 };
 	_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->setPlayFrame(arrLeftStay, 1, true);
 	_enemyInfo.enemyAni[ENEMY_LEFT_STAYANI]->setFPS(1);
-
 
 	int arrRightMove[] = { 16,15,14,13,12 };
 	_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->setPlayFrame(arrRightMove, 5, true);
@@ -106,19 +103,15 @@ void hosuk::update(void)
 	
 	_px->VerticalCollision(_enemyInfo.rc, _enemyInfo.x, _enemyInfo.y, IMAGEMANAGER->findImage("실험맵"));
 
-	//실험용 
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) playerX -= 3;
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) playerX += 3;
-
-	_enemyInfo.playerRc = RectMake(playerX, playerY, 50, 100);
+	
 }
 void hosuk::render(void)
 {
 	enemy::render();
 	//실험용 호석이 사각형
-	Rectangle(getMemDC(), _enemyInfo.rc.left, _enemyInfo.rc.top, _enemyInfo.rc.right, _enemyInfo.rc.bottom);
-	Rectangle(getMemDC(), _enemyInfo.playerRc.left, _enemyInfo.playerRc.top, _enemyInfo.playerRc.right, _enemyInfo.playerRc.bottom);
-	Rectangle(getMemDC(), _enemyInfo.damageRc.left, _enemyInfo.damageRc.top, _enemyInfo.damageRc.right, _enemyInfo.damageRc.bottom);
+	//Rectangle(getMemDC(), _enemyInfo.rc.left, _enemyInfo.rc.top, _enemyInfo.rc.right, _enemyInfo.rc.bottom);
+	//Rectangle(getMemDC(), _enemyInfo.playerRc.left, _enemyInfo.playerRc.top, _enemyInfo.playerRc.right, _enemyInfo.playerRc.bottom);
+	//Rectangle(getMemDC(), _enemyInfo.damageRc.left, _enemyInfo.damageRc.top, _enemyInfo.damageRc.right, _enemyInfo.damageRc.bottom);
 
 
 
@@ -155,23 +148,22 @@ void hosuk::render(void)
 	}
 
 	
-
+	ALUCARD_INFO->statUpdate();
 }
 
 
 void hosuk::move()
 {
-
-
+	
 	//플레이어 위치값에따라 변하는 호석이의 상태값
-	if (_enemyInfo.x > playerX) _enemyInfo.stat = ENEMY_LEFT_MOVE; // 호석이 왼쪽에 플레이어가있으면 호석이는 왼쪽으로 달려감
+	if (_enemyInfo.x > ALUCARD_INFO->getStats().x) _enemyInfo.stat = ENEMY_LEFT_MOVE; // 호석이 왼쪽에 플레이어가있으면 호석이는 왼쪽으로 달려감
 	else //호석이 오른쪽에 플레이어가있으면 호석이는 오른쪽으로 달려감
 	{
 		_enemyInfo.stat = ENEMY_RIGHT_MOVE;	//호석이 상태값을 바꿔줌
 		if (!_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->isPlay())_enemyInfo.enemyAni[ENEMY_RIGHT_MOVEANI]->start();//호석이 왼쪽무브애니가 실행중이아니면 애니메이션 스타트!
 	}
 
-	float distance = getDistance(_enemyInfo.x, _enemyInfo.y, playerX, playerY); // 호석이의 중점값과 플레이어의 중점값을 구해줌
+	float distance = getDistance(_enemyInfo.x, _enemyInfo.y, ALUCARD_INFO->getStats().x, ALUCARD_INFO->getStats().y); // 호석이의 중점값과 플레이어의 중점값을 구해줌
 	
 	//호석이 왼쪽에 적과의 거리가 50보다작으면 호석이의 상태는 왼쪽공격으로 바뀜
 	
@@ -182,7 +174,7 @@ void hosuk::move()
 		if (_count >= 1.0f) _enemyInfo.attack = true;
 	}
 
-	if (_enemyInfo.x > playerX && distance <= 80)
+	if (_enemyInfo.x > ALUCARD_INFO->getStats().x && distance <= 80)
 	{
 		_enemyInfo.attackTime += TIMEMANAGER->getElapsedTime();
 		if (_enemyInfo.attackTime >= 2.0f && _enemyInfo.attack == true)
@@ -192,12 +184,12 @@ void hosuk::move()
 		}
 		else _enemyInfo.stat = ENEMY_LEFT_STAY;
 	}
-	else if (_enemyInfo.x > playerX&& distance >= 600)
+	else if (_enemyInfo.x > ALUCARD_INFO->getStats().x&& distance >= 600)
 	{
 		_enemyInfo.stat = ENEMY_LEFT_STAY;
 	}
 	
-	if (_enemyInfo.x < playerX && distance <= 40) // 플레이어가 호석이 오른쪽에있고 거리가 40 일때 
+	if (_enemyInfo.x < ALUCARD_INFO->getStats().x && distance <= 40) // 플레이어가 호석이 오른쪽에있고 거리가 40 일때 
 	{
 		_enemyInfo.attackTime += TIMEMANAGER->getElapsedTime();  //호석이의 공격딜레이가 + 해줌
 		if (_enemyInfo.attackTime >= 2.0f && _enemyInfo.attack == true) // 호석이의 공격딜레이가 2초이상이고 호석이 공격이 트루일때.
@@ -208,7 +200,7 @@ void hosuk::move()
 		}
 		else _enemyInfo.stat = ENEMY_RIGHT_STAY; // 공격딜레이 조건이 불충족일때는 호석이는 오른쪽을바라보고 서있음
 	}
-	else if (_enemyInfo.x < playerX && distance >= 600)
+	else if (_enemyInfo.x < ALUCARD_INFO->getStats().x && distance >= 600)
 	{
 		_enemyInfo.stat = ENEMY_RIGHT_STAY;
 	}

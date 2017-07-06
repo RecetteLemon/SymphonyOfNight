@@ -14,6 +14,7 @@ struct ALUCARD_STATS
 	int atk;
 	int def;
 	int familiar;
+	float x, y;
 };
 
 class playerStatMemory : public singletonBase<playerStatMemory>
@@ -39,6 +40,8 @@ public:
 	void setAtk(int atk) { _alucardStat.atk = atk; }
 	void setDef(int def) { _alucardStat.def = def; }
 	void setFamiliar(int fm) { _alucardStat.familiar = fm; }
+	void setX(float x) { _alucardStat.x = x; }
+	void setY(float y) { _alucardStat.y = y; }
 
 	void statUpdate();
 	playerStatMemory();

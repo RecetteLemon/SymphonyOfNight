@@ -60,7 +60,7 @@ void loadingScene::loadingImage()
 	_loading->loadImage("familiarBackground", "Image/character/familiarUI.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	_loading->loadImage("character_select", "Image/character/Char_Select.bmp", 103, 48, true, RGB(255, 0, 255));
 	_loading->loadImage("fmiliar_select", "Image/character/fmiliar_Selcect.bmp", 270, 80, true, RGB(255, 0, 255));
-;	_loading->loadImage("invenfont", "image/character/CharacterUI_inven.bmp", 104, 44, true, RGB(255, 0, 255));
+	_loading->loadImage("invenfont", "image/character/CharacterUI_inven.bmp", 104, 44, true, RGB(255, 0, 255));
 	_loading->loadImage("familiarfont", "image/character/CharacterUI_familiar.bmp", 102, 44, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Start", "Image/Loading/Start.bmp", 712, 21, 2, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("È£¼®", "Image/enemy/hosuk.bmp", 630, 129, 9, 2, true, RGB(255, 0, 255));
