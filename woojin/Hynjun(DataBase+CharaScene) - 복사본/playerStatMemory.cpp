@@ -14,13 +14,14 @@ playerStatMemory::playerStatMemory()
 	_alucardStat.gold = 0;
 	_alucardStat.atk = 0;
 	_alucardStat.def = 0;
+	_alucardStat.mana = 100;
 	_alucardStat.familiar = 3;
 
 	_alucardStat.saveStr = 3;
 	_alucardStat.saveCon = 3;
 	_alucardStat.saveInt = 3;
 	_alucardStat.saveLck = 3;
-
+	_alucardStat.md = MAP1;
 	
 }
 

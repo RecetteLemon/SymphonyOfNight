@@ -13,17 +13,25 @@ familiarManager::~familiarManager()
 
 HRESULT familiarManager::init(float* x, float* y)
 {
-	IMAGEMANAGER->addFrameImage("familiarDemon", "familiar_demon.bmp", 640, 672, 5, 7, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("familiarFairy", "familiar_fairy.bmp", 256, 512, 4, 8, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("familiarGhost", "familiar_ghost.bmp", 256, 256, 4, 4, true, RGB(255, 0, 255));
-
 	_x = x;
 	_y = y;
 
 	_familiarX = *_x;
 	_familiarY = *_y;
 
-	_focusFamiliar = NULL;
+	//_familiar = new familiar[FAMILIAR_END];
+	//ZeroMemory(_familiar, sizeof(familiar) * FAMILIAR_END);
+
+	_familiar[FAMILIAR_DEMON] = new familiarDemon;
+ 	_familiar[FAMILIAR_DEMON]->init(IMAGEMANAGER->findImage("familiarDemon"), _familiarX, _familiarY, _x, _y);
+
+	_familiar[FAMILIAR_FAIRY] = new familiarFairy;
+	_familiar[FAMILIAR_FAIRY]->init(IMAGEMANAGER->findImage("familiarFairy"), _familiarX, _familiarY, _x, _y);
+
+	_familiar[FAMILIAR_GHOST] = new familiarGhost;
+	_familiar[FAMILIAR_GHOST]->init(IMAGEMANAGER->findImage("familiarGhost"), _familiarX, _familiarY, _x, _y);
+
+	//_focusFamiliar = NULL;
 	_kind = FAMILIARKIND(ALUCARD_INFO->getStats().familiar);
 	selectFamailiar(int(_kind));
 
@@ -32,33 +40,43 @@ HRESULT familiarManager::init(float* x, float* y)
 
 void familiarManager::release()
 {
-	if (_focusFamiliar != NULL) SAFE_DELETE(_focusFamiliar);
-
-	IMAGEMANAGER->deleteImage("familiarDemon");
-	IMAGEMANAGER->deleteImage("familiarFairy");
-	IMAGEMANAGER->deleteImage("familiarGhost");
+	//if (_focusFamiliar != NULL) SAFE_DELETE(_focusFamiliar);
+	for (int i = 0; i < FAMILIAR_END; i++)
+	{
+		SAFE_DELETE(_familiar[i]);
+	}
+	
 }
 
 void familiarManager::update()
 {
-	if (_focusFamiliar != NULL)
+	/*if (_focusFamiliar != NULL)
 	{
 		_focusFamiliar->update();
 		selectFamailiar(ALUCARD_INFO->getStats().familiar);
+	}*/
+	for (int i = 0; i < FAMILIAR_END; i++)
+	{
+		_familiar[i]->update();
 	}
 }
 
 void familiarManager::render(HDC hdc)
 {
-	if (_focusFamiliar != NULL)
+	/*for (int i = 0; i < FAMILIAR_END; i++)
 	{
-		_focusFamiliar->render(hdc);
-	}
+		if (i == (int)_kind)
+		{
+			_familiar[i].render(hdc);
+		}
+		else continue;
+	}*/
+	if(_focusFamiliar != NULL) _focusFamiliar->render(hdc);
 }
 
 void familiarManager::selectFamailiar(int kind)
 {
-	if (_focusFamiliar != NULL) SAFE_DELETE(_focusFamiliar);
+	//if (_focusFamiliar != NULL) SAFE_DELETE(_focusFamiliar);
 
 	_kind = FAMILIARKIND(kind);
 
@@ -68,18 +86,22 @@ void familiarManager::selectFamailiar(int kind)
 	switch (_kind)
 	{
 	case FAMILIAR_DEMON:
-		_focusFamiliar = new familiarDemon;
-		_focusFamiliar->init("familiarDemon", _familiarX, _familiarY, _x, _y);
+		//_focusFamiliar = new familiarDemon;
+		//_focusFamiliar->init(IMAGEMANAGER->findImage("familiarDemon"), _familiarX, _familiarY, _x, _y);
+		_focusFamiliar = _familiar[FAMILIAR_DEMON];
 		break;
 	case FAMILIAR_FAIRY:
-		_focusFamiliar = new familiarFairy;
-		_focusFamiliar->init("familiarFairy", _familiarX, _familiarY, _x, _y);
+		//_focusFamiliar = new familiarFairy;
+		//_focusFamiliar->init(IMAGEMANAGER->findImage("familiarFairy"), _familiarX, _familiarY, _x, _y);
+		_focusFamiliar = _familiar[FAMILIAR_FAIRY];
 		break;
 	case FAMILIAR_GHOST:
-		_focusFamiliar = new familiarGhost;
-		_focusFamiliar->init("familiarGhost", _familiarX, _familiarY, _x, _y);
+		//_focusFamiliar = new familiarGhost;
+		//_focusFamiliar->init(IMAGEMANAGER->findImage("familiarGhost"), _familiarX, _familiarY, _x, _y);
+		_focusFamiliar = _familiar[FAMILIAR_GHOST];
 		break;
 	case FAMILIAR_END:
 		_focusFamiliar = NULL;
+		break;
 	}
 }

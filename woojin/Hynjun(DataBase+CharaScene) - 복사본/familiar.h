@@ -28,7 +28,7 @@ protected:
 //	RECT _hitBox;
 
 public:
-	virtual HRESULT init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY);
+	virtual HRESULT init(image* img, float x, float y, float* playerPosX, float* playerPosY);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(HDC hdc);

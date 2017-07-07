@@ -1,5 +1,12 @@
 #pragma once
 #include "singletonBase.h"
+enum MAPDIRECTION
+{
+	MAP1,
+	MAP2,
+	MAP3,
+	MAP4
+};
 
 struct ALUCARD_STATS
 {
@@ -14,12 +21,15 @@ struct ALUCARD_STATS
 	int atk;
 	int def;
 	int familiar;
+	int mana;
 	float x, y;
 
 	int saveStr;
 	int saveCon;
 	int saveInt;
 	int saveLck;
+
+	MAPDIRECTION md;
 };
 
 class playerStatMemory : public singletonBase<playerStatMemory>
@@ -46,6 +56,11 @@ public:
 	void setFamiliar(int fm) { _alucardStat.familiar = fm; }
 	void setX(float x) { _alucardStat.x = x; }
 	void setY(float y) { _alucardStat.y = y; }
+	int getMapDirection(void) { return (int)_alucardStat.md; }
+	void setMapDirection(int num) { _alucardStat.md = (MAPDIRECTION)num; }
+	int getMana(void) { return _alucardStat.mana; }
+	void minusMana(int mana) { _alucardStat.mana -= mana; }
+	void plusMana(int mana) { _alucardStat.mana += mana; }
 
 	void setSaveStr(int str) { _alucardStat.saveStr = str; }
 	void setSaveCon(int con) { _alucardStat.saveCon = con; }

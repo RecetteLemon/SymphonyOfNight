@@ -19,7 +19,7 @@ HRESULT objTest::init(void)
 	_x = 300;
 	_y = 300;
 
-	_obj = new objectCreate;
+	/*_obj = new objectCreate;
 	_obj->init(WINSIZEX / 2 - 100, WINSIZEY / 2 - 100);
 	
 	_obj1 = new objectCreate;
@@ -28,7 +28,7 @@ HRESULT objTest::init(void)
 	_obj2 = new objectCreate;
 	_obj2->init(WINSIZEX - 400, 100, 2);
 
-	_rc = RectMakeBottomCenter(_x, _y, 80, 100);
+	_rc = RectMakeBottomCenter(_x, _y, 80, 100);*/
 
 
 	return S_OK;
@@ -37,8 +37,8 @@ HRESULT objTest::init(void)
 //메모리 해제 함수
 void objTest::release(void)
 {
-	_obj->release();
-	safeDelete(_obj);
+	/*_obj->release();
+	safeDelete(_obj);*/
 
 }
 
@@ -69,7 +69,7 @@ void objTest::update(void)
 	}
 
 
-	_rc = RectMakeBottomCenter(_x, _y, 80, 100);
+	/*_rc = RectMakeBottomCenter(_x, _y, 80, 100);
 	_obj->update();
 	_obj1->update();
 	_obj2->update();
@@ -109,7 +109,7 @@ void objTest::update(void)
 		}
 		_obj2->setOnDropItem(true);
 	}
-	
+	*/
 	
 }
 
@@ -117,7 +117,7 @@ void objTest::update(void)
 void objTest::render(void)
 {
 	
-	IMAGEMANAGER->findImage("PixelTest")->render(getMemDC(), 0, 0);
+	/*IMAGEMANAGER->findImage("PixelTest")->render(getMemDC(), 0, 0);
 
 
 
@@ -132,7 +132,7 @@ void objTest::render(void)
 	_obj->render();
 	_obj1->render();
 	_obj2->render();
-
+*/
 	
 	
 }

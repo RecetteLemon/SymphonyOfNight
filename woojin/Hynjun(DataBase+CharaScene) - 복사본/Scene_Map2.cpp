@@ -13,13 +13,13 @@ Scene_Map2::~Scene_Map2()
 
 HRESULT Scene_Map2::init(void)
 {
-	_pixelImage = IMAGEMANAGER->addImage("pc_Map2", "image/Map2_C.bmp", 5194, 600, true, RGB(255, 0, 255));
+	_pixelImage = IMAGEMANAGER->addImage("pc_Map2", "image/Map2_C.bmp", 4000, 600, true, RGB(255, 0, 255));
 
-	_backImage = IMAGEMANAGER->addImage("backImageSCN2", "backImage.bmp", 5194, 600, false, RGB(255, 0, 255));
-	_realBackImage = IMAGEMANAGER->addImage("map2", "image/Map2.bmp", 5194, 600, true, RGB(255, 0, 255));
+	_backImage = IMAGEMANAGER->addImage("backImageSCN2", "backImage.bmp", 4000, 600, false, RGB(255, 0, 255));
+	_realBackImage = IMAGEMANAGER->addImage("map2", "image/Map2.bmp", 4000, 600, true, RGB(255, 0, 255));
 
 	_player = new player;
-	_player->init(10, 394, _pixelImage, false);
+	_player->init(ALUCARD_INFO->getStats().x, ALUCARD_INFO->getStats().y, _pixelImage, false);
 
 	_map = new MapManager;
 	_map->init(_backImage, _player);
@@ -48,14 +48,17 @@ void Scene_Map2::update()
 
 	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
-		//ALUCARD_INFO->setX(_x);
-		//ALUCARD_INFO->setY(_y);
+		ALUCARD_INFO->setX(_player->getPlayerPosX());
+		ALUCARD_INFO->setY(_player->getPlayerPosY());
+		ALUCARD_INFO->setMapDirection(1);
 		SCENEMANAGER->changeScene("CharScene");
 	}
 
-	if ((_player->getPlayerPosX() > 5055 && _player->getPlayerPosX() < 5194) &&
+	if ((_player->getPlayerPosX() > 3600 && _player->getPlayerPosX() < 4000) &&
 		(_player->getPlayerPosY() > 300 && _player->getPlayerPosY() < 394))
 	{
+		ALUCARD_INFO->setX(10);
+		ALUCARD_INFO->setY(1812);
 		SCENEMANAGER->changeScene("Scene_Map3");
 	}
 }

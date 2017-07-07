@@ -20,7 +20,7 @@ HRESULT Scene_Map3::init(void)
 	_realBackImage = IMAGEMANAGER->addImage("map3", "image/Map3.bmp", 800, 1923, true, RGB(255, 0, 255));
 
 	_player = new player;
-	_player->init(10, 1812, _pixelImage, false);
+	_player->init(ALUCARD_INFO->getStats().x, ALUCARD_INFO->getStats().y, _pixelImage, false);
 
 	_map = new MapManager;
 	_map->init(_backImage, _player);
@@ -33,31 +33,30 @@ void Scene_Map3::release()
 
 	_player->release();
 	SAFE_DELETE(_player);
-
-	IMAGEMANAGER->deleteImage("pc_Map3");
-	IMAGEMANAGER->deleteImage("backImageSCN3");
-	IMAGEMANAGER->deleteImage("map3");
-
-	_backImage = NULL;
-	_realBackImage = NULL;
 }
 void Scene_Map3::update()
 {
-	_map->update();
-	_player->update();
-	KEYANIMANAGER->update();
-
 	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
-		//ALUCARD_INFO->setX(_x);
-		//ALUCARD_INFO->setY(_y);
+		ALUCARD_INFO->setX(_player->getPlayerPosX());
+		ALUCARD_INFO->setY(_player->getPlayerPosY());
+		ALUCARD_INFO->setMapDirection(2);
 		SCENEMANAGER->changeScene("CharScene");
 	}
 
-	if ((_player->getPlayerPosX() > 0 && _player->getPlayerPosX() < 100) &&
-		(_player->getPlayerPosY() > 150 && _player->getPlayerPosY() < 212))
+	if (_player)
 	{
-		SCENEMANAGER->changeScene("Scene_Map4");
+		_map->update();
+		_player->update();
+		KEYANIMANAGER->update();
+
+		if ((_player->getPlayerPosX() > 0 && _player->getPlayerPosX() < 100) &&
+			(_player->getPlayerPosY() > 150 && _player->getPlayerPosY() < 212))
+		{
+			ALUCARD_INFO->setX(2762);
+			ALUCARD_INFO->setY(854);
+			SCENEMANAGER->changeScene("Scene_Map4");
+		}
 	}
 }
 void Scene_Map3::render()

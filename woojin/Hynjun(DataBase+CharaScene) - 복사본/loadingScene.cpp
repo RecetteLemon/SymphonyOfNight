@@ -49,8 +49,20 @@ void loadingScene::render()
 
 void loadingScene::loadingImage()
 {
-	
+	//UI
+	_loading->loadImage("뒷게이지", "Image/HUD.bmp", 204, 56, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("앞게이지", "Image/ManaUI.bmp", 196, 10, 2, 1, true, RGB(255, 0, 255));
+	_loading->loadImage("앞게이지2", "Image/manaUI2.bmp", 100, 10, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("하트", "image/heart.bmp", 96, 10, 8, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("hp", "image/HPnum.bmp", 200, 13, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("heart", "image/ManaNum.bmp", 120, 10, 10, 1, true, RGB(255, 0, 255));
 
+	//Map4
+	_loading->loadImage("pc_Map4", "image/BossMap_C.bmp", 2784, 1200, true, RGB(255, 0, 255));
+	_loading->loadImage("backImageSCN4", "backImage.bmp", 2784, 1200, false, RGB(255, 0, 255));
+	_loading->loadImage("map4", "image/BossMap.bmp", 2784, 1200, true, RGB(255, 0, 255));
+
+	//title
 	_loading->loadImage("TitleBackground", "Image/Loading/titleBackground.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Start", "Image/Loading/Start.bmp", 712, 21, 2, 1, true, RGB(255, 0, 255));
 	_loading->loadImage("InventoryUI", "Image/Inventory/InventoryUI.bmp", WINSIZEX, WINSIZEY, false, RGB(255, 0, 255));
@@ -73,17 +85,19 @@ void loadingScene::loadingImage()
 	_loading->loadImage("familiarBackground", "Image/character/familiarUI.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	_loading->loadImage("fmiliar_select", "Image/character/fmiliar_Selcect.bmp", 270, 80, true, RGB(255, 0, 255));
 
-
+	//familiar Manager
+	_loading->loadFrameImage("familiarDemon", "familiar_demon.bmp", 640, 672, 5, 7, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("familiarFairy", "familiar_fairy.bmp", 256, 512, 4, 8, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("familiarGhost", "familiar_ghost.bmp", 256, 256, 4, 4, true, RGB(255, 0, 255));
 
 
 
 	// 오브젝트
-
 	_loading->loadFrameImage("Object1", "Image/Object/Object1.bmp", 32, 64, 1, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Object2", "Image/Object/Object2.bmp", 60, 28, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Object3", "Image/Object/Object3.bmp", 140, 32, 5, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("ObjectBroken", "Image/Object/ObjectBroken.bmp", 208, 56, 4, 1, true, RGB(255, 0, 255));
-	_loading->loadImage("PixelTest", "Image/pixelTest.bmp", 800, 800, false, RGB(255, 0, 255));
+	//_loading->loadImage("PixelTest", "Image/pixelTest.bmp", 800, 800, false, RGB(255, 0, 255));
 	this->addItemImage();
 	
 }

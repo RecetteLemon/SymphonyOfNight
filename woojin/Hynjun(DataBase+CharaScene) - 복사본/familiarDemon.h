@@ -12,7 +12,7 @@ private:
 	animation* _wingMotion;
 
 public:
-	virtual HRESULT init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY);
+	virtual HRESULT init(image* img, float x, float y, float* playerPosX, float* playerPosY);
 	virtual void update(void);
 	virtual void move(void);
 	virtual void render(HDC hdc);

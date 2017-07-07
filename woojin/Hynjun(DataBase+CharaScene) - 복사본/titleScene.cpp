@@ -46,7 +46,7 @@ void titleScene::update()
 	{
 		//°ÔÀÓ¾ÀÃß°¡
 		SOUNDMANAGER->stop("TitleSound");
-		SCENEMANAGER->changeScene("openingScene");
+		SCENEMANAGER->changeScene("Scene_Map1");
 	}
 	
 	

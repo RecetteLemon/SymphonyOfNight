@@ -16,15 +16,21 @@ HRESULT MapManager::init(image* img, player* player)
 	_fieldImage = img;
 	_player = player;
 
+	_UI = new UI;
+	_UI->init(0, 0, 102, 28, "앞게이지2", "뒷게이지", "하트");
+
 	return S_OK;
 }
 
 void MapManager::release()
 {
+	SAFE_DELETE(_UI);
 }
 
 void MapManager::update()
 {
+	_UI->update();
+
 	_rc = RectMakeCenter(_player->getPlayerPosX(), _player->getPlayerPosY(), WINSIZEX, WINSIZEY);
 
 	if (_rc.left < 0)
@@ -51,11 +57,11 @@ void MapManager::update()
 void MapManager::render()
 {
 	_fieldImage->render(getMemDC(), 0, 0, _rc.left, _rc.top, WINSIZEX, WINSIZEY);
+	_UI->render("뒷게이지", "앞게이지2", "하트");
 }
 
 void MapManager::setPosY(float y)
 {
 	_rc.top = y;
 	_rc.bottom = _rc.top - WINSIZEY;
-
 }

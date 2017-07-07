@@ -3,12 +3,15 @@
 #include "player.h"
 #include "MapManager.h"
 
+
 class Scene_Map1 : public gameNode
 {
 private:
 	MapManager* _map;
 	player* _player;
 	
+	
+	image* _castle;
 	image* _cloud;
 	image* _pixelImage;
 	image* _backImage;

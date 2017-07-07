@@ -129,6 +129,7 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="titleScene.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +186,7 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>

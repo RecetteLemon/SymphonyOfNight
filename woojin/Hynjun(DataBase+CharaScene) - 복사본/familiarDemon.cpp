@@ -11,12 +11,12 @@ familiarDemon::~familiarDemon()
 {
 }
 
-HRESULT familiarDemon::init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY)
+HRESULT familiarDemon::init(image* img, float x, float y, float* playerPosX, float* playerPosY)
 {
-	familiar::init(imageName, x, y, playerPosX, playerPosY);
+	familiar::init(img, x, y, playerPosX, playerPosY);
 	
-	_body = IMAGEMANAGER->findImage(imageName);
-	_wing = IMAGEMANAGER->findImage(imageName);
+	_body = img;
+	_wing = img;
 
 	//bodyMotion frame
 	int arrRight[] = { 0 };
@@ -54,8 +54,8 @@ void familiarDemon::update()
 
 void familiarDemon::render(HDC hdc)
 {
-	_wing->aniRender(getMemDC(), _rc.left, _rc.top, _wingMotion);
-	_body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
+	_wing->aniRender(hdc, _rc.left, _rc.top, _wingMotion);
+	_body->aniRender(hdc, _rc.left, _rc.top, _bodyMotion);
 
 	char ptr[32];
 	sprintf(ptr, "%5.2f", _x - *_playerPosX);

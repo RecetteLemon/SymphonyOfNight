@@ -1,12 +1,14 @@
 #pragma once
 #include "gameNode.h"
 #include "player.h"
+#include "UI.h"
 
 class MapManager : public gameNode
 {
 private:
 	image* _fieldImage;
 	player* _player;
+	UI* _UI;
 
 	RECT _rc;
 

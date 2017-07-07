@@ -11,13 +11,13 @@ familiarFairy::~familiarFairy()
 {
 }
 
-HRESULT familiarFairy::init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY)
+HRESULT familiarFairy::init(image* img, float x, float y, float* playerPosX, float* playerPosY)
 {
-	familiar::init(imageName, x, y, playerPosX, playerPosY);
+	familiar::init(img, x, y, playerPosX, playerPosY);
 
-	_body = IMAGEMANAGER->findImage(imageName);
-	_wing = IMAGEMANAGER->findImage(imageName);
-	_hair = IMAGEMANAGER->findImage(imageName);
+	_body = img;
+	_wing = img;
+	_hair = img;
 
 	//bodyMotion frame
 	int arrStand[] = { 0, 1 };
@@ -69,11 +69,11 @@ void familiarFairy::render(HDC hdc)
 {
 	if (_direction != FAMILIAR_DIRECTION_CASTSKILL)
 	{
-		_wing->aniRender(getMemDC(), _rc.left, _rc.top, _wingMotion);
-		_hair->aniRender(getMemDC(), _rc.left, _rc.top, _hairMotion);
-		_body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
+		_wing->aniRender(hdc, _rc.left, _rc.top, _wingMotion);
+		_hair->aniRender(hdc, _rc.left, _rc.top, _hairMotion);
+		_body->aniRender(hdc, _rc.left, _rc.top, _bodyMotion);
 	}
-	else _body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
+	else _body->aniRender(hdc, _rc.left, _rc.top, _bodyMotion);
 
 	char ptr[32];
 	sprintf(ptr, "%5.2f", _x - *_playerPosX);

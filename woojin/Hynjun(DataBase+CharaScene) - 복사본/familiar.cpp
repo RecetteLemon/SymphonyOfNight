@@ -10,10 +10,8 @@ familiar::~familiar()
 {
 }
 
-HRESULT familiar::init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY)
+HRESULT familiar::init(image* img, float x, float y, float* playerPosX, float* playerPosY)
 {
-	gameNode::init();
-
 	_x = x;
 	_y = y - WINSIZEY / 2;
 
@@ -25,12 +23,10 @@ HRESULT familiar::init(const char* imageName, float x, float y, float* playerPos
 
 void familiar::release(void)
 {
-	gameNode::release();
 }
 
 void familiar::update(void)
 {
-	gameNode::update();
 
 }
 
@@ -47,12 +43,9 @@ void familiar::move(void)
 
 	if (tempDist > 0.1)
 	{
-		
-		
 		if (abs(_x - *_playerPosX) > 0) _x += cosf(_angle) * tempDist * TIMEMANAGER->getElapsedTime();
 		if (abs(_y - *_playerPosY) > 0) _y += -sinf(_angle) * tempDist * TIMEMANAGER->getElapsedTime();
 	}
-	
 }
 
 void familiar::setDirection(int direction)

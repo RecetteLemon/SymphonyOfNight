@@ -44,7 +44,22 @@ void characterScene::update(void)
 	if (IntersectRect(&temp, &_selectRC, &_menuRC[1]) && KEYMANAGER->isOnceKeyDown(VK_SPACE)) SCENEMANAGER->changeScene("FamiliarScene");
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
-		SCENEMANAGER->changeScene("Scene_Map1");
+		switch ((int)ALUCARD_INFO->getMapDirection())
+		{
+		case 0:
+			SCENEMANAGER->changeScene("Scene_Map1");
+			break;
+		case 1:
+			SCENEMANAGER->changeScene("Scene_Map2");
+			break;
+		case 2:
+			SCENEMANAGER->changeScene("Scene_Map3");
+			break;
+		case 3:
+			SCENEMANAGER->changeScene("Scene_Map4");
+			break;
+		}
+		
 	}
 
 	_selectRC = RectMakeCenter(_selectX, _selectY, 105, 45);

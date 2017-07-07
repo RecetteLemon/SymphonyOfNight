@@ -28,7 +28,7 @@ HRESULT symphonyOfNight::init(void)
 	SCENEMANAGER->addScene("Scene_Map3", new Scene_Map3);
 	SCENEMANAGER->addScene("Scene_Map4", new Scene_Map4);
 	
-	SCENEMANAGER->changeScene("Scene_Map4");
+	SCENEMANAGER->changeScene("LoadingScene");
 
 	// ╟тюсюЭ©К ╫л╠шеФ
 	

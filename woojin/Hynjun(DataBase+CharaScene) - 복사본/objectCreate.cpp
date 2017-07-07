@@ -11,9 +11,9 @@ objectCreate::~objectCreate()
 {
 }
 
-HRESULT objectCreate::init(float x, float y, int pickObj)
+HRESULT objectCreate::init(float x, float y, image* img, int pickObj)
 {
-	
+	pixelCollisionimage = img;
 
 	this->randomSour();
 	_itemCurrentFrameX = 0;
@@ -29,7 +29,6 @@ HRESULT objectCreate::init(float x, float y, int pickObj)
 
 	_pixel = new pixelCollision;
 	_itemImg = new image*[DROP_ITEM_END];
-	
 	
 	_onDropItem = false;
 	_onBottomItem = false;
@@ -62,7 +61,11 @@ void objectCreate::update(void)
 	if (_onDropItem)
 	{
 		_checkY = _y;
-		_y += DROP_SPEED;
+		if (_pixel->VerticalCollision(_rc, _x, _y, pixelCollisionimage) != BOTTOM)
+		{
+			_y += DROP_SPEED;
+		}
+		
 		if ((int)_randomItem < 2) _itemImg[_randomItem]->setFrameX(_itemCurrentFrameX);
 		
 		this->heartMoving();
@@ -85,7 +88,7 @@ void objectCreate::update(void)
 	}
 
 	
-	//_pixel->pixelColliBottom(0, 0, IMAGEMANAGER->findImage("PixelTest"), _x, _y, 10);
+	
 
 	if (_onDropItem)
 	{
@@ -112,29 +115,29 @@ void objectCreate::update(void)
 	_elapsedTime += TIMEMANAGER->getElapsedTime();
 }
 
-void objectCreate::render(void)		
+void objectCreate::render(HDC hdc)
 {
 	if (_onDropItem)
 	{
 		if ((int)_randomItem < 2)
 		{
-			_itemImg[_randomItem]->frameRender(getMemDC(), _rc.left, _rc.top);
+			_itemImg[_randomItem]->frameRender(hdc, _rc.left, _rc.top);
 		}
 		else if ((int)_randomItem == 2)
 		{
 			char str[128];
 			HFONT font, oldFont;
 			font = CreateFont(20, 0, 0, 0, 500, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, "°íµñ");
-			oldFont = (HFONT)SelectObject(getMemDC(), font);
+			oldFont = (HFONT)SelectObject(hdc, font);
 
 			SetTextColor(getMemDC(), RGB(0, 0, 0));
-			SetBkMode(getMemDC(), TRANSPARENT);
+			SetBkMode(hdc, TRANSPARENT);
 
 			sprintf_s(str, "%s", _randomCreateItem.find(_pickRandom)->second.c_str());
-			TextOut(getMemDC(), _rc.left - 10, _rc.top - 20, str, strlen(str));
-			_itemImg[_randomItem]->render(getMemDC(), _rc.left, _rc.top);
+			TextOut(hdc, _rc.left - 10, _rc.top - 20, str, strlen(str));
+			_itemImg[_randomItem]->render(hdc, _rc.left, _rc.top);
 
-			DeleteObject(SelectObject(getMemDC(), oldFont));
+			DeleteObject(SelectObject(hdc, oldFont));
 		}
 		else
 		{
@@ -143,7 +146,7 @@ void objectCreate::render(void)
 	}
 	else
 	{
-		_objImg->frameRender(getMemDC(), _rc.left, _rc.top);
+		_objImg->frameRender(hdc, _rc.left, _rc.top);
 	}
 }
 
@@ -151,8 +154,11 @@ void objectCreate::heartMoving()
 {
 	if (_randomItem == HEART && !_onBottomItem)
 	{
-		_y -= 6;
-		_x = _startX + 10 * sinf(_countX);
+		if (_pixel->VerticalCollision(_rc, _x, _y, pixelCollisionimage) != BOTTOM)
+		{
+			_y -= 6;
+			_x = _startX + 10 * sinf(_countX);
+		}
 		if (_countX <= 2 * PI) _countX += PI32;
 		else _countX = 0;
 	}

@@ -222,6 +222,8 @@ HRESULT player::init(float x, float y, image* img, bool isOp)
 		_playerMotion->start();
 	}
 
+	
+
 	return S_OK;
 }
 

@@ -22,6 +22,7 @@ class familiarManager : public gameNode
 private:
 
 	familiar* _focusFamiliar;
+	familiar* _familiar[FAMILIAR_END];
 	FAMILIARKIND _kind;
 	PLAYERDIRECT _playerDirect;
 

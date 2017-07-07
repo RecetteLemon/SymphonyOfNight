@@ -109,6 +109,9 @@
     <Filter Include="SymphonyOfNight\map4">
       <UniqueIdentifier>{e372b9e3-5453-4c60-8fd9-394d7ad5f1db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SymphonyOfNight\UI">
+      <UniqueIdentifier>{b3dcc7db-2a69-402b-9a20-6435824cfb85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -274,7 +277,10 @@
       <Filter>SymphonyOfNight\bullet</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Map4.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>SymphonyOfNight\map4</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>SymphonyOfNight\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -432,7 +438,10 @@
       <Filter>SymphonyOfNight\bullet</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Map4.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>SymphonyOfNight\map4</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>SymphonyOfNight\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

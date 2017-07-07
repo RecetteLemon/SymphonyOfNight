@@ -11,11 +11,11 @@ familiarGhost::~familiarGhost()
 {
 }
 
-HRESULT familiarGhost::init(const char* imageName, float x, float y, float* playerPosX, float* playerPosY)
+HRESULT familiarGhost::init(image* img, float x, float y, float* playerPosX, float* playerPosY)
 {
-	familiar::init(imageName, x, y, playerPosX, playerPosY);
+	familiar::init(img, x, y, playerPosX, playerPosY);
 
-	_body = IMAGEMANAGER->findImage(imageName);
+	_body = img;
 
 	int arrRight[] = { 4, 5, 6, 7 };
 	KEYANIMANAGER->addArrayFrameAnimation("GHOST_RIGHT", "familiarGhost", arrRight, 4, 6, true);
@@ -35,7 +35,7 @@ void familiarGhost::update(void)
 
 void familiarGhost::render(HDC hdc)
 {
-	_body->aniRender(getMemDC(), _rc.left, _rc.top, _bodyMotion);
+	_body->aniRender(hdc, _rc.left, _rc.top, _bodyMotion);
 }
 
 void familiarGhost::move(void)

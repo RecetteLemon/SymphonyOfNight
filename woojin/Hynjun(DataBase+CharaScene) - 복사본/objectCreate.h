@@ -13,6 +13,8 @@ private:
 	int _pickObj;
 	float _elapsedTime;
 
+	image* pixelCollisionimage;
+
 private:
 
 	pixelCollision* _pixel;
@@ -42,10 +44,10 @@ private:
 
 public:
 
-	virtual HRESULT init(float x, float y, int pickObj = 0);
+	virtual HRESULT init(float x, float y, image* img, int pickObj = 0);
 	virtual void release(void);
 	virtual void update(void);
-	virtual void render(void);
+	virtual void render(HDC hdc);
 
 	void heartMoving();
 	void randomSour();
